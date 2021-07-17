@@ -15,17 +15,29 @@ namespace WinFormsApp1
 
     private GameObjectDrawModel[,] m_ChessBoardPanles;
 
-    public Form1(GameObjectDrawModel[,] board)
+    public Form1(int w, int h)
     {
+      this.Width = w;
+      this.Height = h;
       InitializeComponent();
-      DrawBoard(board);
     }
 
+    public void ShowForm(GameObjectDrawModel[,] board)
+    {
+      m_ChessBoardPanles = board;
+      DrawBoard(m_ChessBoardPanles);
+      ShowDialog();
+    }
+
+
+    public int GetTopBarHeight()
+    {
+      return this.RectangleToScreen(this.ClientRectangle).Top - this.Top;
+    }
 
     public void DrawBoard(GameObjectDrawModel[,] board)
     {
       GC.Collect();
-      m_ChessBoardPanles = board;
       m_ChessBoardPanles.Cast<GameObjectDrawModel>().ToList().ForEach(x =>
       {
         Controls.Add(x);

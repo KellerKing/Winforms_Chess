@@ -19,7 +19,6 @@ namespace WinFormsApp1
       Application.SetCompatibleTextRenderingDefault(false);
       //Application.Run(new Form1());
       var ctr = new Controller();
-      ctr.ShowDialog();
     }
   }
 }

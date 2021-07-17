@@ -11,19 +11,15 @@ namespace WinFormsApp1
     private Form1 m_mainForm;
     private Board m_Board = Board.GetInstance();
 
+    private const int formWidth = 1000;
+    private const int formHeight = 1000;
+
     public Controller()
     {
-      m_mainForm = new Form1(ViewModelCreator.CreateChessBoardDrawModels(m_Board.Felder));
+      m_mainForm = new Form1(formWidth, formHeight);
+      var topHeight = m_mainForm.GetTopBarHeight();
+      m_mainForm.ShowForm(ViewModelCreator.CreateChessBoardDrawModels(m_Board.Felder, formWidth, formHeight - topHeight)); 
     }
-
-    public void ShowDialog()
-    {
-      m_mainForm.ShowDialog();
-    }
-
-
-
-
 
   }
 }

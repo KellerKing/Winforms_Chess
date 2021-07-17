@@ -11,9 +11,12 @@ namespace WinFormsApp1
   {
     private const int tileSile = 100;
 
-    public static GameObjectDrawModel[,] CreateChessBoardDrawModels(Tile[,] tiles)
+    public static GameObjectDrawModel[,] CreateChessBoardDrawModels(Tile[,] tiles, int windowWidth, int windowHeight)
     {
       var chessBoardPanels = new GameObjectDrawModel[tiles.GetLength(0), tiles.GetLength(1)];
+
+      var startLeft = (windowWidth - tiles.GetLength(0) * tileSile) / 2;
+      var startTop = (windowHeight - tiles.GetLength(1) * tileSile) / 2;
 
       for (var n = 0; n < tiles.GetLength(0); n++)
       {
@@ -22,7 +25,7 @@ namespace WinFormsApp1
           var newPanel = new GameObjectDrawModel
           {
             Size = new Size(tileSile, tileSile),
-            Location = new Point(tileSile * n, tileSile * m),
+            Location = new Point(startLeft + (tileSile * n), startTop + (tileSile * m)),
             PicturePath = (n + m) % 2 == 0 ? 
             @".\Assets\Board_Light.png" :
             @".\Assets\Board_Dark.png"
