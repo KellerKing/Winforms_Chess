@@ -1,16 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace WinFormsApp1
+namespace Winforms_Chess
 {
   public class Board
   {
     public Tile[,] Felder { get; init; }
 
+    public List<Pice> Pices { get; set; }
+
+    public List<string> Moves { get; set; } = new List<string>()
+    {
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    };
+
+
     private static Board Instance;
+
+
+
 
 
 
@@ -23,10 +30,10 @@ namespace WinFormsApp1
     public Board()
     {
       Felder = new Tile[8, 8];
-      createTiles(8, 8);
+      CreateFelder(8, 8);
     }
 
-    private void createTiles(int x, int y)
+    private void CreateFelder(int x, int y)
     {
       var rowName = 1;
       var colName = 'a';
@@ -44,6 +51,11 @@ namespace WinFormsApp1
         rowName++;
         colName = 'a';
       }
+    }
+
+    public List<Pice> CreatePosition(string fenString)
+    {
+      return Fen.GetPices(fenString);
     }
 
 

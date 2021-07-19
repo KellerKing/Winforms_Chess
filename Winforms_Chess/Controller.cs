@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinFormsApp1
+namespace Winforms_Chess
 {
   public class Controller
   {
@@ -18,7 +18,15 @@ namespace WinFormsApp1
     {
       m_mainForm = new Form1(formWidth, formHeight);
       var topHeight = m_mainForm.GetTopBarHeight();
-      m_mainForm.ShowForm(ViewModelCreator.CreateChessBoardDrawModels(m_Board.Felder, formWidth, formHeight - topHeight)); 
+
+      var picesToDraw =  ViewModelCreator.GeneratePices(m_Board.CreatePosition(m_Board.Moves.First()));
+      var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Board.Felder, formWidth, formHeight - topHeight);
+
+      m_mainForm.InitBoard(felderToDraw);
+      m_mainForm.DrawPices(picesToDraw);
+
+      m_mainForm.ShowForm();
+      
     }
 
   }

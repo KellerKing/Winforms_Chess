@@ -1,5 +1,5 @@
 ﻿
-namespace WinFormsApp1
+namespace Winforms_Chess
 {
   partial class Form1
   {

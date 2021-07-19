@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Winforms_Chess
 {
-  public class GameObjectDrawModel : Panel
+  public enum PiceType
   {
-    public string PicturePath { get; set; }
+    PAWN = 1,
+    BISHOP = 3,
+    KNIGHT = 3,
+    ROOK = 5,
+    QUEEN = 9,
+    KING
   }
 }
