@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Winforms_Chess
 {
-  public static class PiceFactory
+  public class Tile
   {
-    public static Pice Create(PiceType piceType)
-    {
-      return null;
-    }
+    public Coords Coords { get; set; }
+    public TileColor Color { get; set; }
+
   }
 }

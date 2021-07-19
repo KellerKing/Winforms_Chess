@@ -35,21 +35,16 @@ namespace Winforms_Chess
 
     private void CreateFelder(int x, int y)
     {
-      var rowName = 1;
-      var colName = 'a';
 
-
-      for (int i = 0; i < x; i++)
+      for (int file = 0; file < x; file++)
       {
-        for (int j = 0; j < y; j++)
+        for (int rank = 0; rank < y; rank++)
         {
-          Felder[i, j] = new Tile()
+          Felder[file, rank] = new Tile()
           {
-            Number = $"{colName++}{rowName}"
+            Coords = new Coords(file, rank)
           };
         }
-        rowName++;
-        colName = 'a';
       }
     }
 
