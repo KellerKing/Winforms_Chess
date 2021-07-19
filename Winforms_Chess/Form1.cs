@@ -53,7 +53,7 @@ namespace Winforms_Chess
 
     public void DrawPices(List<PiceDrawModel> piceDrawModels)
     {
-
+      m_ChessBoardPanles.Cast<GameObjectDrawModel>().ToList().ForEach(x => x.Controls.Clear());
       piceDrawModels.ForEach(x => m_ChessBoardPanles[x.Coords.Value.File, x.Coords.Value.Rank].Controls.Add(x));
 
       //var x = m_ChessBoardPanles[0, 1];
