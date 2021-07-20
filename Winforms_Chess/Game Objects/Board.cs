@@ -50,7 +50,8 @@ namespace Winforms_Chess
 
     public List<Pice> CreatePosition(string fenString)
     {
-      return Fen.GetPices(fenString);
+      Pices = Fen.GetPices(fenString);
+      return new List<Pice>(Pices);
     }
 
 

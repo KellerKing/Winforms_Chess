@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Winforms_Chess.Properties;
 
 namespace Winforms_Chess
 {
@@ -15,6 +11,10 @@ namespace Winforms_Chess
   {
 
     private GameObjectDrawModel[,] m_ChessBoardPanles;
+    private List<PiceDrawModel> m_Pices;
+
+
+    public Action<Coords?> PiceClicked;
 
     public Form1(int w, int h)
     {
@@ -53,20 +53,19 @@ namespace Winforms_Chess
 
     public void DrawPices(List<PiceDrawModel> piceDrawModels)
     {
+      m_Pices = piceDrawModels;
       m_ChessBoardPanles.Cast<GameObjectDrawModel>().ToList().ForEach(x => x.Controls.Clear());
-      piceDrawModels.ForEach(x => m_ChessBoardPanles[x.Coords.Value.File, x.Coords.Value.Rank].Controls.Add(x));
-
-      //var x = m_ChessBoardPanles[0, 1];
-      //var p = new PictureBox();
-      //p.BackColor = Color.Transparent;
-      //var img = Resources.chess_piece_2_black_bishop;
-      //img.MakeTransparent();
-      //p.Size = x.Size;
-      //p.Image = img;
-      //p.SizeMode = PictureBoxSizeMode.Zoom;
-      //x.Controls.Add(p);
-      //p.Click += (sender, e) => MessageBox.Show("Test");
+      m_Pices.ForEach(x =>
+      {
+         m_ChessBoardPanles[x.Coords.Value.File, x.Coords.Value.Rank].Controls.Add(x);
+        x.Click += Pice_Clicked;
+      });
     }
 
+    private void Pice_Clicked(object sender, EventArgs e)
+    {
+      var pice = sender as PiceDrawModel;
+      PiceClicked.Invoke(pice.Coords);
+    }
   }
 }

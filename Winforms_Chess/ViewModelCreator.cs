@@ -30,7 +30,7 @@ namespace Winforms_Chess
           {
             Size = new Size(tileSile, tileSile),
             Location = new Point(startLeft + (tileSile * x), startTop - (tileSile * y)),
-            PicturePath = (x + y) % 2 == 0 ? 
+            PicturePath = (x + y) % 2 != 0 ? 
             @".\Assets\Board_Light.png" :
             @".\Assets\Board_Dark.png"
           };
@@ -58,7 +58,8 @@ namespace Winforms_Chess
             PiceType.PAWN => Resources.chess_piece_2_white_pawn,
             PiceType.ROOK => Resources.chess_piece_2_white_rook,
             PiceType.QUEEN => Resources.chess_piece_2_white_queen,
-            PiceType.KING => Resources.chess_piece_2_white_king
+            PiceType.KING => Resources.chess_piece_2_white_king,
+            PiceType.KNIGHT => Resources.chess_piece_2_white_knight
           };
         }
         else
@@ -69,7 +70,8 @@ namespace Winforms_Chess
             PiceType.PAWN => Resources.chess_piece_2_black_pawn,
             PiceType.ROOK => Resources.chess_piece_2_black_rook,
             PiceType.QUEEN => Resources.chess_piece_2_black_queen,
-            PiceType.KING => Resources.chess_piece_2_black_king
+            PiceType.KING => Resources.chess_piece_2_black_king,
+            PiceType.KNIGHT => Resources.chess_piece_2_black_knight
           };
 
         }
