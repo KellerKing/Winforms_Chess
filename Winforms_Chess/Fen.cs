@@ -25,6 +25,12 @@ namespace Winforms_Chess
 
     };
 
+
+    public static string CreateFenFromPices()
+    {
+      return "";
+    }
+
     public static List<Pice> GetPices(string fen)
     {
       //rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1

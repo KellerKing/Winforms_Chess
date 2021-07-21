@@ -30,6 +30,7 @@ namespace Winforms_Chess
           {
             Size = new Size(tileSile, tileSile),
             Location = new Point(startLeft + (tileSile * x), startTop - (tileSile * y)),
+            Coords = new Coords(y, x),
             PicturePath = (x + y) % 2 != 0 ? 
             @".\Assets\Board_Light.png" :
             @".\Assets\Board_Dark.png"

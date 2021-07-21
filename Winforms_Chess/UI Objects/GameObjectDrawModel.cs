@@ -11,5 +11,6 @@ namespace Winforms_Chess
   public class GameObjectDrawModel : Panel
   {
     public string PicturePath { get; set; }
+    public Coords Coords { get; set; }
   }
 }

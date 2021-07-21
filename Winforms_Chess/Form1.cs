@@ -15,6 +15,7 @@ namespace Winforms_Chess
 
 
     public Action<Coords?> PiceClicked;
+    public Action<Coords> TileClicked;
 
     public Form1(int w, int h)
     {
@@ -46,9 +47,15 @@ namespace Winforms_Chess
       m_ChessBoardPanles.Cast<GameObjectDrawModel>().ToList().ForEach(x =>
       {
         Controls.Add(x);
+        x.Click += Tile_Clicked;
         x.BackgroundImage = Image.FromFile(x.PicturePath);
         //x.Paint += (sender, e) => e.Graphics.DrawImage(Image.FromFile(((GameObjectDrawModel)sender).PicturePath), 0,0);
       });
+    }
+
+    private void Tile_Clicked(object sender, EventArgs e)
+    {
+      TileClicked.Invoke(((GameObjectDrawModel)sender).Coords);
     }
 
     public void DrawPices(List<PiceDrawModel> piceDrawModels)

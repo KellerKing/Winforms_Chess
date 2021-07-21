@@ -24,7 +24,7 @@ namespace Winforms_Chess
       InitGameComponents();
 
       m_mainForm.ShowForm();
-      
+
     }
 
     private void InitGameComponents()
@@ -39,12 +39,31 @@ namespace Winforms_Chess
     private void ConnectEvents()
     {
       m_mainForm.PiceClicked += PiceClicked;
+      m_mainForm.TileClicked += TileClicked;
     }
 
     public void PiceClicked(Coords? coords)
     {
       selectedPice = m_Board.Pices.First(x => x.Coord.Equals(coords));
 
+    }
+
+    public void TileClicked(Coords coords)
+    {
+      if (selectedPice == null) return;
+
+      //var p = m_Board.Felder.Cast<Tile>().ToList().Where(x => x.Coords.Equals(coords)).First();
+      var old = m_Board.Pices.Find(x => x.Coord.Equals(coords));
+
+      if(old != null)
+      {
+        var index = m_Board.Pices.IndexOf(old);
+        m_Board.Pices.Remove()
+      }
+      
+
+
+      Debug.Print($"rank:{coords.Rank} | file:{coords.File}");
     }
 
   }
