@@ -16,6 +16,6 @@ namespace Winforms_Chess
 
     public Player Owner { get; init; }
     public PiceType PiceType { get; init; }
-    public Coords? Coord { get; set; }
+    public Coords Coord { get; set; }
   }
 }

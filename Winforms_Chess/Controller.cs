@@ -54,13 +54,13 @@ namespace Winforms_Chess
 
       //var p = m_Board.Felder.Cast<Tile>().ToList().Where(x => x.Coords.Equals(coords)).First();
       var old = m_Board.Pices.Find(x => x.Coord.Equals(coords));
+      selectedPice.Coord = coords;
 
-      if(old != null)
+      if (old != null)
       {
-        var index = m_Board.Pices.IndexOf(old);
-        m_Board.Pices.Remove()
+        m_Board.Pices.Remove(old);
       }
-      
+      m_mainForm.DrawPices(ViewModelCreator.GeneratePices(m_Board.Pices));
 
 
       Debug.Print($"rank:{coords.Rank} | file:{coords.File}");

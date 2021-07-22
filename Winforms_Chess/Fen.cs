@@ -26,9 +26,27 @@ namespace Winforms_Chess
     };
 
 
-    public static string CreateFenFromPices()
+    public static string CreateFenFromPices(List<Pice> pices, int rank, string fen = "")
     {
-      return "";
+      if (rank == 0) return fen;
+
+      var rankPices = pices.Where(x => x.Coord.Rank == rank).OrderBy(y => y.Coord.File).ToList();
+
+      for (int i = 1; i < rankPices.Count - 1; i++)
+      {
+        if (rankPices[i-1].Coord.File == i)
+        {
+          fen += rankPices[i - 1].Owner == Player.BLACK ?
+            Char.ToLower(fenMapping.First(x => x.Value == rankPices[i - 1].PiceType).Key) :
+            fenMapping.First(x => x.Value == rankPices[i - 1].PiceType).Key;
+          continue;
+        }
+
+        fen += (rankPices[i - 1].Coord.File - 1).ToString();
+
+      }
+
+      return CreateFenFromPices(pices, rank--, fen);
     }
 
     public static List<Pice> GetPices(string fen)
