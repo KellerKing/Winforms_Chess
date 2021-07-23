@@ -28,25 +28,27 @@ namespace Winforms_Chess
 
     public static string CreateFenFromPices(List<Pice> pices, int rank, string fen = "")
     {
-      if (rank == 0) return fen;
+      if (rank == -1) return fen.Substring(0, fen.Length-1);
 
       var rankPices = pices.Where(x => x.Coord.Rank == rank).OrderBy(y => y.Coord.File).ToList();
 
-      for (int i = 1; i < rankPices.Count - 1; i++)
+      if(rankPices.Count == 0 ) return CreateFenFromPices(pices, --rank, $"{fen}8/");
+
+      for (int i = 0; i < rankPices.Count; i++)
       {
-        if (rankPices[i-1].Coord.File == i)
+        if (rankPices[i].Coord.File == i)
         {
-          fen += rankPices[i - 1].Owner == Player.BLACK ?
-            Char.ToLower(fenMapping.First(x => x.Value == rankPices[i - 1].PiceType).Key) :
-            fenMapping.First(x => x.Value == rankPices[i - 1].PiceType).Key;
+          fen += rankPices[i].Owner == Player.BLACK ?
+            Char.ToLower(fenMapping.First(x => x.Value == rankPices[i].PiceType).Key) :
+            fenMapping.First(x => x.Value == rankPices[i].PiceType).Key;
           continue;
         }
-
-        fen += (rankPices[i - 1].Coord.File - 1).ToString();
+        var skipFelder = rankPices[i - 1].Coord.File - 1;
+        fen += skipFelder.ToString();
 
       }
 
-      return CreateFenFromPices(pices, rank--, fen);
+      return CreateFenFromPices(pices, --rank, $"{fen}/");
     }
 
     public static List<Pice> GetPices(string fen)
