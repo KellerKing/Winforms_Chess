@@ -1,10 +1,9 @@
 using NUnit.Framework;
-using Winforms_Chess;
 
-namespace Fen_Tests
+namespace Winforms_Chess
 {
  [TestFixture]
-  public class Tests
+  public class Fen_Tests
   {
     [SetUp]
     public void Setup()

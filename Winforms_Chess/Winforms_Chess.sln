@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winforms_Chess", "Winforms_Chess.csproj", "{D8EE2453-47AD-419B-965D-63073005DECA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fen_Tests", "..\Fen_Tests\Fen_Tests.csproj", "{8ECEDE36-19F4-43F5-A163-C1F3AD7DFEC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Winforms_Chess_Tests", "..\Fen_Tests\Winforms_Chess_Tests.csproj", "{8ECEDE36-19F4-43F5-A163-C1F3AD7DFEC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
