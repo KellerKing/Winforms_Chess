@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Winforms_Chess.Game_Objects;
+using Winforms_Chess.UI_Objects;
 
 namespace Winforms_Chess
 {
@@ -13,9 +16,7 @@ namespace Winforms_Chess
     private GameObjectDrawModel[,] m_ChessBoardPanles;
     private List<PiceDrawModel> m_Pices;
 
-
-    public Action<Coords?> PiceClicked;
-    public Action<Coords> TileClicked;
+    public Action<Coords, bool> GameObjectClickedAction;
 
     public Form1(int w, int h)
     {
@@ -44,18 +45,13 @@ namespace Winforms_Chess
     public void DrawBoard(GameObjectDrawModel[,] board)
     {
       GC.Collect();
-      m_ChessBoardPanles.Cast<GameObjectDrawModel>().ToList().ForEach(x =>
+      board.Cast<GameObjectDrawModel>().ToList().ForEach(x =>
       {
         Controls.Add(x);
-        x.Click += Tile_Clicked;
+        x.Click += GameObjectClicked;
         x.BackgroundImage = Image.FromFile(x.PicturePath);
         //x.Paint += (sender, e) => e.Graphics.DrawImage(Image.FromFile(((GameObjectDrawModel)sender).PicturePath), 0,0);
       });
-    }
-
-    private void Tile_Clicked(object sender, EventArgs e)
-    {
-      TileClicked.Invoke(((GameObjectDrawModel)sender).Coords);
     }
 
     public void DrawPices(List<PiceDrawModel> piceDrawModels)
@@ -64,15 +60,15 @@ namespace Winforms_Chess
       m_ChessBoardPanles.Cast<GameObjectDrawModel>().ToList().ForEach(x => x.Controls.Clear());
       m_Pices.ForEach(x =>
       {
-         m_ChessBoardPanles[x.Coords.Value.File, x.Coords.Value.Rank].Controls.Add(x);
-        x.Click += Pice_Clicked;
+         m_ChessBoardPanles[x.Coord.File, x.Coord.Rank].Controls.Add(x);
+        x.Click += GameObjectClicked;
       });
     }
 
-    private void Pice_Clicked(object sender, EventArgs e)
+    private void GameObjectClicked(object sender, EventArgs e)
     {
-      var pice = sender as PiceDrawModel;
-      PiceClicked.Invoke(pice.Coords);
+      var clickedObject = sender as IUiObject;
+      GameObjectClickedAction.Invoke(clickedObject.Coord, sender is PiceDrawModel ? true : false);
     }
   }
 }

@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Winforms_Chess.Game_Objects;
 
-namespace Winforms_Chess
+namespace Winforms_Chess.UI_Objects
 {
-  public class Tile : IGameObject
+  public interface IUiObject
   {
     public Coords Coord { get; set; }
-    public TileColor Color { get; set; }
-
   }
 }

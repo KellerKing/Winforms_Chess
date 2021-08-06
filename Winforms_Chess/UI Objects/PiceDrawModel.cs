@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using Winforms_Chess.UI_Objects;
 
 namespace Winforms_Chess
 {
-  public class PiceDrawModel : PictureBox
+  public class PiceDrawModel : PictureBox , IUiObject
   {
-    public Coords? Coords { get; set; }
+    public Coords Coord { get; set; }
   }
 }

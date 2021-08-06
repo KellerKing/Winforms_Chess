@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using Winforms_Chess.UI_Objects;
 
 namespace Winforms_Chess
 {
-  public class GameObjectDrawModel : Panel
+  public class GameObjectDrawModel : Panel, IUiObject
   {
     public string PicturePath { get; set; }
-    public Coords Coords { get; set; }
+    public Coords Coord { get; set; }
   }
 }

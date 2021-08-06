@@ -42,7 +42,7 @@ namespace Winforms_Chess
         {
           Felder[file, rank] = new Tile()
           {
-            Coords = new Coords(file, rank)
+            Coord = new Coords(file, rank)
           };
         }
       }

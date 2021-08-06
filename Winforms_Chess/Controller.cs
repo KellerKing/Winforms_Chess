@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Winforms_Chess
 {
   public class Controller
   {
-    private Form1 m_mainForm;
+    private readonly Form1 m_mainForm;
     private Board m_Board = Board.GetInstance();
-
-    private Pice selectedPice;
+    private Player m_CurrentPlayer = Player.WHITE;
+    private Pice m_SelectedPice;
+    private List<Coords> m_PossibleFelder = new List<Coords>();
 
     private const int formWidth = 1000;
     private const int formHeight = 1000;
@@ -38,33 +35,46 @@ namespace Winforms_Chess
 
     private void ConnectEvents()
     {
-      m_mainForm.PiceClicked += PiceClicked;
-      m_mainForm.TileClicked += TileClicked;
+      m_mainForm.GameObjectClickedAction += GameObjectClicked;
     }
 
-    public void PiceClicked(Coords? coords)
+    public void GameObjectClicked(Coords coords, bool isPice)
     {
-      selectedPice = m_Board.Pices.First(x => x.Coord.Equals(coords));
 
+      var moveResultDTO = MoveController.MakeMove(isPice, new List<Pice>(m_Board.Pices), coords, m_CurrentPlayer, new List<Coords>(m_PossibleFelder), (Pice)m_SelectedPice?.Clone());
+
+      if (moveResultDTO.WasFullMove)
+        m_mainForm.DrawPices(ViewModelCreator.GeneratePices(moveResultDTO.BoardPosition));
+
+      m_SelectedPice = moveResultDTO.SelectedPice;
+      m_PossibleFelder = moveResultDTO.PossibleFelder;
+
+      
+
+
+      //if (isPice)
+      //{
+      //  var clickedPice = (Pice)m_Board.Pices.First(x => x.Coord.Equals(coords)).Clone();
+
+      //  if (clickedPice.Owner == m_CurrentPlayer)
+      //  {
+      //    UpdatePossibleFelderAndSelectedPice(clickedPice);
+      //    return;
+      //  }
+      //  else if (m_PossibleFelder.Any(x => x.Equals(m_SelectedPice.Coord)))
+      //  {
+      //    //Das Definitiv auslagern : Ist ein Spielzug: Spieler wird geschlagen
+      //    m_SelectedPice.Coord = clickedPice.Coord;
+      //    m_Board.Pices.Remove(clickedPice);
+      //  }
+      //}
+      //else if (m_SelectedPice != null && m_PossibleFelder.Any(x => x.Equals(coords)))
+      //{
+      //  //Ist ein Spielzug: Vorher wurde eine Figur gewählt und dann ein Feld
+      //  m_SelectedPice.Coord = coords;
+      //  m_SelectedPice = null;
+      //}
     }
-
-    public void TileClicked(Coords coords)
-    {
-      if (selectedPice == null) return;
-
-      //var p = m_Board.Felder.Cast<Tile>().ToList().Where(x => x.Coords.Equals(coords)).First();
-      var old = m_Board.Pices.Find(x => x.Coord.Equals(coords));
-      selectedPice.Coord = coords;
-
-      if (old != null)
-      {
-        m_Board.Pices.Remove(old);
-      }
-      m_mainForm.DrawPices(ViewModelCreator.GeneratePices(m_Board.Pices));
-
-
-      Debug.Print($"rank:{coords.Rank} | file:{coords.File}");
-    }
-
   }
+
 }
