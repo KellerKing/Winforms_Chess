@@ -41,10 +41,13 @@ namespace Winforms_Chess
     public void GameObjectClicked(Coords coords, bool isPice)
     {
 
-      var moveResultDTO = MoveController.MakeMove(isPice, new List<Pice>(m_Board.Pices), coords, m_CurrentPlayer, new List<Coords>(m_PossibleFelder), (Pice)m_SelectedPice?.Clone());
+      var moveResultDTO = MoveController.MakeMove(isPice, new List<Pice>(m_Board.Pices), coords, m_CurrentPlayer, new List<Coords>(m_PossibleFelder), m_SelectedPice == null ? null : (Pice)m_SelectedPice.Clone());
+
+      if (!moveResultDTO.WasMoveLegal) return;
 
       if (moveResultDTO.WasFullMove)
         m_mainForm.DrawPices(ViewModelCreator.GeneratePices(moveResultDTO.BoardPosition));
+
 
       m_SelectedPice = moveResultDTO.SelectedPice;
       m_PossibleFelder = moveResultDTO.PossibleFelder;

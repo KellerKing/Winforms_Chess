@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Winforms_Chess.DTOs;
 
@@ -11,7 +12,7 @@ namespace Winforms_Chess
     {
       if (isPice)
       {
-        var clickedPice = (Pice)pices.First(x => x.Coord.Equals(coords)).Clone();
+        var clickedPice = pices.First(x => x.Coord.Equals(coords));
 
         if (clickedPice.Owner == currentPlayer)
         {
@@ -74,8 +75,9 @@ namespace Winforms_Chess
 
     private static List<Pice> MakeNonCaptureMove(Pice selectedPice, Coords newPosition, List<Pice> pices)
     {
-      selectedPice.Coord = newPosition;
-      return pices;
+      var output = new List<Pice>(pices);
+      output.First(x => x.Coord.Equals(selectedPice.Coord)).Coord = newPosition;
+      return output;
     }
   }
 }
