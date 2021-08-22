@@ -8,11 +8,11 @@ namespace Winforms_Chess
   public static class MoveController
   {
 
-    public static UpdatePositionDTO MakeMove(bool isPice, List<Pice> pices, Coords coords, Player currentPlayer, List<Coords> possibleFelder, Pice preselectedPice)
+    public static UpdatePositionDTO MakeMove(bool isPice, List<Pice> pices, Coords clickedCoords, Player currentPlayer, List<Coords> possibleFelder, Pice preselectedPice)
     {
       if (isPice)
       {
-        var clickedPice = pices.First(x => x.Coord.Equals(coords));
+        var clickedPice = pices.First(x => x.Coord.Equals(clickedCoords));
 
         if (clickedPice.Owner == currentPlayer)
         {
@@ -27,11 +27,11 @@ namespace Winforms_Chess
           };
 
         }
-        else if (possibleFelder.Any(x => x.Equals(preselectedPice.Coord)))
+        else if (possibleFelder.Any(x => x.Equals(clickedCoords)))
         {
           return new UpdatePositionDTO()
           {
-            BoardPosition = CapturePice(pices, preselectedPice, coords),
+            BoardPosition = CapturePice(pices, preselectedPice, clickedCoords),
             SelectedPice = null,
             PossibleFelder = new List<Coords>(),
             WasFullMove = true,
@@ -40,11 +40,11 @@ namespace Winforms_Chess
         }
       }
 
-      else if (preselectedPice != null && possibleFelder.Any(x => x.Equals(coords)))
+      else if (preselectedPice != null && possibleFelder.Any(x => x.Equals(clickedCoords)))
       {
         return new UpdatePositionDTO()
         {
-          BoardPosition = MakeNonCaptureMove(preselectedPice, coords, pices),
+          BoardPosition = MakeNonCaptureMove(preselectedPice, clickedCoords, pices),
           WasMoveLegal = true,
           WasFullMove = true,
           PossibleFelder = new List<Coords>(),
@@ -69,7 +69,7 @@ namespace Winforms_Chess
     private static List<Pice> CapturePice(List<Pice> pices, Pice selectedPice, Coords newPosition)
     {
       pices.Remove(pices.First(x => x.Coord.Equals(newPosition)));
-      selectedPice.Coord = newPosition;
+      pices.First(x => x.Coord.Equals(selectedPice.Coord)).Coord = newPosition;
       return pices;
     }
 

@@ -46,7 +46,11 @@ namespace Winforms_Chess
       if (!moveResultDTO.WasMoveLegal) return;
 
       if (moveResultDTO.WasFullMove)
+      {
+        m_Board.Pices = moveResultDTO.BoardPosition;
         m_mainForm.DrawPices(ViewModelCreator.GeneratePices(moveResultDTO.BoardPosition));
+      }
+       
 
 
       m_SelectedPice = moveResultDTO.SelectedPice;
