@@ -47,16 +47,17 @@ namespace Winforms_Chess
 
       if (moveResultDTO.WasFullMove)
       {
-        m_Board.Pices = moveResultDTO.BoardPosition;
         m_mainForm.DrawPices(ViewModelCreator.GeneratePices(moveResultDTO.BoardPosition));
+        m_CurrentPlayer = m_CurrentPlayer == Player.WHITE ? Player.BLACK : Player.WHITE;
       }
+        
        
-
-
       m_SelectedPice = moveResultDTO.SelectedPice;
       m_PossibleFelder = moveResultDTO.PossibleFelder;
+      m_Board.Pices = moveResultDTO.BoardPosition;
 
       
+
 
 
       //if (isPice)
