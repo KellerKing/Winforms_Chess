@@ -67,7 +67,7 @@ namespace Winforms_Chess
       m_PossibleFelder = moveResultDTO.PossibleFelder;
       m_Board.Pices = moveResultDTO.BoardPosition;
 
-     
+     //test
     }
   }
 
