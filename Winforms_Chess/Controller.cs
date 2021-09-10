@@ -67,7 +67,57 @@ namespace Winforms_Chess
       m_PossibleFelder = moveResultDTO.PossibleFelder;
       m_Board.Pices = moveResultDTO.BoardPosition;
 
-     
+     //test
+
+
+
+      //if (isPice)
+      //{
+      //  var clickedPice = (Pice)m_Board.Pices.First(x => x.Coord.Equals(coords)).Clone();
+
+      //  if (clickedPice.Owner == m_CurrentPlayer)
+      //  {
+      //    UpdatePossibleFelderAndSelectedPice(clickedPice);
+      //    return;
+      //  }
+      //  else if (m_PossibleFelder.Any(x => x.Equals(m_SelectedPice.Coord)))
+      //  {
+      //    //Das Definitiv auslagern : Ist ein Spielzug: Spieler wird geschlagen
+      //    m_SelectedPice.Coord = clickedPice.Coord;
+      //    m_Board.Pices.Remove(clickedPice);
+      //  }
+      //}
+      //else if (m_SelectedPice != null && m_PossibleFelder.Any(x => x.Equals(coords)))
+      //{
+      //  //Ist ein Spielzug: Vorher wurde eine Figur gewählt und dann ein Feld
+      //  m_SelectedPice.Coord = coords;
+      //  m_SelectedPice = null;
+      //}
+
+
+
+      //if (isPice)
+      //{
+      //  var clickedPice = (Pice)m_Board.Pices.First(x => x.Coord.Equals(coords)).Clone();
+
+      //  if (clickedPice.Owner == m_CurrentPlayer)
+      //  {
+      //    UpdatePossibleFelderAndSelectedPice(clickedPice);
+      //    return;
+      //  }
+      //  else if (m_PossibleFelder.Any(x => x.Equals(m_SelectedPice.Coord)))
+      //  {
+      //    //Das Definitiv auslagern : Ist ein Spielzug: Spieler wird geschlagen
+      //    m_SelectedPice.Coord = clickedPice.Coord;
+      //    m_Board.Pices.Remove(clickedPice);
+      //  }
+      //}
+      //else if (m_SelectedPice != null && m_PossibleFelder.Any(x => x.Equals(coords)))
+      //{
+      //  //Ist ein Spielzug: Vorher wurde eine Figur gewählt und dann ein Feld
+      //  m_SelectedPice.Coord = coords;
+      //  m_SelectedPice = null;
+      //}
     }
   }
 
