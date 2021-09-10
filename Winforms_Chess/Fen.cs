@@ -43,7 +43,7 @@ namespace Winforms_Chess
             fenMapping.First(x => x.Value == rankPices[i].PiceType).Key;
           continue;
         }
-        var skipFelder = rankPices[i - 1].Coord.File - 1;
+        var skipFelder = rankPices[i - 1]?.Coord.File - 1 ?? 0;
         fen += skipFelder.ToString();
 
       }

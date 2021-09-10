@@ -12,51 +12,54 @@ namespace Winforms_Chess
     {
       if (isPice)
       {
-        var clickedPice = pices.First(x => x.Coord.Equals(clickedCoords));
+        var clickedPice = pices.FirstOrDefault(x => x.Coord.Equals(clickedCoords));
 
         if (clickedPice.Owner == currentPlayer)
         {
-          var result = UpdatePossibleFelderAndSelectedPice(clickedPice, pices);
-
+          var possibleFields = Move.GetMovesFor(clickedPice, pices);
+          
           return new UpdatePositionDTO()
           {
             BoardPosition = pices,
-            PossibleFelder = result.PossibleFelder,
-            SelectedPice = result.SelectedPice,
+            PossibleFelder = possibleFields,
+            SelectedPice = clickedPice,
             WasMoveLegal = true
           };
 
         }
         else if (possibleFelder.Any(x => x.Equals(clickedCoords)))
         {
+          var newBoardPosition = CapturePice(pices.Select(x => (Pice)x.Clone()).ToList(), preselectedPice, clickedCoords);
+
           return new UpdatePositionDTO()
           {
-            BoardPosition = CapturePice(pices, preselectedPice, clickedCoords),
+            BoardPosition = newBoardPosition,
             SelectedPice = null,
             PossibleFelder = new List<Coords>(),
             WasFullMove = true,
-            WasMoveLegal = true
-          }; //TODO: Vielleicht noch WasCaptureMove oder So. Aber generell bin ich mit dem Ablauf nicht ganz zufrieden. Ich glaub da könnte man gut was vereifnachen. Auch das mit den 2 Bools ist eher so suboptimal. Zumal der 1. Fall ja technisch kein Move ist
+            WasMoveLegal = Rulebook.IsLegalMove(newBoardPosition, currentPlayer)
+          };
         }
       }
 
       else if (preselectedPice != null && possibleFelder.Any(x => x.Equals(clickedCoords)))
       {
+        var newBoardPosition = MakeNonCaptureMove(preselectedPice, clickedCoords, pices.Select(x => (Pice)x.Clone()).ToList());
+        
         return new UpdatePositionDTO()
         {
-          BoardPosition = MakeNonCaptureMove(preselectedPice, clickedCoords, pices),
-          WasMoveLegal = true,
+          BoardPosition = newBoardPosition,
+          WasMoveLegal = Rulebook.IsLegalMove(newBoardPosition, currentPlayer),
           WasFullMove = true,
           PossibleFelder = new List<Coords>(),
           SelectedPice = null
         };
-        
         //Ist ein Spielzug: Vorher wurde eine Figur gewählt und dann ein Feld
       }
 
       return new UpdatePositionDTO();
     }
-
+    //TODO: Die kann raus
     private static UpdateSelectedPiceDTO UpdatePossibleFelderAndSelectedPice(Pice clickedPice, List<Pice> pices)
     {
       return new UpdateSelectedPiceDTO()
@@ -75,9 +78,8 @@ namespace Winforms_Chess
 
     private static List<Pice> MakeNonCaptureMove(Pice selectedPice, Coords newPosition, List<Pice> pices)
     {
-      var output = new List<Pice>(pices);
-      output.First(x => x.Coord.Equals(selectedPice.Coord)).Coord = newPosition;
-      return output;
+      pices.First(x => x.Coord.Equals(selectedPice.Coord)).Coord = newPosition;
+      return pices;
     }
   }
 }
