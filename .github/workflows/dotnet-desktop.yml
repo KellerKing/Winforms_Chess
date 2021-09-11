@@ -36,11 +36,12 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Setup Nuget
-      uses: NuGet/setup-nuget@v1.0.2
+    # - name: Setup Nuget
+    #   uses: NuGet/setup-nuget@v1.0.2
+    #     set-env: 
 
-    - name: Restore Nuget
-      run: nuget restore $env:Solution_Name
+    # - name: Restore Nuget
+    #   run: nuget restore $env:Solution_Name
 
     - name: Build the Solution
       run: msbuild $env:Solution_Name
