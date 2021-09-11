@@ -41,7 +41,7 @@ jobs:
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
-     - name: Restore Nuget
+    - name: Restore Nuget
        run: nuget restore $env:Solution_Name
 
     - name: Build the Solution
