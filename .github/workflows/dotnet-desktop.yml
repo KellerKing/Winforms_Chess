@@ -36,9 +36,9 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.0.2
 
-     - name: Setup Nuget
-       uses: NuGet/setup-nuget@v1.0.2
-         with:
+    - name: Setup Nuget
+      uses: NuGet/setup-nuget@v1.0.2
+        with:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true 
 
      - name: Restore Nuget
