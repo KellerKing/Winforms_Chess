@@ -49,7 +49,7 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test /p:Configuration=$env:Configuration
+      run: dotnet test /p:Configuration=Debug /p:Platform="Any CPU"
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     #- name: Restore the application
