@@ -1,4 +1,4 @@
-name: CI/CD
+name: Testing
 #Wann das ding laufen soll
 on:
   push:
