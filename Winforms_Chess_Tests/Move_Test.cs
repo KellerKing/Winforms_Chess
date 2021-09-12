@@ -564,7 +564,6 @@ namespace Winforms_Chess
       CollectionAssert.AreEquivalent(result, expected);
     }
 
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_E8_AsWhite()
@@ -578,17 +577,116 @@ namespace Winforms_Chess
         }
       };
 
-      var expected = new List<Coords>()
-      {
-      
-      };
+      var expected = new List<Coords>();
 
       var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
-
 
       CollectionAssert.AreEquivalent(result, expected);
     }
 
+    [Test]
+    [TestCase]
+    public void GetMovesFor_TestPawn_B2_AsWhite_CanForward2Fields()
+    {
+      var boardSetup = new List<Pice>()
+      {
+        new Pice(Player.WHITE) //Pice to test
+        {
+          Coord = Feldbezeichnung.B2,
+          PiceType = PiceType.PAWN
+        }
+      };
+
+      var expected = new List<Coords>
+      {
+        Feldbezeichnung.B3,
+        Feldbezeichnung.B4
+      };
+
+      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+
+      CollectionAssert.AreEquivalent(result, expected);
+    }
+
+    [Test]
+    [TestCase]
+    public void GetMovesFor_TestPawn_B2_AsWhite_1EnemyInFront()
+    {
+      var boardSetup = new List<Pice>()
+      {
+        new Pice(Player.WHITE) //Pice to test
+        {
+          Coord = Feldbezeichnung.B2,
+          PiceType = PiceType.PAWN
+        },
+         new Pice(Player.BLACK)
+        {
+          Coord = Feldbezeichnung.B4,
+          PiceType = PiceType.PAWN
+        }
+      };
+
+      var expected = new List<Coords>
+      {
+        Feldbezeichnung.B3,
+      };
+
+      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+
+      CollectionAssert.AreEquivalent(result, expected);
+    }
+
+    [Test]
+    [TestCase]
+    public void GetMovesFor_TestPawn_G7_AsBlack_CanForward2Fields()
+    {
+      var boardSetup = new List<Pice>()
+      {
+        new Pice(Player.BLACK) //Pice to test
+        {
+          Coord = Feldbezeichnung.G7,
+          PiceType = PiceType.PAWN
+        }
+      };
+
+      var expected = new List<Coords>
+      {
+        Feldbezeichnung.G6,
+        Feldbezeichnung.G5
+      };
+
+      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+
+      CollectionAssert.AreEquivalent(result, expected);
+    }
+
+    [Test]
+    [TestCase]
+    public void GetMovesFor_TestPawn_G7_AsBlack_1EnemyInFront()
+    {
+      var boardSetup = new List<Pice>()
+      {
+        new Pice(Player.BLACK) //Pice to test
+        {
+          Coord = Feldbezeichnung.G7,
+          PiceType = PiceType.PAWN
+        },
+         new Pice(Player.WHITE)
+        {
+          Coord = Feldbezeichnung.G5,
+          PiceType = PiceType.PAWN
+        }
+      };
+
+      var expected = new List<Coords>
+      {
+        Feldbezeichnung.G6,
+      };
+
+      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+
+      CollectionAssert.AreEquivalent(result, expected);
+    }
 
 
     [Test]

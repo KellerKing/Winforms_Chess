@@ -19,6 +19,7 @@ namespace Winforms_Chess
         PiceType.BISHOP => GetMovesForBishop(pice, pices),
         PiceType.PAWN => GetMovesForPawn(pice, pices),
         PiceType.KING => GetMovesForKing(pice, pices),
+        _ => throw new NotImplementedException(),
       };
     }
 
@@ -39,7 +40,6 @@ namespace Winforms_Chess
         new Coords(pice.Coord.Rank + 1, pice.Coord.File + 2),
       }
       .Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList().Where(y => IsPiceBlocking(pices, y, enemy) != PiceBlockingReturn.OWN ).ToList();
-
     }
 
     private static List<Coords> GetMovesForKing(Pice pice, List<Pice> pices)
@@ -59,7 +59,6 @@ namespace Winforms_Chess
         new Coords(pice.Coord.Rank, pice.Coord.File - 1),
         new Coords(pice.Coord.Rank - 1, pice.Coord.File - 1),
 
-
       }.Where(x => IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.OWN).ToList().Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList();
     }
 
@@ -74,14 +73,16 @@ namespace Winforms_Chess
       {
         possibleEnemys = pices.Where(x => x.Owner == enemy && x.Coord.Rank == pice.Coord.Rank + 1 && (x.Coord.File - 1 == pice.Coord.File || x.Coord.File + 1 == pice.Coord.File)).ToList();
         felder.Add(new Coords(pice.Coord.Rank + 1, pice.Coord.File));
+        if(pice.Coord.Rank == 1) felder.Add(new Coords(pice.Coord.Rank + 2, pice.Coord.File));
       }
       else
       {
         possibleEnemys = pices.Where(x => x.Owner == enemy && x.Coord.Rank == pice.Coord.Rank - 1 && (x.Coord.File - 1 == pice.Coord.File || x.Coord.File + 1 == pice.Coord.File)).ToList();
         felder.Add(new Coords(pice.Coord.Rank - 1, pice.Coord.File));
+        if (pice.Coord.Rank == 6) felder.Add(new Coords(pice.Coord.Rank - 2, pice.Coord.File));
       }
-      if(felder.Any())
-        felder.Remove(felder.Where(x => IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.NO).FirstOrDefault());
+      if(felder.Count > 0)
+        felder.Remove(felder.FirstOrDefault(x => IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.NO));
       possibleEnemys.ForEach(x => felder.Add(x.Coord));
       return felder.Where(x => IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.OWN).ToList().Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList();
     }

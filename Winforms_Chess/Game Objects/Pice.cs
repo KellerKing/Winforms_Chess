@@ -17,11 +17,7 @@ namespace Winforms_Chess
 
     public object Clone()
     {
-      return new Pice(this.Owner)
-      {
-        Coord = this.Coord,
-        PiceType = this.PiceType
-      };
+      return this.MemberwiseClone();
     }
   }
 }
