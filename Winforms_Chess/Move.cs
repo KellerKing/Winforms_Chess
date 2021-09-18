@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Winforms_Chess.Enums;
 
 namespace Winforms_Chess
@@ -83,7 +81,9 @@ namespace Winforms_Chess
       }
       if(felder.Count > 0)
         felder.Remove(felder.FirstOrDefault(x => IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.NO));
+      
       possibleEnemys.ForEach(x => felder.Add(x.Coord));
+      felder.Add(Rulebook.GetEnPassant(pice, pices).NewPosition);
       return felder.Where(x => IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.OWN).ToList().Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList();
     }
 
@@ -93,7 +93,6 @@ namespace Winforms_Chess
 
       return GetDiagonals(pice, pices).Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList();
     }
-
 
     private static List<Coords> GetMovesForRook(Pice pice, List<Pice> pices)
     {
