@@ -141,7 +141,7 @@ namespace Winforms_Chess
 
       var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
 
-      
+
 
 
       foreach (var item in expected)
@@ -279,7 +279,7 @@ namespace Winforms_Chess
 
       var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
 
-      
+
 
       CollectionAssert.AreEquivalent(result, expected);
     }
@@ -381,7 +381,7 @@ namespace Winforms_Chess
           PiceType = PiceType.KING
         },
 
-        new Pice(Player.WHITE) 
+        new Pice(Player.WHITE)
         {
           Coord = Feldbezeichnung.D6,
           PiceType = PiceType.PAWN
@@ -470,7 +470,7 @@ namespace Winforms_Chess
           PiceType = PiceType.PAWN
         },
 
-         new Pice(Player.WHITE) 
+         new Pice(Player.WHITE)
         {
           Coord = Feldbezeichnung.E6,
           PiceType = PiceType.PAWN
@@ -820,6 +820,65 @@ namespace Winforms_Chess
       CollectionAssert.AreEquivalent(result, expected);
     }
 
+    [Test]
+    [TestCase]
+    public void GetMovesFor_TestPawn_EnPassantPossible()
+    {
+      var boardSetup = new List<Pice>()
+      {
+        new Pice(Player.WHITE) //Pice to test
+        {
+          Coord = Feldbezeichnung.B5,
+          PiceType = PiceType.PAWN
+        },
+        new Pice(Player.BLACK) 
+        {
+          Coord = Feldbezeichnung.C5,
+          PiceType = PiceType.PAWN,
+          MoveCounter = 1
+        }
+      };
+
+      var expected = new List<Coords>
+      {
+        Feldbezeichnung.C6,
+        Feldbezeichnung.B6
+      };
+
+      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+
+
+      CollectionAssert.AreEquivalent(result, expected);
+    }
+
+    [Test]
+    [TestCase]
+    public void GetMovesFor_TestPawn_EnPassantNotPossibleEnemyHasMovedTwice()
+    {
+      var boardSetup = new List<Pice>()
+      {
+        new Pice(Player.WHITE) //Pice to test
+        {
+          Coord = Feldbezeichnung.B5,
+          PiceType = PiceType.PAWN
+        },
+        new Pice(Player.BLACK) 
+        {
+          Coord = Feldbezeichnung.C5,
+          PiceType = PiceType.PAWN,
+          MoveCounter = 2
+        }
+      };
+
+      var expected = new List<Coords>()
+      {
+        Feldbezeichnung.B6
+      };
+
+      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+
+      CollectionAssert.AreEquivalent(result, expected);
+    }
 
 
     [Test]
