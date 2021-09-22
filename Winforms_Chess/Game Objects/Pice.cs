@@ -5,7 +5,6 @@ namespace Winforms_Chess
 {
   public class Pice : IGameObject, ICloneable
   {
-
     public Pice(Player player)
     {
       Owner = player;
@@ -14,14 +13,11 @@ namespace Winforms_Chess
     public Player Owner { get; init; }
     public PiceType PiceType { get; init; }
     public Coords Coord { get; set; }
+    public int MoveCounter { get; set; }
 
     public object Clone()
     {
-      return new Pice(this.Owner)
-      {
-        Coord = this.Coord,
-        PiceType = this.PiceType
-      };
+      return MemberwiseClone();
     }
   }
 }

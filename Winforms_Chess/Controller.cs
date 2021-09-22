@@ -59,7 +59,6 @@ namespace Winforms_Chess
       {
         m_mainForm.DrawPices(ViewModelCreator.GeneratePices(moveResultDTO.BoardPosition));
         m_CurrentPlayer = m_CurrentPlayer == Player.WHITE ? Player.BLACK : Player.WHITE;
-        m_Board.Moves.Add(Fen.CreateFenFromPices(m_Board.Pices, 7));
       }
         
        
@@ -67,7 +66,6 @@ namespace Winforms_Chess
       m_PossibleFelder = moveResultDTO.PossibleFelder;
       m_Board.Pices = moveResultDTO.BoardPosition;
 
-     //test
     }
   }
 
