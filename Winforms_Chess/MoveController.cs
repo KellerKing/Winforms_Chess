@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Winforms_Chess.DTOs;
 
@@ -14,24 +13,39 @@ namespace Winforms_Chess
       {
         var clickedPice = pices.FirstOrDefault(x => x.Coord.Equals(clickedCoords));
 
+        if(clickedPice.Owner == currentPlayer && preselectedPice?.PiceType == PiceType.KING && clickedPice.PiceType == PiceType.ROOK && possibleFelder?.Contains(clickedCoords) == true)
+        {
+          //Castle
+          var newBoardPosition = Castle(pices.Select(x => (Pice)x.Clone()).ToList(), preselectedPice.Coord, clickedCoords);
+
+          return new UpdatePositionDTO
+          {
+            BoardPosition = newBoardPosition,
+            PossibleFelder = new List<Coords>(),
+            SelectedPice = null,
+            WasMoveLegal = Rulebook.IsLegalMove(newBoardPosition, currentPlayer),
+            WasFullMove = true
+          };
+        }
+
         if (clickedPice.Owner == currentPlayer)
         {
-          var possibleFields = Move.GetMovesFor(clickedPice, pices);
-          
-          return new UpdatePositionDTO()
+          possibleFelder = Move.GetMovesFor(clickedPice, pices);
+
+          return new UpdatePositionDTO
           {
             BoardPosition = pices,
-            PossibleFelder = possibleFields,
+            PossibleFelder = possibleFelder,
             SelectedPice = clickedPice,
             WasMoveLegal = true
           };
-
         }
+
         else if (possibleFelder.Any(x => x.Equals(clickedCoords)))
         {
-          var newBoardPosition = CapturePice(pices.Select(x => (Pice)x.Clone()).ToList(), preselectedPice, clickedCoords);
+          var newBoardPosition = CapturePice(pices.Select(x => (Pice)x.Clone()).ToList(), preselectedPice.Coord, clickedCoords);
 
-          return new UpdatePositionDTO()
+          return new UpdatePositionDTO
           {
             BoardPosition = newBoardPosition,
             SelectedPice = null,
@@ -44,9 +58,9 @@ namespace Winforms_Chess
 
       else if (preselectedPice != null && possibleFelder.Any(x => x.Equals(clickedCoords)))
       {
-        var newBoardPosition = MakeNonCaptureMove(preselectedPice, clickedCoords, pices.Select(x => (Pice)x.Clone()).ToList());
-        
-        return new UpdatePositionDTO()
+        var newBoardPosition = MakeNonCaptureMove(preselectedPice.Coord, clickedCoords, pices.Select(x => (Pice)x.Clone()).ToList());
+
+        return new UpdatePositionDTO
         {
           BoardPosition = newBoardPosition,
           WasMoveLegal = Rulebook.IsLegalMove(newBoardPosition, currentPlayer),
@@ -59,26 +73,47 @@ namespace Winforms_Chess
 
       return new UpdatePositionDTO();
     }
-    //TODO: Die kann raus
-    private static UpdateSelectedPiceDTO UpdatePossibleFelderAndSelectedPice(Pice clickedPice, List<Pice> pices)
-    {
-      return new UpdateSelectedPiceDTO()
-      {
-        SelectedPice = clickedPice,
-        PossibleFelder = Move.GetMovesFor(clickedPice, pices)
-      };
-    }
 
-    private static List<Pice> CapturePice(List<Pice> pices, Pice selectedPice, Coords newPosition)
+    private static List<Pice> CapturePice(List<Pice> pices, Coords oldPosition, Coords newPosition)
     {
       pices.Remove(pices.First(x => x.Coord.Equals(newPosition)));
-      pices.First(x => x.Coord.Equals(selectedPice.Coord)).Coord = newPosition;
+      var selectedPice = pices.First(x => x.Coord.Equals(oldPosition));
+      selectedPice.Coord = newPosition;
+      selectedPice.MoveCounter++;
       return pices;
     }
 
-    private static List<Pice> MakeNonCaptureMove(Pice selectedPice, Coords newPosition, List<Pice> pices)
+    private static List<Pice> MakeNonCaptureMove(Coords oldPosition, Coords newPosition, List<Pice> pices)
     {
-      pices.First(x => x.Coord.Equals(selectedPice.Coord)).Coord = newPosition;
+      var selectedPice = pices.First(x => x.Coord.Equals(oldPosition));
+
+      var enPassant = Rulebook.GetEnPassant(selectedPice, pices);
+
+      if (enPassant?.NewPosition.Equals(newPosition) == true) pices.Remove(pices.First(x => x.Coord.Equals(enPassant.PiceToCapture)));
+      selectedPice.Coord = newPosition;
+      selectedPice.MoveCounter++;
+      return pices;
+    }
+
+    private static List<Pice> Castle(List<Pice> pices, Coords king, Coords rook)
+    {
+      var selectedKing = pices.First(x => x.Coord.Equals(king));
+      var selectedRook = pices.First(x => x.Coord.Equals(rook));
+
+      if(Rulebook.CanCastelQueenSide(pices.Select(x => (Pice)x.Clone()).ToList(), (Pice)selectedKing.Clone()))
+      {
+        selectedKing.Coord = new(selectedKing.Coord.Rank, selectedKing.Coord.File - 2);
+        selectedRook.Coord = new(selectedRook.Coord.Rank, selectedRook.Coord.File + 3);
+        selectedKing.MoveCounter++;
+        return pices;
+      }
+      if(Rulebook.CanCastleKingSide(pices.Select(x => (Pice)x.Clone()).ToList(), (Pice)selectedKing.Clone()))
+      {
+        selectedKing.Coord = selectedKing.Coord = new(selectedKing.Coord.Rank, selectedKing.Coord.File + 2);
+        selectedRook.Coord = new(selectedRook.Coord.Rank, selectedRook.Coord.File - 2);
+        selectedKing.MoveCounter++;
+        return pices;
+      }
       return pices;
     }
   }
