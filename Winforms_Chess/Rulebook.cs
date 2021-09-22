@@ -13,24 +13,58 @@ namespace Winforms_Chess
       return !IsKingInCheck(positionsCurrent, currentPlayer);
     }
 
-    public static bool IsEnPassant(Pice selectedPice, Coords coordsToCheck, List<Pice> pices)
+    public static bool CanCastleKingSide(List<Pice> pices, Pice king)
     {
-      if (selectedPice.PiceType != PiceType.PAWN) return false;
+      if (king.MoveCounter != 0) return false;
 
-      var enemyPice = pices.Find(x => x.Coord.Equals(coordsToCheck));
+      var kingSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
+        x.PiceType == PiceType.ROOK
+        && x.Owner == king.Owner &&
+        x.Coord.File > king.Coord.File);
 
-      if (enemyPice == null) return false;
+      if (kingSideRook == null) return false;
+      //if (IsKingInCheck(pices, king.Owner)) return false;
+      if (IsCastleThroughCheck(pices, king, kingSideRook)) return false;
 
-      if (enemyPice.Owner == Player.BLACK && enemyPice.MoveCounter == 1 && enemyPice.Coord.Rank == 4)
+      return !IsPiceBlockingForCastle(pices, king, kingSideRook);
+
+    }
+
+    public static bool CanCastelQueenSide(List<Pice> pices, Pice king)
+    {
+      if (king.MoveCounter != 0) return false;
+
+      var queenSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
+        x.PiceType == PiceType.ROOK
+        && x.Owner == king.Owner &&
+        x.Coord.File < king.Coord.File);
+
+      if (queenSideRook == null) return false;
+      //if (IsKingInCheck(pices, king.Owner)) return false;
+      if(IsCastleThroughCheck(pices, king, queenSideRook)) return false;
+
+      return !IsPiceBlockingForCastle(pices, king, queenSideRook);
+    }
+
+    private static bool IsCastleThroughCheck(List<Pice> pices, Pice king, Pice rook)
+    {
+      var minFile = Math.Min(king.Coord.File, rook.Coord.File);
+      var maxFile = Math.Max(king.Coord.File, rook.Coord.File);
+
+      return Enumerable.Range(minFile, maxFile).Any(x =>
       {
-        return true;
-      }
-      else if (enemyPice.MoveCounter == 1 && enemyPice.Coord.Rank == 3)
-      {
-        return true;
-      }
+        king.Coord = new(king.Coord.Rank, x);
+        return IsKingInCheck(pices, king);
+      });
+    }
 
-      return false;
+    private static bool IsPiceBlockingForCastle(List<Pice> pices, Pice king, Pice rook)
+    {
+      var minFile = Math.Min(king.Coord.File, rook.Coord.File);
+      var maxFile = Math.Max(king.Coord.File, rook.Coord.File);
+
+      return pices.Any(x => x.Coord.Rank == king.Coord.Rank &&
+        (x.Coord.File > minFile && x.Coord.File < maxFile));
     }
 
     public static EnPassantItem GetEnPassant(Pice clickedPice, List<Pice> pices)
@@ -55,7 +89,7 @@ namespace Winforms_Chess
         };
       }
 
-      if (pices.Any(x => x.Owner == Player.WHITE && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.Rank == 3 && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
+      if (pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.Rank == 3 && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
       {
         return new EnPassantItem
         {
@@ -63,7 +97,7 @@ namespace Winforms_Chess
           PiceToCapture = new(clickedPice.Coord.Rank, clickedPice.Coord.File + 1)
         };
       }
-      if (pices.Any(x => x.Owner == Player.WHITE && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.Rank == 3 && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
+      if (pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.Rank == 3 && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
       {
         return new EnPassantItem
         {
@@ -83,15 +117,21 @@ namespace Winforms_Chess
         IsPiceAttacking(board, currentKing, PiceType.KING) || IsPiceAttacking(board, currentKing, PiceType.PAWN);
     }
 
+    private static bool IsKingInCheck(List<Pice> board, Pice currentKing)
+    {
+      return IsPiceAttacking(board, currentKing, PiceType.ROOK) || IsPiceAttacking(board, currentKing, PiceType.KNIGHT) ||
+        IsPiceAttacking(board, currentKing, PiceType.BISHOP) || IsPiceAttacking(board, currentKing, PiceType.QUEEN) ||
+        IsPiceAttacking(board, currentKing, PiceType.KING) || IsPiceAttacking(board, currentKing, PiceType.PAWN);
+    }
+
+
+
     private static bool IsPiceAttacking(List<Pice> board, Pice king, PiceType piceToCheck)
     {
       var enemyPices = board.Where(x => x.Owner != king.Owner && x.PiceType == piceToCheck).ToList();
       var possibleFelder = new List<Coords>();
-      enemyPices.ForEach(x => possibleFelder.AddRange(Move.GetMovesFor(x, board)));
+      enemyPices.ForEach(x => possibleFelder.AddRange(Move.GetMovesFor(x, board, true)));
       return possibleFelder.Any(x => x.Equals(king.Coord));
-
-      //return CheckCheck(board, enemyPices, king.Owner);
-
     }
   }
 }

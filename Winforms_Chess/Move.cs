@@ -7,7 +7,7 @@ namespace Winforms_Chess
 {
   public static class Move
   {
-    public static List<Coords> GetMovesFor(Pice pice, List<Pice> pices)
+    public static List<Coords> GetMovesFor(Pice pice, List<Pice> pices, bool IsCheckingForEnemy = false)
     {
       return pice.PiceType switch
       {
@@ -16,8 +16,8 @@ namespace Winforms_Chess
         PiceType.ROOK => GetMovesForRook(pice, pices),
         PiceType.BISHOP => GetMovesForBishop(pice, pices),
         PiceType.PAWN => GetMovesForPawn(pice, pices),
-        PiceType.KING => GetMovesForKing(pice, pices),
-        _ => throw new NotImplementedException(),
+        PiceType.KING => GetMovesForKing(pice, pices, IsCheckingForEnemy),
+        _ => new List<Coords>(),
       };
     }
 
@@ -37,14 +37,28 @@ namespace Winforms_Chess
         new Coords(pice.Coord.Rank + 1, pice.Coord.File - 2),
         new Coords(pice.Coord.Rank + 1, pice.Coord.File + 2),
       }
-      .Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList().Where(y => IsPiceBlocking(pices, y, enemy) != PiceBlockingReturn.OWN ).ToList();
+      .Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList().Where(y => IsPiceBlocking(pices, y, enemy) != PiceBlockingReturn.OWN).ToList();
     }
 
-    private static List<Coords> GetMovesForKing(Pice pice, List<Pice> pices)
+    private static List<Coords> GetMovesForKing(Pice pice, List<Pice> pices, bool IsCheckingForEnemy)
     {
       var enemy = pice.Owner == Player.BLACK ? Player.WHITE : Player.BLACK;
+      var output = new List<Coords>();
 
-      return new List<Coords>()
+      if (!IsCheckingForEnemy && Rulebook.CanCastelQueenSide(pices.Select(x => (Pice)x.Clone()).ToList(), (Pice)pice.Clone()))
+        output.Add(pices.FirstOrDefault(x => x.MoveCounter == 0 &&
+          x.PiceType == PiceType.ROOK
+          && x.Owner == pice.Owner &&
+          x.Coord.File < pice.Coord.File).Coord);
+
+      else if (!IsCheckingForEnemy && Rulebook.CanCastleKingSide(pices.Select(x => (Pice)x.Clone()).ToList(), (Pice)pice.Clone()))
+        output.Add(pices.FirstOrDefault(x => x.MoveCounter == 0 &&
+          x.PiceType == PiceType.ROOK
+          && x.Owner == pice.Owner &&
+          x.Coord.File > pice.Coord.File).Coord);
+
+
+      output.AddRange(new List<Coords>()
       {
         new Coords(pice.Coord.Rank + 1, pice.Coord.File - 1),
         new Coords(pice.Coord.Rank + 1, pice.Coord.File),
@@ -57,9 +71,9 @@ namespace Winforms_Chess
         new Coords(pice.Coord.Rank, pice.Coord.File - 1),
         new Coords(pice.Coord.Rank - 1, pice.Coord.File - 1),
 
-      }.Where(x => IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.OWN).ToList().Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList();
+      }.Where(x => IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.OWN).ToList());
+      return output.Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList();
     }
-
 
     private static List<Coords> GetMovesForPawn(Pice pice, List<Pice> pices)
     {
@@ -71,7 +85,7 @@ namespace Winforms_Chess
       {
         possibleEnemys = pices.Where(x => x.Owner == enemy && x.Coord.Rank == pice.Coord.Rank + 1 && (x.Coord.File - 1 == pice.Coord.File || x.Coord.File + 1 == pice.Coord.File)).ToList();
         felder.Add(new Coords(pice.Coord.Rank + 1, pice.Coord.File));
-        if(pice.Coord.Rank == 1) felder.Add(new Coords(pice.Coord.Rank + 2, pice.Coord.File));
+        if (pice.Coord.Rank == 1) felder.Add(new Coords(pice.Coord.Rank + 2, pice.Coord.File));
       }
       else
       {
@@ -79,9 +93,9 @@ namespace Winforms_Chess
         felder.Add(new Coords(pice.Coord.Rank - 1, pice.Coord.File));
         if (pice.Coord.Rank == 6) felder.Add(new Coords(pice.Coord.Rank - 2, pice.Coord.File));
       }
-      if(felder.Count > 0)
+      if (felder.Count > 0)
         felder.Remove(felder.FirstOrDefault(x => IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.NO));
-      
+
       possibleEnemys.ForEach(x => felder.Add(x.Coord));
       felder.Add(Rulebook.GetEnPassant(pice, pices).NewPosition);
       return felder.Where(x => IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.OWN).ToList().Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList();
@@ -271,11 +285,7 @@ namespace Winforms_Chess
         else if (blocking == PiceBlockingReturn.OWN) break;
         else output.Add(coords);
       }
-
-
       return output;
-
     }
-
   }
 }
