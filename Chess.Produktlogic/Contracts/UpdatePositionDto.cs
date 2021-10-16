@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace Winforms_Chess.DTOs
+namespace Chess.Produktlogic.Contracts
 {
-  public record UpdatePositionDTO
+  public record UpdatePositionDto
   {
     public List<Pice> BoardPosition { get; init; }
     public bool WasMoveLegal { get; init; }
-    public bool WasFullMove { get; set; }
-    public Pice SelectedPice { get; init; }
     public List<Coords> PossibleFelder { get; set; }
   }
 }

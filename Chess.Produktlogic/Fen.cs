@@ -21,7 +21,6 @@ namespace Winforms_Chess
       { 'P', PiceType.PAWN },
 
       { 'Q', PiceType.QUEEN },
-
     };
 
 
