@@ -1,4 +1,4 @@
-﻿namespace Winforms_Chess
+﻿namespace Chess.Produktlogic.Contracts
 {
   public enum PiceType
   {

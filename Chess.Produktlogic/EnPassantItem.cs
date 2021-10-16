@@ -1,4 +1,6 @@
-﻿namespace Winforms_Chess.DTOs
+﻿using Chess.Produktlogic.Contracts;
+
+namespace Chess.Produktlogic
 {
   public class EnPassantItem
   {

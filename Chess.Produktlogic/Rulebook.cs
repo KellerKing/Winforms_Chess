@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Chess.Produktlogic.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Winforms_Chess.DTOs;
 
-namespace Winforms_Chess
+namespace Chess.Produktlogic
 {
   public static class Rulebook
   {
@@ -67,47 +67,6 @@ namespace Winforms_Chess
         (x.Coord.File > minFile && x.Coord.File < maxFile));
     }
 
-    public static EnPassantItem GetEnPassant(Pice clickedPice, List<Pice> pices)
-    {
-      if (clickedPice.PiceType != PiceType.PAWN) return default;
-
-      if (clickedPice.Owner == Player.WHITE && pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == 4 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
-      {
-        return new EnPassantItem
-        {
-          NewPosition = new(clickedPice.Coord.Rank + 1, clickedPice.Coord.File + 1),
-          PiceToCapture = new(clickedPice.Coord.Rank, clickedPice.Coord.File + 1)
-        };
-      }
-
-      if (clickedPice.Owner == Player.WHITE && pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == 4 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
-      {
-        return new EnPassantItem
-        {
-          NewPosition = new(clickedPice.Coord.Rank + 1, clickedPice.Coord.File - 1),
-          PiceToCapture = new(clickedPice.Coord.Rank, clickedPice.Coord.File - 1)
-        };
-      }
-
-      if (pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.Rank == 3 && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
-      {
-        return new EnPassantItem
-        {
-          NewPosition = new(clickedPice.Coord.Rank - 1, clickedPice.Coord.File + 1),
-          PiceToCapture = new(clickedPice.Coord.Rank, clickedPice.Coord.File + 1)
-        };
-      }
-      if (pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.Rank == 3 && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
-      {
-        return new EnPassantItem
-        {
-          NewPosition = new(clickedPice.Coord.Rank - 1, clickedPice.Coord.File - 1),
-          PiceToCapture = new(clickedPice.Coord.Rank, clickedPice.Coord.File - 1)
-        };
-      }
-      return new EnPassantItem();
-    }
-
     private static bool IsKingInCheck(List<Pice> board, Player currentPlayer)
     {
       var currentKing = board.FirstOrDefault(x => x.Owner == currentPlayer && x.PiceType == PiceType.KING);
@@ -130,7 +89,7 @@ namespace Winforms_Chess
     {
       var enemyPices = board.Where(x => x.Owner != king.Owner && x.PiceType == piceToCheck).ToList();
       var possibleFelder = new List<Coords>();
-      enemyPices.ForEach(x => possibleFelder.AddRange(Move.GetMovesFor(x, board, true)));
+      enemyPices.ForEach(x => possibleFelder.AddRange(PossibleMoveFactory.GetMovesFor(x, board, true)));
       return possibleFelder.Any(x => x.Equals(king.Coord));
     }
   }
