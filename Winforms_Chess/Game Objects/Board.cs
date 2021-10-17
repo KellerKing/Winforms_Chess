@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chess.Produktlogic.Contracts;
+using System.Collections.Generic;
 
 namespace Winforms_Chess
 {

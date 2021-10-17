@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Chess.Produktlogic.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Winforms_Chess.Game_Objects;
 using Winforms_Chess.UI_Objects;
 
 namespace Winforms_Chess

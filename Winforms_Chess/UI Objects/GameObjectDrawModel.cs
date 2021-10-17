@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Chess.Produktlogic.Contracts;
+using System.Windows.Forms;
 using Winforms_Chess.UI_Objects;
 
 namespace Winforms_Chess

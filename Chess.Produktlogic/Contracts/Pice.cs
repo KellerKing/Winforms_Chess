@@ -1,9 +1,6 @@
-﻿using System;
-using Winforms_Chess.Game_Objects;
-
-namespace Winforms_Chess
+﻿namespace Chess.Produktlogic.Contracts
 {
-  public class Pice : IGameObject, ICloneable
+  public class Pice
   {
     public Pice(Player player)
     {
