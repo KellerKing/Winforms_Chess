@@ -29,7 +29,7 @@ namespace Chess.Produktlogic.MovesRules
       var output = new List<Coords>();
       var isPiceBlocking = PiceBlockingReturn.NO;
 
-      while (currentRank >= 0 && isPiceBlocking == PiceBlockingReturn.NO)
+      while (currentRank > 0 && isPiceBlocking == PiceBlockingReturn.NO)
       {
         var coords = new Coords(--currentRank, currentFile);
         isPiceBlocking = MoveRulesHelper.IsPiceBlocking(pices, coords, enemy);
@@ -48,7 +48,7 @@ namespace Chess.Produktlogic.MovesRules
       var output = new List<Coords>();
       var isPiceBlocking = PiceBlockingReturn.NO;
 
-      while (currentRank <= 7 && isPiceBlocking == PiceBlockingReturn.NO)
+      while (currentRank < 7 && isPiceBlocking == PiceBlockingReturn.NO)
       {
         var coords = new Coords(++currentRank, currentFile);
         isPiceBlocking = MoveRulesHelper.IsPiceBlocking(pices, coords, enemy);
@@ -68,7 +68,7 @@ namespace Chess.Produktlogic.MovesRules
       var output = new List<Coords>();
       var isPiceBlocking = PiceBlockingReturn.NO;
 
-      while (currentFile >= 0 && isPiceBlocking == PiceBlockingReturn.NO)
+      while (currentFile > 0 && isPiceBlocking == PiceBlockingReturn.NO)
       {
         var coords = new Coords(currentRank, --currentFile);
         isPiceBlocking = MoveRulesHelper.IsPiceBlocking(pices, coords, enemy);
@@ -87,7 +87,7 @@ namespace Chess.Produktlogic.MovesRules
       var output = new List<Coords>();
       var isPiceBlocking = PiceBlockingReturn.NO;
 
-      while (currentFile <= 7 && isPiceBlocking == PiceBlockingReturn.NO)
+      while (currentFile < 7 && isPiceBlocking == PiceBlockingReturn.NO)
       {
         var coords = new Coords(currentRank, ++currentFile);
         isPiceBlocking = MoveRulesHelper.IsPiceBlocking(pices, coords, enemy);
