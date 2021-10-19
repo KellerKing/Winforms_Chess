@@ -1,10 +1,6 @@
 ﻿using Chess.Produktlogic.Contracts;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Winforms_Chess.Properties;
 
@@ -27,17 +23,17 @@ namespace Winforms_Chess
       {
         for (var y = 0; y < tiles.GetLength(1); y++)
         {
-          var newPanel = new GameObjectDrawModel
+          chessBoardPanels[x, y] = new GameObjectDrawModel
           {
-            Size = new Size(tileSile, tileSile),
-            Location = new Point(startLeft + (tileSile * x), startTop - (tileSile * y)),
+            //Size = new Size(tileSile, tileSile),
+            BackgroundImageLayout = ImageLayout.Stretch,
+            //Location = new Point(startLeft + (tileSile * x), startTop - (tileSile * y)),
             Coord = new Coords(y, x),
-            PicturePath = (x + y) % 2 != 0 ? 
+            Dock = DockStyle.Fill,
+            PicturePath = (x + y) % 2 != 0 ?
             @".\Assets\Board_Light.png" :
             @".\Assets\Board_Dark.png"
           };
-
-          chessBoardPanels[x, y] = newPanel;
         }
       }
       return chessBoardPanels;
@@ -85,6 +81,7 @@ namespace Winforms_Chess
           SizeMode = PictureBoxSizeMode.Zoom,
           Image = img,
           Coord = x.Coord,
+          Dock = DockStyle.Fill,
           Size = new Size(tileSile, tileSile)
           
         });

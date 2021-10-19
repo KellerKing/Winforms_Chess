@@ -9,7 +9,7 @@ using Winforms_Chess.UI_Objects;
 
 namespace Winforms_Chess
 {
-  public partial class Form1 : Form
+  public partial class GameForm : Form
   {
 
     private GameObjectDrawModel[,] m_ChessBoardPanles;
@@ -17,7 +17,7 @@ namespace Winforms_Chess
 
     public Action<Coords, bool> GameObjectClickedAction;
 
-    public Form1(int w, int h)
+    public GameForm(int w, int h)
     {
       this.Width = w;
       this.Height = h;
@@ -44,12 +44,11 @@ namespace Winforms_Chess
     public void DrawBoard(GameObjectDrawModel[,] board)
     {
       GC.Collect();
-      board.Cast<GameObjectDrawModel>().ToList().ForEach(x =>
+      board.Cast<GameObjectDrawModel>().ToList().OrderByDescending(x => x.Coord.Rank).ToList().ForEach(x =>
       {
-        Controls.Add(x);
+        tableLayoutPanel1.Controls.Add(x);
         x.Click += GameObjectClicked;
         x.BackgroundImage = Image.FromFile(x.PicturePath);
-        //x.Paint += (sender, e) => e.Graphics.DrawImage(Image.FromFile(((GameObjectDrawModel)sender).PicturePath), 0,0);
       });
     }
 
@@ -59,7 +58,7 @@ namespace Winforms_Chess
       m_ChessBoardPanles.Cast<GameObjectDrawModel>().ToList().ForEach(x => x.Controls.Clear());
       m_Pices.ForEach(x =>
       {
-         m_ChessBoardPanles[x.Coord.File, x.Coord.Rank].Controls.Add(x);
+        m_ChessBoardPanles[x.Coord.File, x.Coord.Rank].Controls.Add(x);
         x.Click += GameObjectClicked;
       });
     }

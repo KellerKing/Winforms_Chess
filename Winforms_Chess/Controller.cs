@@ -7,7 +7,7 @@ namespace Winforms_Chess
 {
   public class Controller
   {
-    private readonly Form1 m_mainForm;
+    private readonly GameForm m_mainForm;
     private Board m_Board = Board.GetInstance();
     private Player m_CurrentPlayer = Player.WHITE;
     private Pice m_SelectedPice;
@@ -19,7 +19,7 @@ namespace Winforms_Chess
 
     public Controller()
     {
-      m_mainForm = new Form1(formWidth, formHeight);
+      m_mainForm = new GameForm(formWidth, formHeight);
       m_LogicController = new Chess.Produktlogic.Controller();
       ConnectEvents();
       InitGameComponents();
