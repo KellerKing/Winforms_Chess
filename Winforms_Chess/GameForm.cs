@@ -17,15 +17,14 @@ namespace Winforms_Chess
 
     public Action<Coords, bool> GameObjectClickedAction;
 
-    public GameForm(int w, int h)
+    public GameForm()
     {
-      this.Width = w;
-      this.Height = h;
       InitializeComponent();
     }
 
     public void ShowForm()
     {
+      SetStartSize();
       ShowDialog();
     }
 
@@ -33,12 +32,6 @@ namespace Winforms_Chess
     {
       m_ChessBoardPanles = board;
       DrawBoard(m_ChessBoardPanles);
-    }
-
-
-    public int GetTopBarHeight()
-    {
-      return this.RectangleToScreen(this.ClientRectangle).Top - this.Top;
     }
 
     public void DrawBoard(GameObjectDrawModel[,] board)
@@ -61,6 +54,13 @@ namespace Winforms_Chess
         m_ChessBoardPanles[x.Coord.File, x.Coord.Rank].Controls.Add(x);
         x.Click += GameObjectClicked;
       });
+    }
+
+    private void SetStartSize()
+    {
+      var screenSize = Screen.FromControl(this);
+      var newFormSize = Math.Min(screenSize.Bounds.Width, screenSize.Bounds.Height) * 0.35;
+      this.Size = new((int)newFormSize, (int)newFormSize);
     }
 
     private void GameObjectClicked(object sender, EventArgs e)

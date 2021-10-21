@@ -10,14 +10,9 @@ namespace Winforms_Chess
   {
     private const int tileSile = 100;
 
-    public static GameObjectDrawModel[,] CreateChessBoardDrawModels(Tile[,] tiles, int windowWidth, int windowHeight)
+    public static GameObjectDrawModel[,] CreateChessBoardDrawModels(Tile[,] tiles)
     {
       var chessBoardPanels = new GameObjectDrawModel[tiles.GetLength(0), tiles.GetLength(1)];
-
-      var startLeft = (windowWidth - tiles.GetLength(0) * tileSile) / 2;
-      //var startTopa = (windowHeight - tiles.GetLength(1) * tileSile) / 2;
-      var startTop = windowHeight - tileSile -((windowHeight - tiles.GetLength(1) * tileSile) / 2);
-
 
       for (var x = 0; x < tiles.GetLength(0); x++)
       {
@@ -25,9 +20,7 @@ namespace Winforms_Chess
         {
           chessBoardPanels[x, y] = new GameObjectDrawModel
           {
-            //Size = new Size(tileSile, tileSile),
             BackgroundImageLayout = ImageLayout.Stretch,
-            //Location = new Point(startLeft + (tileSile * x), startTop - (tileSile * y)),
             Coord = new Coords(y, x),
             Dock = DockStyle.Fill,
             PicturePath = (x + y) % 2 != 0 ?
@@ -83,7 +76,6 @@ namespace Winforms_Chess
           Coord = x.Coord,
           Dock = DockStyle.Fill,
           Size = new Size(tileSile, tileSile)
-          
         });
       });
       return output;
