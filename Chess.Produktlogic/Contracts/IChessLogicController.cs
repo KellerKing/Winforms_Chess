@@ -8,7 +8,7 @@ namespace Chess.Produktlogic.Contracts
     UpdatePositionDto MakeCaptureMove(List<Pice> pices, Pice clickedPice, Pice preselectedPice);
     UpdatePositionDto MakeNonCaptureMove(List<Pice> pices, Coords clickedPice, Pice preselectedPice);
     UpdatePositionDto MakeCastleMove(List<Pice> pices, Coords clickedPice, Pice preselectedPice);
-    int GetScoring(List<Pice> pices, Player currentPlayer, int startScore);
+    int GetScoring(List<Pice> pices, Player currentPlayer);
     bool IsGameOver(List<Pice> pices, Player currentPlayer);
   }
 }

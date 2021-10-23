@@ -56,6 +56,30 @@ namespace Winforms_Chess
       });
     }
 
+    public void UpdatePices(List<PiceDrawModel> piceDrawModels)
+    {
+      DrawPices(piceDrawModels);
+      return;
+      var picesToRemoveFromBoard = m_Pices.Where(x => !piceDrawModels.Any(y => y.Coord.Equals(x.Coord))).ToList();
+      var picesToRedraw = piceDrawModels.Where(x => !m_Pices.Any(y => y.Coord.Equals(x.Coord))).ToList();
+
+      picesToRemoveFromBoard.ForEach(x => m_ChessBoardPanles[x.Coord.File, x.Coord.Rank].Controls.Clear());
+      picesToRedraw.ForEach(x => 
+      {
+        m_ChessBoardPanles[x.Coord.File, x.Coord.Rank].Controls.Clear();
+        m_ChessBoardPanles[x.Coord.File, x.Coord.Rank].Controls.Add(x);
+        x.Click += GameObjectClicked;
+      });
+
+      m_Pices = piceDrawModels;
+    }
+
+    public void SetScore(int white, int black)
+    {
+      lblPointsBlack.Text = black.ToString();
+      lblPointsWhite.Text = white.ToString();
+    }
+
     private void SetStartSize()
     {
       var screenSize = Screen.FromControl(this);

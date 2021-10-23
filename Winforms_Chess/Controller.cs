@@ -20,7 +20,6 @@ namespace Winforms_Chess
       m_LogicController = new Chess.Produktlogic.Controller();
       ConnectEvents();
       InitGameComponents();
-
       m_mainForm.ShowForm();
     }
 
@@ -44,7 +43,15 @@ namespace Winforms_Chess
       m_CurrentPlayer = m_CurrentPlayer == Player.WHITE ? Player.BLACK : Player.WHITE;
       m_PossibleFelder = moveResult.PossibleFelder;
       m_Board.Pices = moveResult.BoardPosition;
-      m_mainForm.DrawPices(ViewModelCreator.GeneratePices(moveResult.BoardPosition));
+      m_mainForm.UpdatePices(ViewModelCreator.GeneratePices(moveResult.BoardPosition));
+      UpdateScores();
+    }
+
+    private void UpdateScores()
+    {
+      var scoreBlack = m_LogicController.GetScoring(m_Board.Pices, Player.BLACK);
+      var scoreWhite = m_LogicController.GetScoring(m_Board.Pices, Player.WHITE);
+      m_mainForm.SetScore(scoreWhite, scoreBlack);
     }
 
     public void GameObjectClicked(Coords coords, bool isPice)
