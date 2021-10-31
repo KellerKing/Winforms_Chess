@@ -7,32 +7,26 @@ namespace Winforms_Chess
 {
   public class Controller
   {
-    private readonly Form1 m_mainForm;
+    private readonly GameForm m_mainForm;
     private Board m_Board = Board.GetInstance();
     private Player m_CurrentPlayer = Player.WHITE;
     private Pice m_SelectedPice;
     private List<Coords> m_PossibleFelder = new List<Coords>();
     private IChessLogicController m_LogicController;
 
-    private const int formWidth = 1000;
-    private const int formHeight = 1000;
-
     public Controller()
     {
-      m_mainForm = new Form1(formWidth, formHeight);
+      m_mainForm = new GameForm();
       m_LogicController = new Chess.Produktlogic.Controller();
       ConnectEvents();
       InitGameComponents();
-
       m_mainForm.ShowForm();
-
     }
 
     private void InitGameComponents()
     {
-      var topHeight = m_mainForm.GetTopBarHeight();
       var picesToDraw = ViewModelCreator.GeneratePices(m_Board.CreatePosition(m_Board.Moves.First()));
-      var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Board.Felder, formWidth, formHeight - topHeight);
+      var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Board.Felder);
       m_mainForm.InitBoard(felderToDraw);
       m_mainForm.DrawPices(picesToDraw);
     }
@@ -49,7 +43,15 @@ namespace Winforms_Chess
       m_CurrentPlayer = m_CurrentPlayer == Player.WHITE ? Player.BLACK : Player.WHITE;
       m_PossibleFelder = moveResult.PossibleFelder;
       m_Board.Pices = moveResult.BoardPosition;
-      m_mainForm.DrawPices(ViewModelCreator.GeneratePices(moveResult.BoardPosition));
+      m_mainForm.UpdatePices(ViewModelCreator.GeneratePices(moveResult.BoardPosition));
+      UpdateScores();
+    }
+
+    private void UpdateScores()
+    {
+      var scoreBlack = m_LogicController.GetScoring(m_Board.Pices, Player.BLACK);
+      var scoreWhite = m_LogicController.GetScoring(m_Board.Pices, Player.WHITE);
+      m_mainForm.SetScore(scoreWhite, scoreBlack);
     }
 
     public void GameObjectClicked(Coords coords, bool isPice)

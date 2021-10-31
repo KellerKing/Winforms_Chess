@@ -1,12 +1,13 @@
-﻿using NUnit.Framework;
+﻿using Chess.Produktlogic.Contracts;
+using NUnit.Framework;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using Winforms_Chess;
 
-namespace Winforms_Chess
+namespace Chess.Produktlogic.Test
 {
   [TestFixture]
-  public class Move_Test
+  public class PossibleMoveFactory_Tests
   {
     [SetUp]
     public void Setup()
@@ -58,7 +59,7 @@ namespace Winforms_Chess
 
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       foreach (var item in expected)
@@ -110,7 +111,7 @@ namespace Winforms_Chess
         Feldbezeichnung.D7,
       }.OrderBy(x => x.File).ToList();
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup).OrderBy(x => x.File).ToList();
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup).OrderBy(x => x.File).ToList();
 
       foreach (var item in expected)
       {
@@ -139,7 +140,7 @@ namespace Winforms_Chess
         new Coords(1,5)
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
 
@@ -206,11 +207,7 @@ namespace Winforms_Chess
 
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
-
-      var difference = expected.Where(x => !result.Contains(x)).ToList();
-
-
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
       CollectionAssert.AreEquivalent(result, expected);
     }
 
@@ -277,7 +274,7 @@ namespace Winforms_Chess
         Feldbezeichnung.H2,
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
 
@@ -327,7 +324,7 @@ namespace Winforms_Chess
 
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
       CollectionAssert.AreEquivalent(result, expected);
     }
@@ -363,7 +360,7 @@ namespace Winforms_Chess
         Feldbezeichnung.D6,
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -422,7 +419,7 @@ namespace Winforms_Chess
         Feldbezeichnung.D6,
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -449,7 +446,7 @@ namespace Winforms_Chess
         Feldbezeichnung.H2
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -494,7 +491,7 @@ namespace Winforms_Chess
        Feldbezeichnung.D6
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -533,7 +530,7 @@ namespace Winforms_Chess
        Feldbezeichnung.F6
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -558,7 +555,7 @@ namespace Winforms_Chess
        Feldbezeichnung.E6
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -579,7 +576,7 @@ namespace Winforms_Chess
 
       var expected = new List<Coords>();
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
       CollectionAssert.AreEquivalent(result, expected);
     }
@@ -603,7 +600,7 @@ namespace Winforms_Chess
         Feldbezeichnung.B4
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
       CollectionAssert.AreEquivalent(result, expected);
     }
@@ -631,7 +628,7 @@ namespace Winforms_Chess
         Feldbezeichnung.B3,
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
       CollectionAssert.AreEquivalent(result, expected);
     }
@@ -655,7 +652,7 @@ namespace Winforms_Chess
         Feldbezeichnung.G5
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
       CollectionAssert.AreEquivalent(result, expected);
     }
@@ -683,7 +680,7 @@ namespace Winforms_Chess
         Feldbezeichnung.G6,
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
       CollectionAssert.AreEquivalent(result, expected);
     }
@@ -725,7 +722,7 @@ namespace Winforms_Chess
        Feldbezeichnung.D4
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -764,7 +761,7 @@ namespace Winforms_Chess
        Feldbezeichnung.F4
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -789,7 +786,7 @@ namespace Winforms_Chess
        Feldbezeichnung.E4
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -814,7 +811,7 @@ namespace Winforms_Chess
 
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -845,7 +842,7 @@ namespace Winforms_Chess
         Feldbezeichnung.B6
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -875,7 +872,7 @@ namespace Winforms_Chess
         Feldbezeichnung.B6
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
       CollectionAssert.AreEquivalent(result, expected);
     }
@@ -909,7 +906,7 @@ namespace Winforms_Chess
 
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -950,7 +947,7 @@ namespace Winforms_Chess
 
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -990,7 +987,7 @@ namespace Winforms_Chess
 
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);
@@ -1036,7 +1033,7 @@ namespace Winforms_Chess
 
       };
 
-      var result = Move.GetMovesFor(boardSetup.First(), boardSetup);
+      var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
 
 
       CollectionAssert.AreEquivalent(result, expected);

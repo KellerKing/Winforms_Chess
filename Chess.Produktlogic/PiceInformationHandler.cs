@@ -15,32 +15,18 @@ namespace Chess.Produktlogic
       new PiceInformation { FenSymbol = 'N', Value = 3, PiceType = PiceType.KNIGHT},
       new PiceInformation { FenSymbol = 'R', Value = 5, PiceType = PiceType.ROOK},
       new PiceInformation { FenSymbol = 'Q', Value = 9, PiceType = PiceType.QUEEN},
-      new PiceInformation { FenSymbol = 'K', Value = int.MaxValue, PiceType = PiceType.KING},
+      new PiceInformation { FenSymbol = 'K', Value = 10, PiceType = PiceType.KING},
     };
 
     public static PiceInformation GetPiceInformation(char symbol)
     {
-      var piceSelected = m_PiceInformation.FirstOrDefault(x => char.ToUpperInvariant(symbol) == x.FenSymbol);
-      return CopyPiceInformation(piceSelected);
+      return m_PiceInformation.FirstOrDefault(x => char.ToUpperInvariant(symbol) == x.FenSymbol);
     }
 
     public static PiceInformation GetPiceInformation(PiceType piceType)
     {
-      var piceSelected = m_PiceInformation.FirstOrDefault(x => x.PiceType == piceType);
-      return CopyPiceInformation(piceSelected);
+      return m_PiceInformation.FirstOrDefault(x => x.PiceType == piceType);
 
-    }
-
-    private static PiceInformation CopyPiceInformation(PiceInformation pice)
-    {
-      if (pice == null) return null;
-
-      return new PiceInformation
-      {
-        FenSymbol = pice.FenSymbol,
-        PiceType = pice.PiceType,
-        Value = pice.Value
-      };
     }
   }
 }

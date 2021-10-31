@@ -31,6 +31,7 @@ namespace Chess.Produktlogic
       {
         BoardPosition = newBoardPosition,
         WasMoveLegal = Rulebook.IsLegalMove(newBoardPosition, preselectedPice.Owner),
+        PossibleFelder = new List<Coords>(),
       };
     }
 
@@ -46,9 +47,9 @@ namespace Chess.Produktlogic
       };
     }
 
-    public int GetScoring(List<Pice> pices, Player currentPlayer, int startScore)
+    public int GetScoring(List<Pice> pices, Player currentPlayer)
     {
-      return ScoreCalculator.CalculateScore(pices, currentPlayer, startScore);
+      return ScoreCalculator.CalculateRelativeScore(pices, currentPlayer);
     }
 
     public bool IsGameOver(List<Pice> pices, Player currentPlayer)
