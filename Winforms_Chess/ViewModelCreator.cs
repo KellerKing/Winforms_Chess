@@ -39,33 +39,27 @@ namespace Winforms_Chess
 
       pices.ForEach(x =>
       {
-        Bitmap img;
-
-        if (x.Owner == Player.WHITE)
+        Bitmap img = x.Owner switch
         {
-          img = x.PiceType switch
+          Player.WHITE => x.PiceType switch
           {
             PiceType.BISHOP => Resources.chess_piece_2_white_bishop,
-            PiceType.PAWN => Resources.chess_piece_2_white_pawn,
-            PiceType.ROOK => Resources.chess_piece_2_white_rook,
+            PiceType.PAWN => Resources.pawn_white,
+            PiceType.ROOK => Resources.rook_white,
             PiceType.QUEEN => Resources.chess_piece_2_white_queen,
             PiceType.KING => Resources.chess_piece_2_white_king,
             PiceType.KNIGHT => Resources.chess_piece_2_white_knight
-          };
-        }
-        else
-        {
-          img = x.PiceType switch
+          },
+          _ => x.PiceType switch
           {
             PiceType.BISHOP => Resources.chess_piece_2_black_bishop,
-            PiceType.PAWN => Resources.chess_piece_2_black_pawn,
-            PiceType.ROOK => Resources.chess_piece_2_black_rook,
+            PiceType.PAWN => Resources.pawn_black,
+            PiceType.ROOK => Resources.rook_black,
             PiceType.QUEEN => Resources.chess_piece_2_black_queen,
             PiceType.KING => Resources.chess_piece_2_black_king,
             PiceType.KNIGHT => Resources.chess_piece_2_black_knight
-          };
-
-        }
+          },
+        };
         img.MakeTransparent();
 
         output.Add(new PiceDrawModel()
