@@ -6,7 +6,7 @@ namespace Chess.Produktlogic.MovesRules
 {
   public static class KnightMoveRule
   {
-    public static List<Coords> GetMovesForKnight(Pice pice, List<Pice> pices, Player enemy)
+    public static List<Coords> GetMovesForKnight(Piece pice, List<Piece> pices, Player enemy)
     {
       return new List<Coords>()
       {

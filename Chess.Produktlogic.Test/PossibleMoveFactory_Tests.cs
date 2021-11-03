@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using Winforms_Chess;
 
 namespace Chess.Produktlogic.Test
 {
@@ -18,29 +17,29 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestKnight_CenterPosition2Possibles()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
           PiceType = PiceType.KNIGHT
         },
-        new Pice(Player.BLACK) //Rechts oben --> geht nicht
+        new Piece(Player.BLACK) //Rechts oben --> geht nicht
         {
           Coord = new Coords(6, 5),
           PiceType = PiceType.PAWN
         },
-        new Pice(Player.WHITE) //Links unten --> geht
+        new Piece(Player.WHITE) //Links unten --> geht
         {
           Coord = new Coords(2, 3),
           PiceType = PiceType.ROOK
         },
-        new Pice(Player.WHITE) //Links oben --> geht
+        new Piece(Player.WHITE) //Links oben --> geht
         {
           Coord = new Coords(6, 3),
           PiceType = PiceType.KNIGHT
         },
-        new Pice(Player.BLACK) // Rechts unten --> geht nicht
+        new Piece(Player.BLACK) // Rechts unten --> geht nicht
         {
           Coord = new Coords(2, 5),
           PiceType = PiceType.QUEEN
@@ -73,24 +72,24 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestKnight_CenterPositionNoBlockingPicesAllEnemies()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
           PiceType = PiceType.KNIGHT
         },
-        new Pice(Player.WHITE) //Rechts oben --> geht
+        new Piece(Player.WHITE) //Rechts oben --> geht
         {
           Coord = new Coords(6, 5),
           PiceType = PiceType.PAWN
         },
-        new Pice(Player.WHITE) //Links unten --> geht
+        new Piece(Player.WHITE) //Links unten --> geht
         {
           Coord = new Coords(2, 3),
           PiceType = PiceType.ROOK
         },
-        new Pice(Player.WHITE) //Links oben --> geht
+        new Piece(Player.WHITE) //Links oben --> geht
         {
           Coord = new Coords(6, 3),
           PiceType = PiceType.KNIGHT
@@ -125,9 +124,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestKnight_H1PositionNoBlockingPices()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(0, 7),
           PiceType = PiceType.KNIGHT
@@ -159,9 +158,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestQueen_E5AllPositionsArePossible()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
           PiceType = PiceType.QUEEN
@@ -216,32 +215,32 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestQueen_E5ArroundingIsBlockingDiagonalsAreEnemys()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
           PiceType = PiceType.QUEEN
         },
 
-        new Pice(Player.BLACK) //Pice to Block
+        new Piece(Player.BLACK) //Pice to Block
         {
          Coord =  new Coords(5,3),
           PiceType = PiceType.PAWN
         },
-         new Pice(Player.BLACK) //Pice to Block
+         new Piece(Player.BLACK) //Pice to Block
         {
           Coord = new Coords(5,4),
           PiceType = PiceType.PAWN
         },
 
-         new Pice(Player.BLACK) //Pice to Block
+         new Piece(Player.BLACK) //Pice to Block
         {
           Coord = new Coords(4,5),
           PiceType = PiceType.PAWN
         },
 
-         new Pice(Player.BLACK) //Pice to Block
+         new Piece(Player.BLACK) //Pice to Block
         {
           Coord = new Coords(3,4),
           PiceType = PiceType.PAWN
@@ -249,7 +248,7 @@ namespace Chess.Produktlogic.Test
 
 
 
-         new Pice(Player.WHITE) //Enemy --> geht, aber weiter geht die Diagonale nicht (nach links unten)
+         new Piece(Player.WHITE) //Enemy --> geht, aber weiter geht die Diagonale nicht (nach links unten)
         {
           Coord = new Coords(3,3),
           PiceType = PiceType.PAWN
@@ -287,9 +286,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestQueen_H1()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.H1,
           PiceType = PiceType.QUEEN
@@ -337,9 +336,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestKing_E5AllPossible()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
           PiceType = PiceType.KING
@@ -370,36 +369,36 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestKing_E5EnemysOnDiagonalsAn1OwnPawnOnBottom()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
           PiceType = PiceType.KING
         },
 
-        new Pice(Player.WHITE)
+        new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.D6,
           PiceType = PiceType.PAWN
         },
 
-        new Pice(Player.WHITE)
+        new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F6,
           PiceType = PiceType.PAWN
         },
-        new Pice(Player.WHITE)
+        new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F4,
           PiceType = PiceType.PAWN
         },
-        new Pice(Player.WHITE)
+        new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.D4,
           PiceType = PiceType.PAWN
         },
-        new Pice(Player.BLACK)
+        new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.E4,
           PiceType = PiceType.PAWN
@@ -430,9 +429,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestKing_H1NoOtherPices()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.H1,
           PiceType = PiceType.KING
@@ -459,26 +458,26 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_E5EnemysOnF6D6AndOwnPawnOnE6_AsWhite()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.PAWN
         },
 
-         new Pice(Player.WHITE)
+         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.E6,
           PiceType = PiceType.PAWN
         },
 
-        new Pice(Player.BLACK)
+        new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.F6,
           PiceType = PiceType.PAWN
         },
-        new Pice(Player.BLACK)
+        new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.D6,
           PiceType = PiceType.PAWN
@@ -502,21 +501,21 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_E5EnemysOnF6OwnOnD6_AsWhite()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.PAWN
         },
 
-         new Pice(Player.BLACK)
+         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.D6,
           PiceType = PiceType.PAWN
         },
 
-        new Pice(Player.BLACK)
+        new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.F6,
           PiceType = PiceType.PAWN
@@ -541,9 +540,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_E5_AsWhite()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.PAWN
@@ -565,9 +564,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_E8_AsWhite()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.E8,
           PiceType = PiceType.PAWN
@@ -585,9 +584,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_B2_AsWhite_CanForward2Fields()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.B2,
           PiceType = PiceType.PAWN
@@ -609,14 +608,14 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_B2_AsWhite_1EnemyInFront()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.B2,
           PiceType = PiceType.PAWN
         },
-         new Pice(Player.BLACK)
+         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.B4,
           PiceType = PiceType.PAWN
@@ -637,9 +636,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_G7_AsBlack_CanForward2Fields()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.G7,
           PiceType = PiceType.PAWN
@@ -661,14 +660,14 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_G7_AsBlack_1EnemyInFront()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.G7,
           PiceType = PiceType.PAWN
         },
-         new Pice(Player.WHITE)
+         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.G5,
           PiceType = PiceType.PAWN
@@ -690,26 +689,26 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_E5EnemysOnF4D4AndOnE4_AsBlack()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.PAWN
         },
 
-         new Pice(Player.WHITE)
+         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.E4,
           PiceType = PiceType.PAWN
         },
 
-        new Pice(Player.WHITE)
+        new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F4,
           PiceType = PiceType.PAWN
         },
-        new Pice(Player.WHITE)
+        new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.D4,
           PiceType = PiceType.PAWN
@@ -733,21 +732,21 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_E5EnemysOnF4OwnOnD4_AsBlack()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.PAWN
         },
 
-         new Pice(Player.WHITE)
+         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F4,
           PiceType = PiceType.PAWN
         },
 
-        new Pice(Player.WHITE)
+        new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.D4,
           PiceType = PiceType.PAWN
@@ -772,9 +771,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_E5_AsBlack()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.PAWN
@@ -797,9 +796,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_E1_AsBlack()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.BLACK) //Pice to test
+        new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.E1,
           PiceType = PiceType.PAWN
@@ -821,14 +820,14 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_EnPassantPossible()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.B5,
           PiceType = PiceType.PAWN
         },
-        new Pice(Player.BLACK) 
+        new Piece(Player.BLACK) 
         {
           Coord = Feldbezeichnung.C5,
           PiceType = PiceType.PAWN,
@@ -852,14 +851,14 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestPawn_EnPassantNotPossibleEnemyHasMovedTwice()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.B5,
           PiceType = PiceType.PAWN
         },
-        new Pice(Player.BLACK) 
+        new Piece(Player.BLACK) 
         {
           Coord = Feldbezeichnung.C5,
           PiceType = PiceType.PAWN,
@@ -882,9 +881,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestBishop_G2()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.G2,
           PiceType = PiceType.BISHOP
@@ -917,20 +916,20 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestBishop_G2_OwnE4EnemyH3()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.G2,
           PiceType = PiceType.BISHOP
         },
-        new Pice(Player.WHITE)
+        new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.E4,
           PiceType = PiceType.PAWN
         },
 
-        new Pice(Player.BLACK)
+        new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.H3,
           PiceType = PiceType.PAWN
@@ -959,20 +958,20 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestRook_H1_OwnF1EnemyH3()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.H1,
           PiceType = PiceType.ROOK
         },
-        new Pice(Player.WHITE)
+        new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F1,
           PiceType = PiceType.PAWN
         },
 
-        new Pice(Player.BLACK)
+        new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.H3,
           PiceType = PiceType.PAWN
@@ -999,9 +998,9 @@ namespace Chess.Produktlogic.Test
     [TestCase]
     public void GetMovesFor_TestRook_E5_NoOtherPices()
     {
-      var boardSetup = new List<Pice>()
+      var boardSetup = new List<Piece>()
       {
-        new Pice(Player.WHITE) //Pice to test
+        new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.ROOK

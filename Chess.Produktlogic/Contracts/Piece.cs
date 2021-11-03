@@ -1,8 +1,8 @@
 ﻿namespace Chess.Produktlogic.Contracts
 {
-  public class Pice
+  public class Piece
   {
-    public Pice(Player player)
+    public Piece(Player player)
     {
       Owner = player;
     }

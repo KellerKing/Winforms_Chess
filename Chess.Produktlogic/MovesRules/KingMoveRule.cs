@@ -7,14 +7,14 @@ namespace Chess.Produktlogic.MovesRules
 {
   static class KingMoveRule
   {
-    public static List<Coords> GetMovesForKing(Pice pice, List<Pice> pices, Player enemy, bool IsCheckingForEnemy)
+    public static List<Coords> GetMovesForKing(Piece pice, List<Piece> pices, Player enemy, bool IsCheckingForEnemy)
     {
       var output = new List<Coords>();
 
-      if (!IsCheckingForEnemy && Rulebook.CanCastelQueenSide(pices.Select(x => (Pice)x.Clone()).ToList(), (Pice)pice.Clone()))
+      if (!IsCheckingForEnemy && Rulebook.CanCastelQueenSide(pices.Select(x => (Piece)x.Clone()).ToList(), (Piece)pice.Clone()))
         output.Add(GetCastleRook(pice, pices, "Queenside"));
 
-      else if (!IsCheckingForEnemy && Rulebook.CanCastleKingSide(pices.Select(x => (Pice)x.Clone()).ToList(), (Pice)pice.Clone()))
+      else if (!IsCheckingForEnemy && Rulebook.CanCastleKingSide(pices.Select(x => (Piece)x.Clone()).ToList(), (Piece)pice.Clone()))
         output.Add(GetCastleRook(pice, pices, "Kingside"));
 
       output.AddRange(new List<Coords>()
@@ -34,7 +34,7 @@ namespace Chess.Produktlogic.MovesRules
       return output.Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList();
     }
 
-    private static Coords GetCastleRook(Pice king, List<Pice> pices, string side)
+    private static Coords GetCastleRook(Piece king, List<Piece> pices, string side)
     {
       return pices.FirstOrDefault(x => x.PiceType == PiceType.ROOK &&
           x.Owner == king.Owner &&
@@ -43,7 +43,7 @@ namespace Chess.Produktlogic.MovesRules
           x.Coord.File < king.Coord.File).Coord;
     }
 
-    public static bool CanCastleKingSide(List<Pice> pices, Pice king)
+    public static bool CanCastleKingSide(List<Piece> pices, Piece king)
     {
       if (king.MoveCounter != 0) return false;
 
@@ -58,7 +58,7 @@ namespace Chess.Produktlogic.MovesRules
       return !IsPiceBlockingForCastle(pices, king, kingSideRook);
     }
 
-    public static bool CanCastelQueenSide(List<Pice> pices, Pice king)
+    public static bool CanCastelQueenSide(List<Piece> pices, Piece king)
     {
       if (king.MoveCounter != 0) return false;
 
@@ -74,7 +74,7 @@ namespace Chess.Produktlogic.MovesRules
       return !IsPiceBlockingForCastle(pices, king, queenSideRook);
     }
 
-    private static bool IsCastleThroughCheck(List<Pice> pices, Pice king, Pice rook)
+    private static bool IsCastleThroughCheck(List<Piece> pices, Piece king, Piece rook)
     {
       var minFile = Math.Min(king.Coord.File, rook.Coord.File);
       var maxFile = Math.Max(king.Coord.File, rook.Coord.File);
@@ -86,7 +86,7 @@ namespace Chess.Produktlogic.MovesRules
       });
     }
 
-    private static bool IsPiceBlockingForCastle(List<Pice> pices, Pice king, Pice rook)
+    private static bool IsPiceBlockingForCastle(List<Piece> pices, Piece king, Piece rook)
     {
       var minFile = Math.Min(king.Coord.File, rook.Coord.File);
       var maxFile = Math.Max(king.Coord.File, rook.Coord.File);

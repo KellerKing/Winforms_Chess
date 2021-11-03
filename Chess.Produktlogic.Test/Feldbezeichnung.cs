@@ -1,6 +1,6 @@
 ﻿using Chess.Produktlogic.Contracts;
 
-namespace Winforms_Chess
+namespace Chess.Produktlogic.Test
 {
   public static class Feldbezeichnung
   {

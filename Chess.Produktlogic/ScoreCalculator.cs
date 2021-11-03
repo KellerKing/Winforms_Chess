@@ -6,7 +6,7 @@ namespace Chess.Produktlogic
 {
   public class ScoreCalculator
   {
-    public static int CalculateRelativeScore(List<Pice> pices, Player currentPlayer)
+    public static int CalculateRelativeScore(List<Piece> pices, Player currentPlayer)
     {
       if (pices == null) return 0;
 

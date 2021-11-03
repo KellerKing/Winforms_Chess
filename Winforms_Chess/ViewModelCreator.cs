@@ -33,7 +33,7 @@ namespace Winforms_Chess
     }
 
 
-    public static List<PiceDrawModel> GeneratePices(List<Pice> pices)
+    public static List<PiceDrawModel> GeneratePices(List<Piece> pices)
     {
       var output = new List<PiceDrawModel>();
 
