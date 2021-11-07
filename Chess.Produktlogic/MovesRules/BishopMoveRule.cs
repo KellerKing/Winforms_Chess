@@ -6,12 +6,12 @@ namespace Chess.Produktlogic.MovesRules
 {
   static class BishopMoveRule
   {
-    public static List<Coords> GetMovesForBishop(Pice pice, List<Pice> pices, Player enemy)
+    public static List<Coords> GetMovesForBishop(Piece pice, List<Piece> pices, Player enemy)
     {
       return GetDiagonals(pice, pices, enemy);
     }
 
-    private static List<Coords> GetRightUpperDiagonals(int currentRank, int currentFile, List<Pice> pices, Player enemy)
+    private static List<Coords> GetRightUpperDiagonals(int currentRank, int currentFile, List<Piece> pices, Player enemy)
     {
       var isPiceBlocking = PiceBlockingReturn.NO;
       var output = new List<Coords>();
@@ -27,7 +27,7 @@ namespace Chess.Produktlogic.MovesRules
       return output;
     }
 
-    private static List<Coords> GetLeftLowerDiagonals(int currentRank, int currentFile, List<Pice> pices, Player enemy)
+    private static List<Coords> GetLeftLowerDiagonals(int currentRank, int currentFile, List<Piece> pices, Player enemy)
     {
       var isPiceBlocking = PiceBlockingReturn.NO;
       var output = new List<Coords>();
@@ -43,7 +43,7 @@ namespace Chess.Produktlogic.MovesRules
       return output;
     }
 
-    private static List<Coords> GetLeftUpperDiagonals(int currentRank, int currentFile, List<Pice> pices, Player enemy)
+    private static List<Coords> GetLeftUpperDiagonals(int currentRank, int currentFile, List<Piece> pices, Player enemy)
     {
       var isPiceBlocking = PiceBlockingReturn.NO;
       var output = new List<Coords>();
@@ -59,7 +59,7 @@ namespace Chess.Produktlogic.MovesRules
       return output;
     }
 
-    private static List<Coords> GetRightLowerDiagonals(int currentRank, int currentFile, List<Pice> pices, Player enemy)
+    private static List<Coords> GetRightLowerDiagonals(int currentRank, int currentFile, List<Piece> pices, Player enemy)
     {
       var isPiceBlocking = PiceBlockingReturn.NO;
       var output = new List<Coords>();
@@ -75,7 +75,7 @@ namespace Chess.Produktlogic.MovesRules
       return output;
     }
 
-    private static List<Coords> GetDiagonals(Pice pice, List<Pice> pices, Player enemy)
+    private static List<Coords> GetDiagonals(Piece pice, List<Piece> pices, Player enemy)
     {
       var currentFile = pice.Coord.File;
       var currentRank = pice.Coord.Rank;

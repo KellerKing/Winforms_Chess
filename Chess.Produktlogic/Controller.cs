@@ -6,14 +6,14 @@ namespace Chess.Produktlogic
 {
   public class Controller : IChessLogicController
   {
-    public List<Coords> GetPossibleFelderForPice(Pice piceToCheck, List<Pice> boardPosition)
+    public List<Coords> GetPossibleFelderForPice(Piece piceToCheck, List<Piece> boardPosition)
     {
       return PossibleMoveFactory.GetMovesFor(piceToCheck, boardPosition);
     }
 
-    public UpdatePositionDto MakeCastleMove(List<Pice> pices, Coords clickedPice, Pice preselectedPice)
+    public UpdatePositionDto MakeCastleMove(List<Piece> pices, Coords clickedPice, Piece preselectedPice)
     {
-      var newBoardPosition = Move.Castle(pices.Select(x => (Pice)x.Clone()).ToList(), preselectedPice.Coord, clickedPice);
+      var newBoardPosition = Move.Castle(pices.Select(x => (Piece)x.Clone()).ToList(), preselectedPice.Coord, clickedPice);
 
       return new UpdatePositionDto
       {
@@ -23,9 +23,9 @@ namespace Chess.Produktlogic
       };
     }
 
-    public UpdatePositionDto MakeCaptureMove(List<Pice> pices, Pice clickedPice, Pice preselectedPice)
+    public UpdatePositionDto MakeCaptureMove(List<Piece> pices, Piece clickedPice, Piece preselectedPice)
     {
-      var newBoardPosition = Move.CapturePice(pices.Select(x => (Pice)x.Clone()).ToList(), preselectedPice.Coord, clickedPice.Coord);
+      var newBoardPosition = Move.CapturePice(pices.Select(x => (Piece)x.Clone()).ToList(), preselectedPice.Coord, clickedPice.Coord);
       
       return new UpdatePositionDto
       {
@@ -35,9 +35,9 @@ namespace Chess.Produktlogic
       };
     }
 
-    public UpdatePositionDto MakeNonCaptureMove(List<Pice> pices, Coords clickedPice, Pice preselectedPice)
+    public UpdatePositionDto MakeNonCaptureMove(List<Piece> pices, Coords clickedPice, Piece preselectedPice)
     {
-      var newBoardPosition = Move.MakeNonCaptureMove(preselectedPice.Coord, clickedPice, pices.Select(x => (Pice)x.Clone()).ToList());
+      var newBoardPosition = Move.MakeNonCaptureMove(preselectedPice.Coord, clickedPice, pices.Select(x => (Piece)x.Clone()).ToList());
 
       return new UpdatePositionDto
       {
@@ -47,19 +47,19 @@ namespace Chess.Produktlogic
       };
     }
 
-    public int GetScoring(List<Pice> pices, Player currentPlayer)
+    public int GetScoring(List<Piece> pices, Player currentPlayer)
     {
       return ScoreCalculator.CalculateRelativeScore(pices, currentPlayer);
     }
 
-    public bool IsGameOver(List<Pice> pices, Player currentPlayer)
+    public bool IsGameOver(List<Piece> pices, Player currentPlayer)
     {
-      var filteredPices = pices.Where(x => x.Owner == currentPlayer);
-      foreach (var _ in filteredPices.Where(item => PossibleMoveFactory.GetMovesFor(item, pices, false).Count != 0).Select(item => new { }))
-      {
-        return false;
-      }
-      return true;
+      return Rulebook.HasPlayerLost(pices, currentPlayer);
+    }
+
+    public MoveType GetMoveType(bool isPice, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)
+    {
+      return Move.GetMoveType(isPice, felderPossible, coordsToCheck, pieces, piecePreSelected, playerCurrent);
     }
   }
 }

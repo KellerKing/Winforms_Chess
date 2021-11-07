@@ -29,6 +29,11 @@ namespace Winforms_Chess
       ShowDialog();
     }
 
+    public void ShowMeldung(string meldung)
+    {
+      MessageBox.Show(meldung);
+    }
+
     public void InitBoard(GameObjectDrawModel[,] board)
     {
       m_ChessBoardPanles = board;
@@ -69,8 +74,6 @@ namespace Winforms_Chess
         DrawPices(piceDrawModels);
         return;
       }
-        
-
 
       picesToRemoveFromBoard.ForEach(x => m_ChessBoardPanles[x.Coord.File, x.Coord.Rank].Controls.Clear());
       picesToRedraw.ForEach(x =>
