@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess.Produktlogic", "Chess
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess.Produktlogic.Test", "Chess.Produktlogic.Test\Chess.Produktlogic.Test.csproj", "{A3E82FFD-4A13-45AD-92D1-158E992B29D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chess.Menue", "Chess.Menue\Chess.Menue.csproj", "{B0D69626-64E8-4ED5-817E-28E880F528FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A3E82FFD-4A13-45AD-92D1-158E992B29D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3E82FFD-4A13-45AD-92D1-158E992B29D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3E82FFD-4A13-45AD-92D1-158E992B29D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0D69626-64E8-4ED5-817E-28E880F528FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0D69626-64E8-4ED5-817E-28E880F528FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0D69626-64E8-4ED5-817E-28E880F528FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0D69626-64E8-4ED5-817E-28E880F528FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

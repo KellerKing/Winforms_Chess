@@ -1,6 +1,7 @@
 ﻿using Chess.Produktlogic.Contracts;
 using System.Collections.Generic;
 using System.Linq;
+using Winforms_Chess.Contracts;
 
 namespace Winforms_Chess
 {
@@ -13,13 +14,18 @@ namespace Winforms_Chess
     private List<Coords> m_PossibleFelder = new List<Coords>();
     private readonly IChessLogicController m_LogicController;
 
-    public Controller()
+    public Controller(InputDto inputDto)
     {
       m_mainForm = new GameForm();
       m_LogicController = new Chess.Produktlogic.Controller();
       ConnectEvents();
+    }
+
+    public ResultDto ShowGame()
+    {
       InitGameComponents();
-      m_mainForm.ShowForm();
+      m_mainForm.ShowDialog();
+      return new ResultDto();
     }
 
     private void InitGameComponents()
@@ -45,14 +51,13 @@ namespace Winforms_Chess
       m_mainForm.UpdatePices(ViewModelCreator.GeneratePices(moveResult.BoardPosition));
       UpdateScores();
       HandlePlayerLoss();
-      
     }
 
     private void HandlePlayerLoss()
     {
       if (m_LogicController.IsGameOver(m_Board.Pices, m_CurrentPlayer))
       {
-        m_mainForm.ShowMeldung($"{m_CurrentPlayer} hat verloren!");
+       
       }
     }
 
@@ -69,7 +74,7 @@ namespace Winforms_Chess
       m_PossibleFelder = m_LogicController.GetPossibleFelderForPice(m_SelectedPice, m_Board.Pices);
     }
 
-    public void GameObjectClicked(Coords coords, bool isPice)
+    private void GameObjectClicked(Coords coords, bool isPice)
     {
       UpdatePositionDto moveResult = null;
 
@@ -91,7 +96,6 @@ namespace Winforms_Chess
         case MoveType.NONE:
           return;
       }
-
       ValidiereZug(moveResult);
     }
   }

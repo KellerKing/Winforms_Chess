@@ -21,12 +21,7 @@ namespace Winforms_Chess
     public GameForm()
     {
       InitializeComponent();
-    }
-
-    public void ShowForm()
-    {
       SetStartSize();
-      ShowDialog();
     }
 
     public void ShowMeldung(string meldung)
