@@ -8,6 +8,7 @@ namespace Winforms_Chess
   public class Controller
   {
     private readonly GameForm m_mainForm;
+    private ResultDto m_ResultDto;
     private Board m_Board = Board.GetInstance();
     private Player m_CurrentPlayer = Player.WHITE;
     private Piece m_SelectedPice;
@@ -25,7 +26,7 @@ namespace Winforms_Chess
     {
       InitGameComponents();
       m_mainForm.ShowDialog();
-      return new ResultDto();
+      return m_ResultDto;
     }
 
     private void InitGameComponents()
@@ -45,19 +46,21 @@ namespace Winforms_Chess
     {
       if (!moveResult.WasMoveLegal) return;
 
-      m_CurrentPlayer = m_CurrentPlayer == Player.WHITE ? Player.BLACK : Player.WHITE;
+      m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
       m_PossibleFelder = moveResult.PossibleFelder;
       m_Board.Pices = moveResult.BoardPosition;
       m_mainForm.UpdatePices(ViewModelCreator.GeneratePices(moveResult.BoardPosition));
       UpdateScores();
-      HandlePlayerLoss();
+      HandlePlayerLossOrDoNothing();
     }
 
-    private void HandlePlayerLoss()
+    private void HandlePlayerLossOrDoNothing()
     {
       if (m_LogicController.IsGameOver(m_Board.Pices, m_CurrentPlayer))
       {
-       
+        m_ResultDto = ResultDtoFactory.GetResultDto(Helper.GetEnemy(m_CurrentPlayer).ToString(), System.Windows.Forms.DialogResult.OK);
+        m_mainForm.Dispose();
+        m_mainForm.Close();
       }
     }
 
