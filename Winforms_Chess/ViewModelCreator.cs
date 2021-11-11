@@ -32,6 +32,34 @@ namespace Winforms_Chess
       return chessBoardPanels;
     }
 
+    public static Bitmap CreateSinglePieceImage(Player player, PiceType piceType)
+    {
+      Bitmap img = player switch
+      {
+        Player.WHITE => piceType switch
+        {
+          PiceType.BISHOP => Resources.chess_piece_2_white_bishop,
+          PiceType.PAWN => Resources.pawn_white,
+          PiceType.ROOK => Resources.rook_white,
+          PiceType.QUEEN => Resources.chess_piece_2_white_queen,
+          PiceType.KING => Resources.chess_piece_2_white_king,
+          PiceType.KNIGHT => Resources.chess_piece_2_white_knight
+        },
+        _ => piceType switch
+        {
+          PiceType.BISHOP => Resources.chess_piece_2_black_bishop,
+          PiceType.PAWN => Resources.pawn_black,
+          PiceType.ROOK => Resources.rook_black,
+          PiceType.QUEEN => Resources.chess_piece_2_black_queen,
+          PiceType.KING => Resources.chess_piece_2_black_king,
+          PiceType.KNIGHT => Resources.chess_piece_2_black_knight
+        },
+      };
+
+      img.MakeTransparent();
+      return img;
+    }
+
 
     public static List<PiceDrawModel> GeneratePices(List<Piece> pices)
     {
@@ -69,7 +97,7 @@ namespace Winforms_Chess
           Image = img,
           Coord = x.Coord,
           Dock = DockStyle.Fill,
-          Size = new Size(tileSile, tileSile)
+          //Size = new Size(tileSile, tileSile)
         });
       });
       return output;

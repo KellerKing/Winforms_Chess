@@ -180,7 +180,7 @@ namespace Chess.Menue
       this.ClientSize = new System.Drawing.Size(539, 295);
       this.Controls.Add(this.panel1);
       this.Name = "MainForm";
-      this.Text = "Form1";
+      this.Text = "Chess";
       this.panel1.ResumeLayout(false);
       this.groupBox2.ResumeLayout(false);
       this.groupBox2.PerformLayout();

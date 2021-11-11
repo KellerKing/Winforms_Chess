@@ -10,6 +10,9 @@ namespace Chess.Produktlogic
 
     public static MoveType GetMoveType(bool isPice, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)
     {
+      if (!isPice && piecePreSelected != null && felderPossible.Contains(coordsToCheck) && (coordsToCheck.Rank == 0 || coordsToCheck.Rank == 7) && piecePreSelected.PiceType == PiceType.PAWN)
+        return MoveType.CONVERT_PAWN;
+
       if (isPice && piecePreSelected?.PiceType == PiceType.KING && pieces.Find(x => x.Owner == playerCurrent && x.Coord.Equals(coordsToCheck))?.PiceType == PiceType.ROOK)
         return MoveType.CASTLE;
 

@@ -8,7 +8,7 @@
     }
 
     public Player Owner { get; init; }
-    public PiceType PiceType { get; init; }
+    public PiceType PiceType { get; set; }
     public Coords Coord { get; set; }
     public int MoveCounter { get; set; }
 
