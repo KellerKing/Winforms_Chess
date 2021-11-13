@@ -25,7 +25,7 @@ namespace Chess.Menue
 
     private void StartGame()
     {
-      m_GameController = new(new InputDto());
+      m_GameController = new(m_MainForm.CollectSettings());
       m_MainForm.Hide();
       HandleGameResult(m_GameController.ShowGame());
     }

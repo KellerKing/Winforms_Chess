@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Winforms_Chess.UI_Objects;
 
@@ -15,7 +14,7 @@ namespace Winforms_Chess
 
     private GameObjectDrawModel[,] m_ChessBoardPanles;
     private List<PiceDrawModel> m_Pices;
-
+    private Player m_BottomPlayer;
     public Action<Coords, bool> GameObjectClickedAction;
 
     public GameForm()
@@ -29,15 +28,21 @@ namespace Winforms_Chess
       MessageBox.Show(meldung);
     }
 
-    public void InitBoard(GameObjectDrawModel[,] board)
+    public void InitBoard(GameObjectDrawModel[,] board, Player playerSelected)
     {
       m_ChessBoardPanles = board;
-      DrawBoard(m_ChessBoardPanles);
+      m_BottomPlayer = playerSelected;
+      DrawBoard(m_ChessBoardPanles, playerSelected);
     }
 
-    public void DrawBoard(GameObjectDrawModel[,] board)
+    public void DrawBoard(GameObjectDrawModel[,] board, Player playerSelected)
     {
-      board.Cast<GameObjectDrawModel>().ToList().OrderByDescending(x => x.Coord.Rank).ToList().ForEach(x =>
+      boradGrid.Controls.Clear();
+      if (playerSelected == Player.BLACK) FlipScorePosition();
+
+      var sortedTiles = playerSelected == Player.BLACK ? board.Cast<GameObjectDrawModel>().ToList().OrderBy(x => x.Coord.Rank).ToList() : board.Cast<GameObjectDrawModel>().ToList().OrderByDescending(x => x.Coord.Rank).ToList();
+
+      sortedTiles.ForEach(x =>
       {
         boradGrid.Controls.Add(x);
         x.Click += GameObjectClicked;
@@ -59,8 +64,6 @@ namespace Winforms_Chess
 
     public void UpdatePices(List<PiceDrawModel> piceDrawModels)
     {
-      ////DrawPices(piceDrawModels);
-      ////return;
       var picesToRemoveFromBoard = m_Pices.Where(x => !piceDrawModels.Any(y => y.Coord.Equals(x.Coord))).ToList();
       var picesToRedraw = piceDrawModels.Where(x => !m_Pices.Any(y => y.Coord.Equals(x.Coord))).ToList();
 
@@ -106,10 +109,24 @@ namespace Winforms_Chess
       this.Size = new((int)newFormSize, (int)newFormSize);
     }
 
+    private void FlipScorePosition()
+    {
+      var coordsBlack = lblPointsBlack.Location;
+      lblPointsBlack.Location = lblPointsWhite.Location;
+      lblPointsWhite.Location = coordsBlack;
+    }
+
     private void GameObjectClicked(object sender, EventArgs e)
     {
       var clickedObject = sender as IUiObject;
       GameObjectClickedAction.Invoke(clickedObject.Coord, sender is PiceDrawModel ? true : false);
+    }
+
+    private void ButtonFlipBoard_Click(object sender, EventArgs e)
+    {
+      m_BottomPlayer = Helper.GetEnemy(m_BottomPlayer);
+      FlipScorePosition();
+      DrawBoard(m_ChessBoardPanles, m_BottomPlayer);
     }
   }
 }

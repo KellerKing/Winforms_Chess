@@ -20,20 +20,20 @@ namespace Winforms_Chess
       m_mainForm = new GameForm();
       m_LogicController = new Chess.Produktlogic.Controller();
       ConnectEvents();
+      InitGameComponents(inputDto.Singleplayer ? inputDto.PlayerSelected : Player.WHITE);
     }
 
     public ResultDto ShowGame()
     {
-      InitGameComponents();
       m_mainForm.ShowDialog();
       return m_ResultDto;
     }
 
-    private void InitGameComponents()
+    private void InitGameComponents(Player playerCurrent)
     {
       var picesToDraw = ViewModelCreator.GeneratePices(m_Board.CreatePosition(m_Board.Moves.First()));
       var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Board.Felder);
-      m_mainForm.InitBoard(felderToDraw);
+      m_mainForm.InitBoard(felderToDraw, playerCurrent);
       m_mainForm.DrawPices(picesToDraw);
     }
 

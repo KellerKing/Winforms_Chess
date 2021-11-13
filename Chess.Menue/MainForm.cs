@@ -1,6 +1,6 @@
-﻿using Chess.Menue.Properties;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using Winforms_Chess.Contracts;
 
 namespace Chess.Menue
 {
@@ -24,6 +24,15 @@ namespace Chess.Menue
       var state = ((RadioButton)sender) == rbSinglePlayer ? true : false;
 
       SetSizeChoosing(state);
+    }
+
+    public InputDto CollectSettings()
+    {
+      return new InputDto
+      {
+        PlayerSelected = rbPlayerWhite.Checked ? Produktlogic.Contracts.Player.WHITE : Produktlogic.Contracts.Player.BLACK,
+        Singleplayer = rbSinglePlayer.Checked
+      };
     }
 
     private void SetSizeChoosing(bool state)
