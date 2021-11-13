@@ -1,32 +1,39 @@
 ﻿using Chess.Produktlogic.Contracts;
 using System.Collections.Generic;
 using System.Linq;
+using Winforms_Chess.Contracts;
 
 namespace Winforms_Chess
 {
   public class Controller
   {
     private readonly GameForm m_mainForm;
+    private ResultDto m_ResultDto = new ResultDto();
     private Board m_Board = Board.GetInstance();
     private Player m_CurrentPlayer = Player.WHITE;
     private Piece m_SelectedPice;
     private List<Coords> m_PossibleFelder = new List<Coords>();
     private readonly IChessLogicController m_LogicController;
 
-    public Controller()
+    public Controller(InputDto inputDto)
     {
       m_mainForm = new GameForm();
       m_LogicController = new Chess.Produktlogic.Controller();
       ConnectEvents();
-      InitGameComponents();
-      m_mainForm.ShowForm();
+      InitGameComponents(inputDto.Singleplayer ? inputDto.PlayerSelected : Player.WHITE);
     }
 
-    private void InitGameComponents()
+    public ResultDto ShowGame()
+    {
+      m_mainForm.ShowDialog();
+      return m_ResultDto;
+    }
+
+    private void InitGameComponents(Player playerCurrent)
     {
       var picesToDraw = ViewModelCreator.GeneratePices(m_Board.CreatePosition(m_Board.Moves.First()));
       var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Board.Felder);
-      m_mainForm.InitBoard(felderToDraw);
+      m_mainForm.InitBoard(felderToDraw, playerCurrent);
       m_mainForm.DrawPices(picesToDraw);
     }
 
@@ -39,21 +46,21 @@ namespace Winforms_Chess
     {
       if (!moveResult.WasMoveLegal) return;
 
-      m_CurrentPlayer = m_CurrentPlayer == Player.WHITE ? Player.BLACK : Player.WHITE;
+      m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
       m_PossibleFelder = moveResult.PossibleFelder;
       m_Board.Pices = moveResult.BoardPosition;
       m_mainForm.UpdatePices(ViewModelCreator.GeneratePices(moveResult.BoardPosition));
       UpdateScores();
-      HandlePlayerLoss();
-      
+      HandlePlayerLossOrDoNothing();
     }
 
-    private void HandlePlayerLoss()
+    private void HandlePlayerLossOrDoNothing()
     {
-      if (m_LogicController.IsGameOver(m_Board.Pices, m_CurrentPlayer))
-      {
-        m_mainForm.ShowMeldung($"{m_CurrentPlayer} hat verloren!");
-      }
+      if (!m_LogicController.IsGameOver(m_Board.Pices, m_CurrentPlayer)) return;
+
+      m_ResultDto = ResultDtoFactory.GetResultDto(Helper.GetEnemy(m_CurrentPlayer).ToString(), System.Windows.Forms.DialogResult.OK);
+      m_mainForm.Dispose();
+      m_mainForm.Close();
     }
 
     private void UpdateScores()
@@ -69,7 +76,7 @@ namespace Winforms_Chess
       m_PossibleFelder = m_LogicController.GetPossibleFelderForPice(m_SelectedPice, m_Board.Pices);
     }
 
-    public void GameObjectClicked(Coords coords, bool isPice)
+    private void GameObjectClicked(Coords coords, bool isPice)
     {
       UpdatePositionDto moveResult = null;
 
@@ -90,8 +97,13 @@ namespace Winforms_Chess
           return;
         case MoveType.NONE:
           return;
+        case MoveType.CONVERT_PAWN:
+          var ctr = new PieceSelectForm.Controller(m_CurrentPlayer);
+          var newPiece = ctr.ShowDialog();
+          moveResult = m_LogicController.MakeNonCaptureMove(m_Board.Pices, coords, m_SelectedPice);
+          moveResult.BoardPosition.First(x => x.Coord.Equals(coords)).PiceType = newPiece;
+          break;
       }
-
       ValidiereZug(moveResult);
     }
   }

@@ -7,5 +7,6 @@
     FORWARD,
     PIECE_SELECT,
     NONE,
+    CONVERT_PAWN
   }
 }
