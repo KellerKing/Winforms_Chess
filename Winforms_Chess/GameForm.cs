@@ -33,12 +33,12 @@ namespace Winforms_Chess
       m_ChessBoardPanles = board;
       m_BottomPlayer = playerSelected;
       DrawBoard(m_ChessBoardPanles, playerSelected);
+      if(m_BottomPlayer == Player.BLACK) FlipScorePosition();
     }
 
     public void DrawBoard(GameObjectDrawModel[,] board, Player playerSelected)
     {
       boradGrid.Controls.Clear();
-      if (playerSelected == Player.BLACK) FlipScorePosition();
 
       var sortedTiles = playerSelected == Player.BLACK ? board.Cast<GameObjectDrawModel>().ToList().OrderBy(x => x.Coord.Rank).ToList() : board.Cast<GameObjectDrawModel>().ToList().OrderByDescending(x => x.Coord.Rank).ToList();
 
@@ -125,8 +125,8 @@ namespace Winforms_Chess
     private void ButtonFlipBoard_Click(object sender, EventArgs e)
     {
       m_BottomPlayer = Helper.GetEnemy(m_BottomPlayer);
-      FlipScorePosition();
       DrawBoard(m_ChessBoardPanles, m_BottomPlayer);
+      FlipScorePosition();
     }
   }
 }

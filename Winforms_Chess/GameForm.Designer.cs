@@ -74,9 +74,8 @@ namespace Winforms_Chess
       this.lblPointsWhite.ForeColor = System.Drawing.Color.White;
       this.lblPointsWhite.Location = new System.Drawing.Point(12, 940);
       this.lblPointsWhite.Name = "lblPointsWhite";
-      this.lblPointsWhite.Size = new System.Drawing.Size(17, 20);
+      this.lblPointsWhite.Size = new System.Drawing.Size(0, 20);
       this.lblPointsWhite.TabIndex = 5;
-      this.lblPointsWhite.Text = "0";
       // 
       // lblPointsBlack
       // 
@@ -84,9 +83,8 @@ namespace Winforms_Chess
       this.lblPointsBlack.ForeColor = System.Drawing.Color.White;
       this.lblPointsBlack.Location = new System.Drawing.Point(12, 9);
       this.lblPointsBlack.Name = "lblPointsBlack";
-      this.lblPointsBlack.Size = new System.Drawing.Size(17, 20);
+      this.lblPointsBlack.Size = new System.Drawing.Size(0, 20);
       this.lblPointsBlack.TabIndex = 6;
-      this.lblPointsBlack.Text = "0";
       // 
       // panel1
       // 
