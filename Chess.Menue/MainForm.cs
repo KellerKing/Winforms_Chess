@@ -40,9 +40,14 @@ namespace Chess.Menue
       groupBoxSideChoose.Enabled = state;
     }
 
-    internal void ShowMessage(string winner)
+    internal void ShowMessage(ResultDto resultDto)
     {
-      MessageBox.Show($"{winner} has won!");
+      if (!resultDto.IsPatt)
+      {
+        MessageBox.Show("Statlement");
+        return;
+      }
+      MessageBox.Show($"{resultDto.Winner} has won!");
     }
   }
 }

@@ -37,7 +37,7 @@ namespace Chess.Produktlogic.MovesRules
         };
       }
 
-      if (pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.Rank == 3 && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
+      if (clickedPice.Owner == Player.BLACK && pices.Any(x => x.Owner == Player.WHITE && x.Coord.Rank == 3 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
       {
         return new EnPassantItem
         {
@@ -45,7 +45,7 @@ namespace Chess.Produktlogic.MovesRules
           PiceToCapture = new(clickedPice.Coord.Rank, clickedPice.Coord.File + 1)
         };
       }
-      if (pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.Rank == 3 && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
+      if (clickedPice.Owner == Player.BLACK && pices.Any(x => x.Owner == Player.WHITE && x.Coord.Rank == 3 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
       {
         return new EnPassantItem
         {

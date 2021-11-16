@@ -52,9 +52,11 @@ namespace Chess.Produktlogic
       return ScoreCalculator.CalculateRelativeScore(pices, currentPlayer);
     }
 
-    public bool IsGameOver(List<Piece> pices, Player currentPlayer)
+    public GameOver IsGameOver(List<Piece> pices, Player currentPlayer)
     {
-      return Rulebook.HasPlayerLost(pices, currentPlayer);
+      if (Rulebook.HasPlayerLost(pices, currentPlayer)) return GameOver.GAME_OVER;
+      else if (Rulebook.IsStatelement(pices, currentPlayer)) return GameOver.STATLEMENT;
+      return GameOver.NO;
     }
 
     public MoveType GetMoveType(bool isPice, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)

@@ -56,9 +56,10 @@ namespace Winforms_Chess
 
     private void HandlePlayerLossOrDoNothing()
     {
-      if (!m_LogicController.IsGameOver(m_Board.Pices, m_CurrentPlayer)) return;
+      var gameOverResult = m_LogicController.IsGameOver(m_Board.Pices, m_CurrentPlayer);
+      if (gameOverResult == GameOver.NO) return;
 
-      m_ResultDto = ResultDtoFactory.GetResultDto(Helper.GetEnemy(m_CurrentPlayer).ToString(), System.Windows.Forms.DialogResult.OK);
+      m_ResultDto = ResultDtoFactory.GetResultDto(Helper.GetEnemy(m_CurrentPlayer).ToString(), gameOverResult, System.Windows.Forms.DialogResult.OK);
       m_mainForm.Dispose();
       m_mainForm.Close();
     }
