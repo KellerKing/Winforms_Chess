@@ -36,7 +36,7 @@ namespace Chess.Menue
 
       if (resultDto.DialogResult == System.Windows.Forms.DialogResult.OK)
       {
-        m_MainForm.ShowMessage(resultDto.Winner);
+        m_MainForm.ShowMessage(resultDto);
       }
     }
   }

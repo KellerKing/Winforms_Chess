@@ -13,6 +13,18 @@ namespace Chess.Produktlogic
       return !IsKingInCheck(positionsCurrent, currentPlayer);
     }
 
+    public static bool IsStatelement(List<Piece> pices, Player currentPlayer)
+    {
+      if (!IsLegalMove(pices, currentPlayer)) return false;
+
+      foreach (var item in pices.Where(x => x.Owner == currentPlayer))
+      {
+        var felderPossible = PossibleMoveFactory.GetMovesFor(item, pices);
+        if (CanDoLegalMove(pices.ConvertAll(x => (Piece)x.Clone()).ToList(), (Piece)item.Clone(), felderPossible)) return false;
+      }
+      return true;
+    }
+
     public static bool HasPlayerLost(List<Piece> pices, Player currentPlayer)
     {
       if (IsLegalMove(pices, currentPlayer)) return false;
@@ -20,7 +32,7 @@ namespace Chess.Produktlogic
       foreach (var item in pices.Where(x => x.Owner == currentPlayer))
       {
         var felderPossible = PossibleMoveFactory.GetMovesFor(item, pices);
-        return CanDoLegalMove(pices.ConvertAll(x => (Piece)x.Clone()).ToList(), item, felderPossible);
+        if (CanDoLegalMove(pices.ConvertAll(x => (Piece)x.Clone()).ToList(),(Piece)item.Clone(), felderPossible)) return false;
       }
       return true;
     }
@@ -93,9 +105,9 @@ namespace Chess.Produktlogic
       foreach (var possibleFeld in felderPossible)
       {
         var movetype = Move.GetMoveType(pieces.Any(x => x.Coord.Equals(possibleFeld)), felderPossible, possibleFeld, pieces, piece, piece.Owner);
-        return IsLegalMove(Move.AutomaticMove(movetype, piece.Coord, possibleFeld, pieces), piece.Owner);
+        if (IsLegalMove(Move.AutomaticMove(movetype, piece.Coord, possibleFeld, pieces.ConvertAll(x => (Piece)x.Clone()).ToList()), piece.Owner)) return true;
       }
-      return true;
+      return false;
     }
 
     private static bool IsPiceAttacking(List<Piece> board, Piece king, PiceType piceToCheck)
