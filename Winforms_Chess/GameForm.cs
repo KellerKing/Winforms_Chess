@@ -93,6 +93,7 @@ namespace Winforms_Chess
       else
       {
         lblPointsBlack.Text = black.ToString();
+        lblPointsWhite.Text = "";
       }
     }
 
