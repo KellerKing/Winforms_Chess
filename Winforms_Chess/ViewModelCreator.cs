@@ -97,6 +97,7 @@ namespace Winforms_Chess
           Image = img,
           Coord = x.Coord,
           Dock = DockStyle.Fill,
+          Piece = x
           //Size = new Size(tileSile, tileSile)
         });
       });

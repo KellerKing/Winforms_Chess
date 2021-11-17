@@ -65,13 +65,7 @@ namespace Winforms_Chess
     public void UpdatePices(List<PiceDrawModel> piceDrawModels)
     {
       var picesToRemoveFromBoard = m_Pices.Where(x => !piceDrawModels.Any(y => y.Coord.Equals(x.Coord))).ToList();
-      var picesToRedraw = piceDrawModels.Where(x => !m_Pices.Any(y => y.Coord.Equals(x.Coord))).ToList();
-
-      if (picesToRedraw.Count == 0)
-      {
-        DrawPices(piceDrawModels);
-        return;
-      }
+      var picesToRedraw = piceDrawModels.Where(x => !m_Pices.Any(y => y.Coord.Equals(x.Coord) && y.Piece.Owner == x.Piece.Owner && y.Piece.PiceType == x.Piece.PiceType)).ToList();
 
       picesToRemoveFromBoard.ForEach(x => m_ChessBoardPanles[x.Coord.File, x.Coord.Rank].Controls.Clear());
       picesToRedraw.ForEach(x =>

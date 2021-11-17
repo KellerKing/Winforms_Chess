@@ -7,5 +7,6 @@ namespace Winforms_Chess
   public class PiceDrawModel : PictureBox , IUiObject
   {
     public Coords Coord { get; set; }
+    public Piece Piece { get; init; }
   }
 }
