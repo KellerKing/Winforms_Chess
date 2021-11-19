@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Winforms_Chess.Properties;
+using Chess.Game.Properties;
 
 namespace Winforms_Chess
 {
