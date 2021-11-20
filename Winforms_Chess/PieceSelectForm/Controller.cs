@@ -22,10 +22,10 @@ namespace Winforms_Chess.PieceSelectForm
 
     private void InitForm()
     {
-      m_Form.DrawTargetPieces(ViewModelCreator.CreateSinglePieceImage(m_PlayerCurrent, PiceType.BISHOP),
-        ViewModelCreator.CreateSinglePieceImage(m_PlayerCurrent, PiceType.KNIGHT), 
-        ViewModelCreator.CreateSinglePieceImage(m_PlayerCurrent, PiceType.QUEEN), 
-        ViewModelCreator.CreateSinglePieceImage(m_PlayerCurrent, PiceType.ROOK));
+      m_Form.DrawTargetPieces(ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.BISHOP),
+        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.KNIGHT), 
+        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.QUEEN), 
+        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.ROOK));
     }
 
     private void ConnectEvents()
