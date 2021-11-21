@@ -63,9 +63,9 @@ namespace Chess.Game.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_black_bishop {
+        public static System.Drawing.Bitmap bishop_black {
             get {
-                object obj = ResourceManager.GetObject("chess_piece_2_black_bishop", resourceCulture);
+                object obj = ResourceManager.GetObject("bishop_black", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Chess.Game.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_black_king {
+        public static System.Drawing.Bitmap bishop_white {
             get {
-                object obj = ResourceManager.GetObject("chess_piece_2_black_king", resourceCulture);
+                object obj = ResourceManager.GetObject("bishop_white", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace Chess.Game.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_black_knight {
+        public static System.Drawing.Bitmap king_black {
             get {
-                object obj = ResourceManager.GetObject("chess_piece_2_black_knight", resourceCulture);
+                object obj = ResourceManager.GetObject("king_black", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace Chess.Game.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_black_pawn {
+        public static System.Drawing.Bitmap king_white {
             get {
-                object obj = ResourceManager.GetObject("chess_piece_2_black_pawn", resourceCulture);
+                object obj = ResourceManager.GetObject("king_white", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace Chess.Game.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_black_queen {
+        public static System.Drawing.Bitmap knight_black {
             get {
-                object obj = ResourceManager.GetObject("chess_piece_2_black_queen", resourceCulture);
+                object obj = ResourceManager.GetObject("knight_black", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,69 +113,9 @@ namespace Chess.Game.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_black_rook {
+        public static System.Drawing.Bitmap knight_white {
             get {
-                object obj = ResourceManager.GetObject("chess_piece_2_black_rook", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_white_bishop {
-            get {
-                object obj = ResourceManager.GetObject("chess_piece_2_white_bishop", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_white_king {
-            get {
-                object obj = ResourceManager.GetObject("chess_piece_2_white_king", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_white_knight {
-            get {
-                object obj = ResourceManager.GetObject("chess_piece_2_white_knight", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_white_pawn {
-            get {
-                object obj = ResourceManager.GetObject("chess_piece_2_white_pawn", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_white_queen {
-            get {
-                object obj = ResourceManager.GetObject("chess_piece_2_white_queen", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap chess_piece_2_white_rook {
-            get {
-                object obj = ResourceManager.GetObject("chess_piece_2_white_rook", resourceCulture);
+                object obj = ResourceManager.GetObject("knight_white", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -196,6 +136,26 @@ namespace Chess.Game.Properties {
         public static System.Drawing.Bitmap pawn_white {
             get {
                 object obj = ResourceManager.GetObject("pawn_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap queen_black {
+            get {
+                object obj = ResourceManager.GetObject("queen_black", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap queen_white {
+            get {
+                object obj = ResourceManager.GetObject("queen_white", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

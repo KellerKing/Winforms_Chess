@@ -3,12 +3,28 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Chess.Game.Properties;
+using System;
 
 namespace Winforms_Chess
 {
   public class ViewModelCreator
   {
-    private const int tileSile = 100;
+    private static readonly Dictionary<Tuple<string, PiceType>, Bitmap> pieceResources = new()
+    {
+      { new Tuple<string, PiceType>("white", PiceType.ROOK), Resources.rook_white },
+      { new Tuple<string, PiceType>("white", PiceType.PAWN), Resources.pawn_white },
+      { new Tuple<string, PiceType>("white", PiceType.BISHOP), Resources.bishop_white },
+      { new Tuple<string, PiceType>("white", PiceType.QUEEN), Resources.queen_white },
+      { new Tuple<string, PiceType>("white", PiceType.KING), Resources.king_white },
+      { new Tuple<string, PiceType>("white", PiceType.KNIGHT), Resources.knight_white },
+
+      { new Tuple<string, PiceType>("black", PiceType.ROOK), Resources.rook_black },
+      { new Tuple<string, PiceType>("black", PiceType.PAWN), Resources.pawn_black },
+      { new Tuple<string, PiceType>("black", PiceType.BISHOP), Resources.bishop_black },
+      { new Tuple<string, PiceType>("black", PiceType.QUEEN), Resources.queen_black },
+      { new Tuple<string, PiceType>("black", PiceType.KING), Resources.king_black },
+      { new Tuple<string, PiceType>("black", PiceType.KNIGHT), Resources.knight_black },
+    };
 
     public static GameObjectDrawModel[,] CreateChessBoardDrawModels(Tile[,] tiles)
     {
@@ -32,32 +48,11 @@ namespace Winforms_Chess
       return chessBoardPanels;
     }
 
-    public static Bitmap CreateSinglePieceImage(Player player, PiceType piceType)
+    public static Bitmap GetSinglePieceImage(Player player, PiceType piceType)
     {
-      Bitmap img = player switch
-      {
-        Player.WHITE => piceType switch
-        {
-          PiceType.BISHOP => Resources.chess_piece_2_white_bishop,
-          PiceType.PAWN => Resources.pawn_white,
-          PiceType.ROOK => Resources.rook_white,
-          PiceType.QUEEN => Resources.chess_piece_2_white_queen,
-          PiceType.KING => Resources.chess_piece_2_white_king,
-          PiceType.KNIGHT => Resources.chess_piece_2_white_knight
-        },
-        _ => piceType switch
-        {
-          PiceType.BISHOP => Resources.chess_piece_2_black_bishop,
-          PiceType.PAWN => Resources.pawn_black,
-          PiceType.ROOK => Resources.rook_black,
-          PiceType.QUEEN => Resources.chess_piece_2_black_queen,
-          PiceType.KING => Resources.chess_piece_2_black_king,
-          PiceType.KNIGHT => Resources.chess_piece_2_black_knight
-        },
-      };
-
-      img.MakeTransparent();
-      return img;
+      var texture = GetBitmapForPiece(piceType, player);
+      texture.MakeTransparent();
+      return texture;
     }
 
 
@@ -65,44 +60,36 @@ namespace Winforms_Chess
     {
       var output = new List<PiceDrawModel>();
 
-      pices.ForEach(x =>
+      pices.ForEach(item =>
       {
-        Bitmap img = x.Owner switch
-        {
-          Player.WHITE => x.PiceType switch
-          {
-            PiceType.BISHOP => Resources.chess_piece_2_white_bishop,
-            PiceType.PAWN => Resources.pawn_white,
-            PiceType.ROOK => Resources.rook_white,
-            PiceType.QUEEN => Resources.chess_piece_2_white_queen,
-            PiceType.KING => Resources.chess_piece_2_white_king,
-            PiceType.KNIGHT => Resources.chess_piece_2_white_knight
-          },
-          _ => x.PiceType switch
-          {
-            PiceType.BISHOP => Resources.chess_piece_2_black_bishop,
-            PiceType.PAWN => Resources.pawn_black,
-            PiceType.ROOK => Resources.rook_black,
-            PiceType.QUEEN => Resources.chess_piece_2_black_queen,
-            PiceType.KING => Resources.chess_piece_2_black_king,
-            PiceType.KNIGHT => Resources.chess_piece_2_black_knight
-          },
-        };
-        img.MakeTransparent();
+        var texture = GetBitmapForPiece(item.PiceType, item.Owner);
+        texture.MakeTransparent();
 
         output.Add(new PiceDrawModel()
         {
           BackColor = Color.Transparent,
           SizeMode = PictureBoxSizeMode.Zoom,
-          Image = img,
-          Coord = x.Coord,
+          Image = texture,
+          Coord = item.Coord,
           Dock = DockStyle.Fill,
-          Piece = x
-          //Size = new Size(tileSile, tileSile)
+          Piece = item
         });
       });
       return output;
     }
-  }
 
+    private static Bitmap GetBitmapForPiece(PiceType piceType, Player player)
+    {
+
+      var pieceColor = player == Player.WHITE ? "white" : "black";
+      var key = new Tuple<string, PiceType>(pieceColor, piceType);
+
+      if (pieceResources.ContainsKey(key))
+        return pieceResources[key];
+
+      throw new Exception($"Cant find the speciefied Texture for Piece {piceType}");
+    }
+  }
 }
+
+
