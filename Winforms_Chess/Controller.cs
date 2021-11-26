@@ -9,11 +9,16 @@ namespace Winforms_Chess
   {
     private readonly GameForm m_mainForm;
     private ResultDto m_ResultDto = new ResultDto();
-    private Board m_Board = Board.GetInstance();
     private Player m_CurrentPlayer = Player.WHITE;
     private Piece m_SelectedPice;
     private List<Coords> m_PossibleFelder = new List<Coords>();
     private readonly IChessLogicController m_LogicController;
+    private List<Piece> m_BoardPosition;
+
+    private List<string> m_Moves = new()
+    {
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    };
 
     public Controller(InputDto inputDto)
     {
@@ -31,8 +36,9 @@ namespace Winforms_Chess
 
     private void InitGameComponents(Player playerCurrent)
     {
-      var picesToDraw = ViewModelCreator.GeneratePices(m_Board.CreatePosition(m_Board.Moves.First()));
-      var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Board.Felder);
+      m_BoardPosition = Fen.GetPices(m_Moves.First());
+      var picesToDraw = ViewModelCreator.GeneratePices(m_BoardPosition);
+      var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(Helper.CreateFelder(8, 8));
       m_mainForm.InitBoard(felderToDraw, playerCurrent);
       m_mainForm.DrawPices(picesToDraw);
     }
@@ -48,7 +54,7 @@ namespace Winforms_Chess
 
       m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
       m_PossibleFelder = moveResult.PossibleFelder;
-      m_Board.Pices = moveResult.BoardPosition;
+      m_BoardPosition = moveResult.BoardPosition;
       m_mainForm.UpdatePices(ViewModelCreator.GeneratePices(moveResult.BoardPosition));
       UpdateScores();
       HandlePlayerLossOrDoNothing();
@@ -56,7 +62,7 @@ namespace Winforms_Chess
 
     private void HandlePlayerLossOrDoNothing()
     {
-      var gameOverResult = m_LogicController.IsGameOver(m_Board.Pices, m_CurrentPlayer);
+      var gameOverResult = m_LogicController.IsGameOver(m_BoardPosition, m_CurrentPlayer);
       if (gameOverResult == GameOver.NO) return;
 
       m_ResultDto = ResultDtoFactory.GetResultDto(Helper.GetEnemy(m_CurrentPlayer).ToString(), gameOverResult, System.Windows.Forms.DialogResult.OK);
@@ -66,32 +72,41 @@ namespace Winforms_Chess
 
     private void UpdateScores()
     {
-      var scoreBlack = m_LogicController.GetScoring(m_Board.Pices, Player.BLACK);
-      var scoreWhite = m_LogicController.GetScoring(m_Board.Pices, Player.WHITE);
+      var scoreBlack = m_LogicController.GetScoring(m_BoardPosition, Player.BLACK);
+      var scoreWhite = m_LogicController.GetScoring(m_BoardPosition, Player.WHITE);
       m_mainForm.SetScore(scoreWhite, scoreBlack);
     }
 
     private void SelectPieceToMove(Coords coords)
     {
-      m_SelectedPice = m_Board.Pices.First(x => x.Coord.Equals(coords));
-      m_PossibleFelder = m_LogicController.GetPossibleFelderForPice(m_SelectedPice, m_Board.Pices);
+      m_SelectedPice = m_BoardPosition.First(x => x.Coord.Equals(coords));
+      m_PossibleFelder = m_LogicController.GetPossibleFelderForPice(m_SelectedPice, m_BoardPosition);
+    }
+
+    private UpdatePositionDto ConvertPawn(Coords clickedCoords)
+    {
+      var ctr = new PieceSelectForm.Controller(m_CurrentPlayer);
+      var newPiece = ctr.ShowDialog();
+      var moveResult = m_LogicController.MakeNonCaptureMove(m_BoardPosition, clickedCoords, m_SelectedPice);
+      moveResult.BoardPosition.First(x => x.Coord.Equals(clickedCoords)).PiceType = newPiece;
+      return moveResult;
     }
 
     private void GameObjectClicked(Coords coords, bool isPice)
     {
       UpdatePositionDto moveResult = null;
 
-      switch (m_LogicController.GetMoveType(isPice, m_PossibleFelder, coords, m_Board.Pices, m_SelectedPice, m_CurrentPlayer))
+      switch (m_LogicController.GetMoveType(isPice, m_PossibleFelder, coords, m_BoardPosition, m_SelectedPice, m_CurrentPlayer))
       {
         case MoveType.CASTLE:
-          moveResult = m_LogicController.MakeCastleMove(m_Board.Pices, coords, m_SelectedPice);
+          moveResult = m_LogicController.MakeCastleMove(m_BoardPosition, coords, m_SelectedPice);
           break;
         case MoveType.CAPUTRE:
-          var clickedPice = m_Board.Pices.First(x => x.Coord.Equals(coords));
-          moveResult = m_LogicController.MakeCaptureMove(m_Board.Pices, clickedPice, m_SelectedPice);
+          var clickedPice = m_BoardPosition.First(x => x.Coord.Equals(coords));
+          moveResult = m_LogicController.MakeCaptureMove(m_BoardPosition, clickedPice, m_SelectedPice);
           break;
         case MoveType.FORWARD:
-          moveResult = m_LogicController.MakeNonCaptureMove(m_Board.Pices, coords, m_SelectedPice);
+          moveResult = m_LogicController.MakeNonCaptureMove(m_BoardPosition, coords, m_SelectedPice);
           break;
         case MoveType.PIECE_SELECT:
           SelectPieceToMove(coords);
@@ -99,10 +114,7 @@ namespace Winforms_Chess
         case MoveType.NONE:
           return;
         case MoveType.CONVERT_PAWN:
-          var ctr = new PieceSelectForm.Controller(m_CurrentPlayer);
-          var newPiece = ctr.ShowDialog();
-          moveResult = m_LogicController.MakeNonCaptureMove(m_Board.Pices, coords, m_SelectedPice);
-          moveResult.BoardPosition.First(x => x.Coord.Equals(coords)).PiceType = newPiece;
+          moveResult = ConvertPawn(coords);
           break;
       }
       ValidiereZug(moveResult);

@@ -113,8 +113,7 @@ namespace Winforms_Chess
 
     private void GameObjectClicked(object sender, EventArgs e)
     {
-      var clickedObject = sender as IUiObject;
-      GameObjectClickedAction.Invoke(clickedObject.Coord, sender is PiceDrawModel ? true : false);
+      GameObjectClickedAction.Invoke(((IUiObject)sender).Coord, sender is PiceDrawModel ? true : false);
     }
 
     private void ButtonFlipBoard_Click(object sender, EventArgs e)

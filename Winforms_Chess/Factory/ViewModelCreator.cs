@@ -26,7 +26,7 @@ namespace Winforms_Chess
       { new Tuple<string, PiceType>("black", PiceType.KNIGHT), Resources.knight_black },
     };
 
-    public static GameObjectDrawModel[,] CreateChessBoardDrawModels(Tile[,] tiles)
+    public static GameObjectDrawModel[,] CreateChessBoardDrawModels(Coords[,] tiles)
     {
       var chessBoardPanels = new GameObjectDrawModel[tiles.GetLength(0), tiles.GetLength(1)];
 
