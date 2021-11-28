@@ -49,7 +49,7 @@ namespace Winforms_Chess
       return CreateFenFromPices(pices, --rank, $"{fen}/");
     }
 
-    public static List<Piece> GetPices(string fen)
+    public static List<Piece> GetPieces(string fen)
     {
       //rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
       var splitted = fen.Split(" ");

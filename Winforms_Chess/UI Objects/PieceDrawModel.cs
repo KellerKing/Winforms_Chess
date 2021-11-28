@@ -4,9 +4,9 @@ using Winforms_Chess.UI_Objects;
 
 namespace Winforms_Chess
 {
-  public class GameObjectDrawModel : Panel, IUiObject
+  public class PieceDrawModel : PictureBox , IUiObject
   {
-    public string PicturePath { get; set; }
     public Coords Coord { get; set; }
+    public Piece Piece { get; init; }
   }
 }

@@ -8,10 +8,10 @@ namespace Winforms_Chess
   public class Controller
   {
     private readonly GameForm m_mainForm;
-    private ResultDto m_ResultDto = new ResultDto();
+    private ResultDto m_ResultDto = new();
     private Player m_CurrentPlayer = Player.WHITE;
-    private Piece m_SelectedPice;
-    private List<Coords> m_PossibleFelder = new List<Coords>();
+    private Piece m_SelectedPiece;
+    private List<Coords> m_PossibleFelder = new();
     private readonly IChessLogicController m_LogicController;
     private List<Piece> m_BoardPosition;
 
@@ -36,11 +36,11 @@ namespace Winforms_Chess
 
     private void InitGameComponents(Player playerCurrent)
     {
-      m_BoardPosition = Fen.GetPices(m_Moves.First());
-      var picesToDraw = ViewModelCreator.GeneratePices(m_BoardPosition);
+      m_BoardPosition = Fen.GetPieces(m_Moves[0]);
+      var piecesToDraw = ViewModelCreator.GeneratePieces(m_BoardPosition);
       var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(Helper.CreateFelder(8, 8));
       m_mainForm.InitBoard(felderToDraw, playerCurrent);
-      m_mainForm.DrawPices(picesToDraw);
+      m_mainForm.InitPieces(piecesToDraw);
     }
 
     private void ConnectEvents()
@@ -55,7 +55,7 @@ namespace Winforms_Chess
       m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
       m_PossibleFelder = moveResult.PossibleFelder;
       m_BoardPosition = moveResult.BoardPosition;
-      m_mainForm.UpdatePices(ViewModelCreator.GeneratePices(moveResult.BoardPosition));
+      m_mainForm.UpdatePieces(ViewModelCreator.GeneratePieces(moveResult.BoardPosition));
       UpdateScores();
       HandlePlayerLossOrDoNothing();
     }
@@ -79,42 +79,42 @@ namespace Winforms_Chess
 
     private void SelectPieceToMove(Coords coords)
     {
-      m_SelectedPice = m_BoardPosition.First(x => x.Coord.Equals(coords));
-      m_PossibleFelder = m_LogicController.GetPossibleFelderForPice(m_SelectedPice, m_BoardPosition);
+      m_SelectedPiece = m_BoardPosition.First(x => x.Coord.Equals(coords));
+      m_PossibleFelder = m_LogicController.GetPossibleFelderForPiece(m_SelectedPiece, m_BoardPosition);
     }
 
     private UpdatePositionDto ConvertPawn(Coords clickedCoords)
     {
       var ctr = new PieceSelectForm.Controller(m_CurrentPlayer);
       var newPiece = ctr.ShowDialog();
-      var moveResult = m_LogicController.MakeNonCaptureMove(m_BoardPosition, clickedCoords, m_SelectedPice);
+      var moveResult = m_LogicController.MakeNonCaptureMove(m_BoardPosition, clickedCoords, m_SelectedPiece);
       moveResult.BoardPosition.First(x => x.Coord.Equals(clickedCoords)).PiceType = newPiece;
       return moveResult;
     }
 
-    private void GameObjectClicked(Coords coords, bool isPice)
+    private void GameObjectClicked(Coords coordsClicked, bool isPieceClicked)
     {
       UpdatePositionDto moveResult = null;
 
-      switch (m_LogicController.GetMoveType(isPice, m_PossibleFelder, coords, m_BoardPosition, m_SelectedPice, m_CurrentPlayer))
+      switch (m_LogicController.GetMoveType(isPieceClicked, m_PossibleFelder, coordsClicked, m_BoardPosition, m_SelectedPiece, m_CurrentPlayer))
       {
         case MoveType.CASTLE:
-          moveResult = m_LogicController.MakeCastleMove(m_BoardPosition, coords, m_SelectedPice);
+          moveResult = m_LogicController.MakeCastleMove(m_BoardPosition, coordsClicked, m_SelectedPiece);
           break;
         case MoveType.CAPUTRE:
-          var clickedPice = m_BoardPosition.First(x => x.Coord.Equals(coords));
-          moveResult = m_LogicController.MakeCaptureMove(m_BoardPosition, clickedPice, m_SelectedPice);
+          var clickedPiece = m_BoardPosition.First(x => x.Coord.Equals(coordsClicked));
+          moveResult = m_LogicController.MakeCaptureMove(m_BoardPosition, clickedPiece, m_SelectedPiece);
           break;
         case MoveType.FORWARD:
-          moveResult = m_LogicController.MakeNonCaptureMove(m_BoardPosition, coords, m_SelectedPice);
+          moveResult = m_LogicController.MakeNonCaptureMove(m_BoardPosition, coordsClicked, m_SelectedPiece);
           break;
         case MoveType.PIECE_SELECT:
-          SelectPieceToMove(coords);
+          SelectPieceToMove(coordsClicked);
           return;
         case MoveType.NONE:
           return;
         case MoveType.CONVERT_PAWN:
-          moveResult = ConvertPawn(coords);
+          moveResult = ConvertPawn(coordsClicked);
           break;
       }
       ValidiereZug(moveResult);

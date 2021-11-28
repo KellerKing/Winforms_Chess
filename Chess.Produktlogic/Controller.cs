@@ -6,7 +6,7 @@ namespace Chess.Produktlogic
 {
   public class Controller : IChessLogicController
   {
-    public List<Coords> GetPossibleFelderForPice(Piece piceToCheck, List<Piece> boardPosition)
+    public List<Coords> GetPossibleFelderForPiece(Piece piceToCheck, List<Piece> boardPosition)
     {
       return PossibleMoveFactory.GetMovesFor(piceToCheck, boardPosition);
     }

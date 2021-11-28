@@ -26,15 +26,15 @@ namespace Winforms_Chess
       { new Tuple<string, PiceType>("black", PiceType.KNIGHT), Resources.knight_black },
     };
 
-    public static GameObjectDrawModel[,] CreateChessBoardDrawModels(Coords[,] tiles)
+    public static TileDrawModel[,] CreateChessBoardDrawModels(Coords[,] tiles)
     {
-      var chessBoardPanels = new GameObjectDrawModel[tiles.GetLength(0), tiles.GetLength(1)];
+      var chessBoardPanels = new TileDrawModel[tiles.GetLength(0), tiles.GetLength(1)];
 
       for (var x = 0; x < tiles.GetLength(0); x++)
       {
         for (var y = 0; y < tiles.GetLength(1); y++)
         {
-          chessBoardPanels[x, y] = new GameObjectDrawModel
+          chessBoardPanels[x, y] = new TileDrawModel
           {
             BackgroundImageLayout = ImageLayout.Stretch,
             Coord = new Coords(y, x),
@@ -48,24 +48,24 @@ namespace Winforms_Chess
       return chessBoardPanels;
     }
 
-    public static Bitmap GetSinglePieceImage(Player player, PiceType piceType)
+    public static Bitmap GetSinglePieceImage(Player player, PiceType pieceType)
     {
-      var texture = GetBitmapForPiece(piceType, player);
+      var texture = GetBitmapForPiece(pieceType, player);
       texture.MakeTransparent();
       return texture;
     }
 
 
-    public static List<PiceDrawModel> GeneratePices(List<Piece> pices)
+    public static List<PieceDrawModel> GeneratePieces(List<Piece> pieces)
     {
-      var output = new List<PiceDrawModel>();
+      var output = new List<PieceDrawModel>();
 
-      pices.ForEach(item =>
+      pieces.ForEach(item =>
       {
         var texture = GetBitmapForPiece(item.PiceType, item.Owner);
         texture.MakeTransparent();
 
-        output.Add(new PiceDrawModel()
+        output.Add(new PieceDrawModel()
         {
           BackColor = Color.Transparent,
           SizeMode = PictureBoxSizeMode.Zoom,
@@ -78,16 +78,16 @@ namespace Winforms_Chess
       return output;
     }
 
-    private static Bitmap GetBitmapForPiece(PiceType piceType, Player player)
+    private static Bitmap GetBitmapForPiece(PiceType pieceType, Player player)
     {
 
       var pieceColor = player == Player.WHITE ? "white" : "black";
-      var key = new Tuple<string, PiceType>(pieceColor, piceType);
+      var key = new Tuple<string, PiceType>(pieceColor, pieceType);
 
       if (pieceResources.ContainsKey(key))
         return pieceResources[key];
 
-      throw new Exception($"Cant find the speciefied Texture for Piece {piceType}");
+      throw new Exception($"Cant find the speciefied Texture for Piece {pieceType}");
     }
   }
 }
