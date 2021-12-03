@@ -6,7 +6,7 @@ namespace Chess.Produktlogic
 {
   public class Controller : IChessLogicController
   {
-    public List<Coords> GetPossibleFelderForPice(Piece piceToCheck, List<Piece> boardPosition)
+    public List<Coords> GetPossibleFelderForPiece(Piece piceToCheck, List<Piece> boardPosition)
     {
       return PossibleMoveFactory.GetMovesFor(piceToCheck, boardPosition);
     }
@@ -62,6 +62,17 @@ namespace Chess.Produktlogic
     public MoveType GetMoveType(bool isPice, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)
     {
       return Move.GetMoveType(isPice, felderPossible, coordsToCheck, pieces, piecePreSelected, playerCurrent);
+    }
+
+    public List<Piece> CreatePiecesFromFen(string fen)
+    {
+      //TODO: Maybe Check if Fen is valid
+      return FenMapper.CreatePiecesFromFen(fen);
+    }
+
+    public string CreateFenFromPieces(List<Piece> pieces)
+    {
+     return FenMapper.CreateFenFromPices(pieces);
     }
   }
 }
