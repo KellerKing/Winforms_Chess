@@ -6,7 +6,7 @@ namespace Chess.Produktlogic
 {
   public static class PossibleMoveFactory
   {
-    public static List<Coords> GetMovesFor(Pice pice, List<Pice> pices, bool IsCheckingForEnemy = false)
+    public static List<Coords> GetMovesFor(Piece pice, List<Piece> pices, bool IsCheckingForEnemy = false)
     {
       var enemy = pice.Owner == Player.BLACK ? Player.WHITE : Player.BLACK;
 

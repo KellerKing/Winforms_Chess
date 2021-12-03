@@ -8,12 +8,36 @@ namespace Chess.Produktlogic
   public static class Rulebook
   {
 
-    public static bool IsLegalMove(List<Pice> positionsCurrent, Player currentPlayer)
+    public static bool IsLegalMove(List<Piece> positionsCurrent, Player currentPlayer)
     {
       return !IsKingInCheck(positionsCurrent, currentPlayer);
     }
 
-    public static bool CanCastleKingSide(List<Pice> pices, Pice king)
+    public static bool IsStatelement(List<Piece> pices, Player currentPlayer)
+    {
+      if (!IsLegalMove(pices, currentPlayer)) return false;
+
+      foreach (var item in pices.Where(x => x.Owner == currentPlayer))
+      {
+        var felderPossible = PossibleMoveFactory.GetMovesFor(item, pices);
+        if (CanDoLegalMove(pices.ConvertAll(x => (Piece)x.Clone()).ToList(), (Piece)item.Clone(), felderPossible)) return false;
+      }
+      return true;
+    }
+
+    public static bool HasPlayerLost(List<Piece> pices, Player currentPlayer)
+    {
+      if (IsLegalMove(pices, currentPlayer)) return false;
+
+      foreach (var item in pices.Where(x => x.Owner == currentPlayer))
+      {
+        var felderPossible = PossibleMoveFactory.GetMovesFor(item, pices);
+        if (CanDoLegalMove(pices.ConvertAll(x => (Piece)x.Clone()).ToList(),(Piece)item.Clone(), felderPossible)) return false;
+      }
+      return true;
+    }
+
+    public static bool CanCastleKingSide(List<Piece> pices, Piece king)
     {
       if (king.MoveCounter != 0) return false;
 
@@ -22,15 +46,11 @@ namespace Chess.Produktlogic
         && x.Owner == king.Owner &&
         x.Coord.File > king.Coord.File);
 
-      if (kingSideRook == null) return false;
-      //if (IsKingInCheck(pices, king.Owner)) return false;
-      if (IsCastleThroughCheck(pices, king, kingSideRook)) return false;
-
+      if (kingSideRook == null || IsCastleThroughCheck(pices, king, kingSideRook)) return false;
       return !IsPiceBlockingForCastle(pices, king, kingSideRook);
-
     }
 
-    public static bool CanCastelQueenSide(List<Pice> pices, Pice king)
+    public static bool CanCastelQueenSide(List<Piece> pices, Piece king)
     {
       if (king.MoveCounter != 0) return false;
 
@@ -39,14 +59,11 @@ namespace Chess.Produktlogic
         && x.Owner == king.Owner &&
         x.Coord.File < king.Coord.File);
 
-      if (queenSideRook == null) return false;
-      //if (IsKingInCheck(pices, king.Owner)) return false;
-      if(IsCastleThroughCheck(pices, king, queenSideRook)) return false;
-
+      if (queenSideRook == null || IsCastleThroughCheck(pices, king, queenSideRook)) return false;
       return !IsPiceBlockingForCastle(pices, king, queenSideRook);
     }
 
-    private static bool IsCastleThroughCheck(List<Pice> pices, Pice king, Pice rook)
+    private static bool IsCastleThroughCheck(List<Piece> pices, Piece king, Piece rook)
     {
       var minFile = Math.Min(king.Coord.File, rook.Coord.File);
       var maxFile = Math.Max(king.Coord.File, rook.Coord.File);
@@ -58,7 +75,7 @@ namespace Chess.Produktlogic
       });
     }
 
-    private static bool IsPiceBlockingForCastle(List<Pice> pices, Pice king, Pice rook)
+    private static bool IsPiceBlockingForCastle(List<Piece> pices, Piece king, Piece rook)
     {
       var minFile = Math.Min(king.Coord.File, rook.Coord.File);
       var maxFile = Math.Max(king.Coord.File, rook.Coord.File);
@@ -67,7 +84,7 @@ namespace Chess.Produktlogic
         (x.Coord.File > minFile && x.Coord.File < maxFile));
     }
 
-    private static bool IsKingInCheck(List<Pice> board, Player currentPlayer)
+    private static bool IsKingInCheck(List<Piece> board, Player currentPlayer)
     {
       var currentKing = board.FirstOrDefault(x => x.Owner == currentPlayer && x.PiceType == PiceType.KING);
 
@@ -76,16 +93,24 @@ namespace Chess.Produktlogic
         IsPiceAttacking(board, currentKing, PiceType.KING) || IsPiceAttacking(board, currentKing, PiceType.PAWN);
     }
 
-    private static bool IsKingInCheck(List<Pice> board, Pice currentKing)
+    private static bool IsKingInCheck(List<Piece> board, Piece currentKing)
     {
       return IsPiceAttacking(board, currentKing, PiceType.ROOK) || IsPiceAttacking(board, currentKing, PiceType.KNIGHT) ||
         IsPiceAttacking(board, currentKing, PiceType.BISHOP) || IsPiceAttacking(board, currentKing, PiceType.QUEEN) ||
         IsPiceAttacking(board, currentKing, PiceType.KING) || IsPiceAttacking(board, currentKing, PiceType.PAWN);
     }
 
+    private static bool CanDoLegalMove(List<Piece> pieces, Piece piece, List<Coords> felderPossible)
+    {
+      foreach (var possibleFeld in felderPossible)
+      {
+        var movetype = Move.GetMoveType(pieces.Any(x => x.Coord.Equals(possibleFeld)), felderPossible, possibleFeld, pieces, piece, piece.Owner);
+        if (IsLegalMove(Move.AutomaticMove(movetype, piece.Coord, possibleFeld, pieces.ConvertAll(x => (Piece)x.Clone()).ToList()), piece.Owner)) return true;
+      }
+      return false;
+    }
 
-
-    private static bool IsPiceAttacking(List<Pice> board, Pice king, PiceType piceToCheck)
+    private static bool IsPiceAttacking(List<Piece> board, Piece king, PiceType piceToCheck)
     {
       var enemyPices = board.Where(x => x.Owner != king.Owner && x.PiceType == piceToCheck).ToList();
       var possibleFelder = new List<Coords>();

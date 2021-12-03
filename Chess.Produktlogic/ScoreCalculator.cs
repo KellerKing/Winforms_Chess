@@ -6,10 +6,17 @@ namespace Chess.Produktlogic
 {
   public class ScoreCalculator
   {
-    public static int CalculateScore(List<Pice> pices , Player currentPlayer, int startScore)
+    public static int CalculateRelativeScore(List<Piece> pices, Player currentPlayer)
     {
-      return startScore - pices.Where(x => x.Owner == currentPlayer)
+      if (pices == null) return 0;
+
+      var scoreForPlayer = pices.Where(x => x.Owner == currentPlayer)
         .Sum(x => PiceInformationHandler.GetPiceInformation(x.PiceType).Value);
+
+      var scoreForEnemy = pices.Where(x => x.Owner != currentPlayer)
+        .Sum(x => PiceInformationHandler.GetPiceInformation(x.PiceType).Value);
+
+      return scoreForPlayer - scoreForEnemy;
     }
   }
 }

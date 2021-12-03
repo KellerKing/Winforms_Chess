@@ -14,7 +14,7 @@ namespace Chess.Produktlogic.MovesRules
       return piceBlocking != PiceBlockingReturn.OWN;
     }
 
-    public static PiceBlockingReturn IsPiceBlocking(List<Pice> pices, Coords coordsToCheck, Player enemy)
+    public static PiceBlockingReturn IsPiceBlocking(List<Piece> pices, Coords coordsToCheck, Player enemy)
     {
       if (pices.Any(x => x.Owner == enemy && x.Coord.Equals(coordsToCheck)))
         return PiceBlockingReturn.ENEMY;

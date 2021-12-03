@@ -1,14 +1,14 @@
 ﻿namespace Chess.Produktlogic.Contracts
 {
-  public class Pice
+  public class Piece
   {
-    public Pice(Player player)
+    public Piece(Player player)
     {
       Owner = player;
     }
 
     public Player Owner { get; init; }
-    public PiceType PiceType { get; init; }
+    public PiceType PiceType { get; set; }
     public Coords Coord { get; set; }
     public int MoveCounter { get; set; }
 

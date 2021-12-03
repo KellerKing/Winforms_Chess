@@ -6,7 +6,7 @@ namespace Chess.Produktlogic.MovesRules
 {
   static class PawnMoveRule
   {
-    public static List<Coords> GetMovesForPawn(Pice pice, List<Pice> pices, Player enemy)
+    public static List<Coords> GetMovesForPawn(Piece pice, List<Piece> pices, Player enemy)
     {
       var felder = new List<Coords>();
       felder.AddRange(GetNormalForwardFelder(pice, pices, enemy));
@@ -15,7 +15,7 @@ namespace Chess.Produktlogic.MovesRules
       return felder.Where(x => MoveRulesHelper.IsPiceBlocking(pices, x, enemy) != PiceBlockingReturn.OWN).ToList().Where(x => (x.Rank >= 0 && x.Rank <= 7) && (x.File >= 0 && x.File <= 7)).ToList();
     }
 
-    public static EnPassantItem GetEnPassant(Pice clickedPice, List<Pice> pices)
+    public static EnPassantItem GetEnPassant(Piece clickedPice, List<Piece> pices)
     {
       if (clickedPice.PiceType != PiceType.PAWN) return default;
 
@@ -37,7 +37,7 @@ namespace Chess.Produktlogic.MovesRules
         };
       }
 
-      if (pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.Rank == 3 && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
+      if (clickedPice.Owner == Player.BLACK && pices.Any(x => x.Owner == Player.WHITE && x.Coord.Rank == 3 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
       {
         return new EnPassantItem
         {
@@ -45,7 +45,7 @@ namespace Chess.Produktlogic.MovesRules
           PiceToCapture = new(clickedPice.Coord.Rank, clickedPice.Coord.File + 1)
         };
       }
-      if (pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.Rank == 3 && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
+      if (clickedPice.Owner == Player.BLACK && pices.Any(x => x.Owner == Player.WHITE && x.Coord.Rank == 3 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
       {
         return new EnPassantItem
         {
@@ -58,7 +58,7 @@ namespace Chess.Produktlogic.MovesRules
 
 
 
-    private static List<Coords> GetNormalForwardFelder(Pice pice, List<Pice> pices, Player enemy)
+    private static List<Coords> GetNormalForwardFelder(Piece pice, List<Piece> pices, Player enemy)
     {
       if(enemy == Player.BLACK)
         return GetFelderForBlackEnemy(pice, pices);
@@ -67,7 +67,7 @@ namespace Chess.Produktlogic.MovesRules
     }
 
 
-    private static List<Coords> GetFelderForWhiteEnemy(Pice pice, List<Pice> pices)
+    private static List<Coords> GetFelderForWhiteEnemy(Piece pice, List<Piece> pices)
     {
       var felder = pices.Where(x => x.Owner == Player.WHITE && x.Coord.Rank == pice.Coord.Rank - 1 && (x.Coord.File - 1 == pice.Coord.File || x.Coord.File + 1 == pice.Coord.File))
                         .Select(x => x.Coord)
@@ -82,7 +82,7 @@ namespace Chess.Produktlogic.MovesRules
       return felder;
     }
 
-    private static List<Coords> GetFelderForBlackEnemy(Pice pice, List<Pice> pices)
+    private static List<Coords> GetFelderForBlackEnemy(Piece pice, List<Piece> pices)
     {
       var felder = pices.Where(x => x.Owner == Player.BLACK && x.Coord.Rank == pice.Coord.Rank + 1 && (x.Coord.File - 1 == pice.Coord.File || x.Coord.File + 1 == pice.Coord.File))
                         .Select(x => x.Coord)

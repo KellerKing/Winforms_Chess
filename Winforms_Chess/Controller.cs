@@ -1,40 +1,48 @@
 ﻿using Chess.Produktlogic.Contracts;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using Winforms_Chess.Contracts;
 
 namespace Winforms_Chess
 {
   public class Controller
   {
-    private readonly Form1 m_mainForm;
-    private Board m_Board = Board.GetInstance();
+    private readonly GameForm m_mainForm;
+    private ResultDto m_ResultDto = new();
     private Player m_CurrentPlayer = Player.WHITE;
-    private Pice m_SelectedPice;
-    private List<Coords> m_PossibleFelder = new List<Coords>();
-    private IChessLogicController m_LogicController;
+    private Piece m_SelectedPiece;
+    private List<Coords> m_PossibleFelder = new();
+    private readonly IChessLogicController m_LogicController;
+    private List<Piece> m_BoardPosition;
+    private readonly Coords[,] m_Felder;
 
-    private const int formWidth = 1000;
-    private const int formHeight = 1000;
-
-    public Controller()
+    private List<string> m_Moves = new()
     {
-      m_mainForm = new Form1(formWidth, formHeight);
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+    };
+
+    public Controller(InputDto inputDto)
+    {
+      m_mainForm = new GameForm();
       m_LogicController = new Chess.Produktlogic.Controller();
+      m_Felder = Helper.CreateFelder(8, 8);
       ConnectEvents();
-      InitGameComponents();
-
-      m_mainForm.ShowForm();
-
+      InitGameComponents(inputDto.Singleplayer ? inputDto.PlayerSelected : Player.WHITE);
     }
 
-    private void InitGameComponents()
+    public ResultDto ShowGame()
     {
-      var topHeight = m_mainForm.GetTopBarHeight();
-      var picesToDraw = ViewModelCreator.GeneratePices(m_Board.CreatePosition(m_Board.Moves.First()));
-      var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Board.Felder, formWidth, formHeight - topHeight);
-      m_mainForm.InitBoard(felderToDraw);
-      m_mainForm.DrawPices(picesToDraw);
+      m_mainForm.ShowDialog();
+      return m_ResultDto;
+    }
+
+    private void InitGameComponents(Player playerCurrent)
+    {
+      m_BoardPosition = m_LogicController.CreatePiecesFromFen(m_Moves[0]);
+      var piecesToDraw = ViewModelCreator.GeneratePieces(m_BoardPosition);
+      var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Felder);
+      m_mainForm.InitBoard(felderToDraw, playerCurrent);
+      m_mainForm.InitPieces(piecesToDraw);
     }
 
     private void ConnectEvents()
@@ -46,45 +54,72 @@ namespace Winforms_Chess
     {
       if (!moveResult.WasMoveLegal) return;
 
-      m_CurrentPlayer = m_CurrentPlayer == Player.WHITE ? Player.BLACK : Player.WHITE;
+      m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
       m_PossibleFelder = moveResult.PossibleFelder;
-      m_Board.Pices = moveResult.BoardPosition;
-      m_mainForm.DrawPices(ViewModelCreator.GeneratePices(moveResult.BoardPosition));
+      m_BoardPosition = moveResult.BoardPosition;
+      m_mainForm.UpdatePieces(ViewModelCreator.GeneratePieces(moveResult.BoardPosition));
+      UpdateScores();
+      HandlePlayerLossOrDoNothing();
     }
 
-    public void GameObjectClicked(Coords coords, bool isPice)
+    private void HandlePlayerLossOrDoNothing()
     {
-      //Castle
-      if(isPice && m_SelectedPice?.PiceType == PiceType.KING && m_Board.Pices.FirstOrDefault(x => x.Owner == m_CurrentPlayer && x.Coord.Equals(coords))?.PiceType == PiceType.ROOK)
-      {
-        var moveResult = m_LogicController.MakeCastleMove(m_Board.Pices, coords, m_SelectedPice);
-        ValidiereZug(moveResult);
-        return;
-      }
+      var gameOverResult = m_LogicController.IsGameOver(m_BoardPosition, m_CurrentPlayer);
+      if (gameOverResult == GameOver.NO) return;
 
-      //Wenn ich meine Figur anklicke um die möglichen Felder zu laden
-      if (isPice && m_Board.Pices.Any(x => x.Owner == m_CurrentPlayer && x.Coord.Equals(coords)))
-      {
-        m_SelectedPice = m_Board.Pices.First(x => x.Coord.Equals(coords));
-        m_PossibleFelder = m_LogicController.GetPossibleFelderForPice(m_SelectedPice, m_Board.Pices);
-        return;
-      }
+      m_ResultDto = ResultDtoFactory.GetResultDto(Helper.GetEnemy(m_CurrentPlayer).ToString(), gameOverResult, System.Windows.Forms.DialogResult.OK);
+      m_mainForm.Dispose();
+      m_mainForm.Close();
+    }
 
-      //Wenn ich meine Figur gewählt habe, und jetzt auf mein Zielfeld klicke
-      if(!isPice && m_SelectedPice != null && m_PossibleFelder.Contains(coords))
-      {
-        var moveResult = m_LogicController.MakeNonCaptureMove(m_Board.Pices, coords, m_SelectedPice);
-        ValidiereZug(moveResult);
-        return;
-      }
+    private void UpdateScores()
+    {
+      var scoreBlack = m_LogicController.GetScoring(m_BoardPosition, Player.BLACK);
+      var scoreWhite = m_LogicController.GetScoring(m_BoardPosition, Player.WHITE);
+      m_mainForm.SetScore(scoreWhite, scoreBlack);
+    }
 
-      //Wenn ich meine Figur gewählt habe, und jetzt auf einen Gegner Klicke
-      if (isPice && m_SelectedPice != null && m_PossibleFelder.Contains(coords))
+    private void SelectPieceToMove(Coords coords)
+    {
+      m_SelectedPiece = m_BoardPosition.First(x => x.Coord.Equals(coords));
+      m_PossibleFelder = m_LogicController.GetPossibleFelderForPiece(m_SelectedPiece, m_BoardPosition);
+    }
+
+    private UpdatePositionDto ConvertPawn(Coords clickedCoords)
+    {
+      var ctr = new PieceSelectForm.Controller(m_CurrentPlayer);
+      var newPiece = ctr.ShowDialog();
+      var moveResult = m_LogicController.MakeNonCaptureMove(m_BoardPosition, clickedCoords, m_SelectedPiece);
+      moveResult.BoardPosition.First(x => x.Coord.Equals(clickedCoords)).PiceType = newPiece;
+      return moveResult;
+    }
+
+    private void GameObjectClicked(Coords coordsClicked, bool isPieceClicked)
+    {
+      UpdatePositionDto moveResult = null;
+
+      switch (m_LogicController.GetMoveType(isPieceClicked, m_PossibleFelder, coordsClicked, m_BoardPosition, m_SelectedPiece, m_CurrentPlayer))
       {
-        var clickedPice = m_Board.Pices.First(x => x.Coord.Equals(coords));
-        var moveResult = m_LogicController.MakeCaptureMove(m_Board.Pices, clickedPice, m_SelectedPice);
-        ValidiereZug(moveResult);
+        case MoveType.CASTLE:
+          moveResult = m_LogicController.MakeCastleMove(m_BoardPosition, coordsClicked, m_SelectedPiece);
+          break;
+        case MoveType.CAPUTRE:
+          var clickedPiece = m_BoardPosition.First(x => x.Coord.Equals(coordsClicked));
+          moveResult = m_LogicController.MakeCaptureMove(m_BoardPosition, clickedPiece, m_SelectedPiece);
+          break;
+        case MoveType.FORWARD:
+          moveResult = m_LogicController.MakeNonCaptureMove(m_BoardPosition, coordsClicked, m_SelectedPiece);
+          break;
+        case MoveType.PIECE_SELECT:
+          SelectPieceToMove(coordsClicked);
+          return;
+        case MoveType.NONE:
+          return;
+        case MoveType.CONVERT_PAWN:
+          moveResult = ConvertPawn(coordsClicked);
+          break;
       }
+      ValidiereZug(moveResult);
     }
   }
 }

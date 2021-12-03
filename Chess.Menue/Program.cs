@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Winforms_Chess
+namespace Chess.Menue
 {
   static class Program
   {
@@ -17,8 +17,9 @@ namespace Winforms_Chess
       Application.SetHighDpiMode(HighDpiMode.SystemAware);
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      //Application.Run(new Form1());
+      //Application.Run(new MainForm());
       var ctr = new Controller();
+      ctr.ShowGameMenue();
     }
   }
 }

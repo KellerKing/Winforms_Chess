@@ -4,11 +4,15 @@ namespace Chess.Produktlogic.Contracts
 {
   public interface IChessLogicController
   {
-    List<Coords> GetPossibleFelderForPice(Pice piceToCheck, List<Pice> boardPosition);
-    UpdatePositionDto MakeCaptureMove(List<Pice> pices, Pice clickedPice, Pice preselectedPice);
-    UpdatePositionDto MakeNonCaptureMove(List<Pice> pices, Coords clickedPice, Pice preselectedPice);
-    UpdatePositionDto MakeCastleMove(List<Pice> pices, Coords clickedPice, Pice preselectedPice);
-    int GetScoring(List<Pice> pices, Player currentPlayer, int startScore);
-    bool IsGameOver(List<Pice> pices, Player currentPlayer);
+    public List<Piece> CreatePiecesFromFen(string fen);
+    public string CreateFenFromPieces(List<Piece> pieces);
+
+    List<Coords> GetPossibleFelderForPiece(Piece piceToCheck, List<Piece> boardPosition);
+    UpdatePositionDto MakeCaptureMove(List<Piece> pieces, Piece clickedPice, Piece preselectedPice);
+    UpdatePositionDto MakeNonCaptureMove(List<Piece> pieces, Coords clickedPice, Piece preselectedPice);
+    UpdatePositionDto MakeCastleMove(List<Piece> pieces, Coords clickedPice, Piece preselectedPice);
+    int GetScoring(List<Piece> pieces, Player currentPlayer);
+    GameOver IsGameOver(List<Piece> pieces, Player currentPlayer);
+    MoveType GetMoveType(bool isPice, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent);
   }
 }

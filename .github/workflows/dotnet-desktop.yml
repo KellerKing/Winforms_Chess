@@ -20,7 +20,7 @@ jobs:
 
     env:
       Solution_Name: Winforms_Chess.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
-      Test_Project_Path: Winforms_Chess_Tests\Winforms_Chess_Tests.csproj                # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
+      Test_Project_Path: Winforms_Chess_Tests\Chess.Produktlogic.Test.csproj                # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
 
     steps:
     - name: Checkout
