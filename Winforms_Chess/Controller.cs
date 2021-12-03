@@ -14,16 +14,18 @@ namespace Winforms_Chess
     private List<Coords> m_PossibleFelder = new();
     private readonly IChessLogicController m_LogicController;
     private List<Piece> m_BoardPosition;
+    private readonly Coords[,] m_Felder;
 
     private List<string> m_Moves = new()
     {
-      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+      "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
     };
 
     public Controller(InputDto inputDto)
     {
       m_mainForm = new GameForm();
       m_LogicController = new Chess.Produktlogic.Controller();
+      m_Felder = Helper.CreateFelder(8, 8);
       ConnectEvents();
       InitGameComponents(inputDto.Singleplayer ? inputDto.PlayerSelected : Player.WHITE);
     }
@@ -36,9 +38,9 @@ namespace Winforms_Chess
 
     private void InitGameComponents(Player playerCurrent)
     {
-      m_BoardPosition = Fen.GetPieces(m_Moves[0]);
+      m_BoardPosition = m_LogicController.CreatePiecesFromFen(m_Moves[0]);
       var piecesToDraw = ViewModelCreator.GeneratePieces(m_BoardPosition);
-      var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(Helper.CreateFelder(8, 8));
+      var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Felder);
       m_mainForm.InitBoard(felderToDraw, playerCurrent);
       m_mainForm.InitPieces(piecesToDraw);
     }

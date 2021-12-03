@@ -4,6 +4,9 @@ namespace Chess.Produktlogic.Contracts
 {
   public interface IChessLogicController
   {
+    public List<Piece> CreatePiecesFromFen(string fen);
+    public string CreateFenFromPieces(List<Piece> pieces);
+
     List<Coords> GetPossibleFelderForPiece(Piece piceToCheck, List<Piece> boardPosition);
     UpdatePositionDto MakeCaptureMove(List<Piece> pieces, Piece clickedPice, Piece preselectedPice);
     UpdatePositionDto MakeNonCaptureMove(List<Piece> pieces, Coords clickedPice, Piece preselectedPice);

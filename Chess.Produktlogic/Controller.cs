@@ -63,5 +63,16 @@ namespace Chess.Produktlogic
     {
       return Move.GetMoveType(isPice, felderPossible, coordsToCheck, pieces, piecePreSelected, playerCurrent);
     }
+
+    public List<Piece> CreatePiecesFromFen(string fen)
+    {
+      //TODO: Maybe Check if Fen is valid
+      return FenMapper.CreatePiecesFromFen(fen);
+    }
+
+    public string CreateFenFromPieces(List<Piece> pieces)
+    {
+     return FenMapper.CreateFenFromPices(pieces);
+    }
   }
 }
