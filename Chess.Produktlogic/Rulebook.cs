@@ -7,28 +7,15 @@ namespace Chess.Produktlogic
 {
   public static class Rulebook
   {
-    public static bool IsStatelement(List<Piece> pices, Player currentPlayer)
+    public static GameOver IsGameOver(List<Piece> pices, Player currentPlayer)
     {
-      if (IsKingInCheck(pices, currentPlayer)) return false;
+      var isKingInCheck = IsKingInCheck(pices, currentPlayer);
 
-      foreach (var item in pices.Where(x => x.Owner == currentPlayer))
-      {
-        var felderPossible = PossibleMoveFactory.GetMovesFor(item, pices);
-        if (CanDoLegalMove(pices.ConvertAll(x => (Piece)x.Clone()).ToList(), (Piece)item.Clone(), felderPossible)) return false;
-      }
-      return true;
-    }
+      if (isKingInCheck && HasPlayerLost(pices, currentPlayer)) return GameOver.GAME_OVER;
 
-    public static bool HasPlayerLost(List<Piece> pices, Player currentPlayer)
-    {
-      if (!IsKingInCheck(pices, currentPlayer)) return false;
+      if (!isKingInCheck && IsStatelement(pices, currentPlayer)) return GameOver.STATLEMENT;
 
-      foreach (var item in pices.Where(x => x.Owner == currentPlayer))
-      {
-        var felderPossible = PossibleMoveFactory.GetMovesFor(item, pices);
-        if (CanDoLegalMove(pices.ConvertAll(x => (Piece)x.Clone()).ToList(),(Piece)item.Clone(), felderPossible)) return false;
-      }
-      return true;
+      return GameOver.NO;
     }
 
     public static bool CanCastleKingSide(List<Piece> pices, Piece king)
@@ -56,6 +43,26 @@ namespace Chess.Produktlogic
       if (queenSideRook == null || IsCastleThroughCheck(pices, king, queenSideRook)) return false;
       return !IsPiceBlockingForCastle(pices, king, queenSideRook);
     }
+    private static bool IsStatelement(List<Piece> pices, Player currentPlayer)
+    {
+      foreach (var item in pices.Where(x => x.Owner == currentPlayer))
+      {
+        var felderPossible = PossibleMoveFactory.GetMovesFor(item, pices);
+        if (CanDoLegalMove(pices.ConvertAll(x => (Piece)x.Clone()).ToList(), (Piece)item.Clone(), felderPossible)) return false;
+      }
+      return true;
+    }
+
+    private static bool HasPlayerLost(List<Piece> pices, Player currentPlayer)
+    {
+      foreach (var item in pices.Where(x => x.Owner == currentPlayer))
+      {
+        var felderPossible = PossibleMoveFactory.GetMovesFor(item, pices);
+        if (CanDoLegalMove(pices.ConvertAll(x => (Piece)x.Clone()).ToList(), (Piece)item.Clone(), felderPossible)) return false;
+      }
+      return true;
+    }
+
 
     private static bool IsCastleThroughCheck(List<Piece> pices, Piece king, Piece rook)
     {

@@ -7,22 +7,21 @@ namespace Chess.Produktlogic
 {
   public class Move
   {
-
-    public static MoveType GetMoveType(bool isPice, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)
+    public static MoveType GetMoveType(bool isPieceClicked, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)
     {
-      if (!isPice && piecePreSelected != null && felderPossible.Contains(coordsToCheck) && (coordsToCheck.Rank == 0 || coordsToCheck.Rank == 7) && piecePreSelected.PiceType == PiceType.PAWN)
+      if (!isPieceClicked && piecePreSelected != null && felderPossible.Contains(coordsToCheck) && (coordsToCheck.Rank == 0 || coordsToCheck.Rank == 7) && piecePreSelected.PiceType == PiceType.PAWN)
         return MoveType.CONVERT_PAWN;
 
-      if (isPice && piecePreSelected?.PiceType == PiceType.KING && pieces.Find(x => x.Owner == playerCurrent && x.Coord.Equals(coordsToCheck))?.PiceType == PiceType.ROOK)
+      if (isPieceClicked && piecePreSelected?.PiceType == PiceType.KING && pieces.Find(x => x.Owner == playerCurrent && x.Coord.Equals(coordsToCheck))?.PiceType == PiceType.ROOK)
         return MoveType.CASTLE;
 
-      if (isPice && pieces.Any(x => x.Owner == playerCurrent && x.Coord.Equals(coordsToCheck)))
+      if (isPieceClicked && pieces.Any(x => x.Owner == playerCurrent && x.Coord.Equals(coordsToCheck)))
         return MoveType.PIECE_SELECT;
 
-      if (!isPice && piecePreSelected != null && felderPossible.Contains(coordsToCheck))
+      if (!isPieceClicked && piecePreSelected != null && felderPossible.Contains(coordsToCheck))
         return MoveType.FORWARD;
 
-      if (isPice && piecePreSelected != null && felderPossible.Contains(coordsToCheck))
+      if (isPieceClicked && piecePreSelected != null && felderPossible.Contains(coordsToCheck))
         return MoveType.CAPUTRE;
 
       return MoveType.NONE;

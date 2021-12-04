@@ -54,9 +54,7 @@ namespace Chess.Produktlogic
 
     public GameOver IsGameOver(List<Piece> pices, Player currentPlayer)
     {
-      if (Rulebook.HasPlayerLost(pices, currentPlayer)) return GameOver.GAME_OVER;
-      else if (Rulebook.IsStatelement(pices, currentPlayer)) return GameOver.STATLEMENT;
-      return GameOver.NO;
+      return Rulebook.IsGameOver(pices, currentPlayer);
     }
 
     public MoveType GetMoveType(bool isPice, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)
