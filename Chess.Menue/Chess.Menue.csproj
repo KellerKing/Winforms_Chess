@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Winforms_Chess\Chess.Game.csproj" />
+    <ProjectReference Include="..\Chess.Game\Chess.Game.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,11 +1,11 @@
-﻿using Winforms_Chess.Contracts;
+﻿using Chess.Game.Contracts;
 
 namespace Chess.Menue
 {
   class Controller
   {
     private readonly MainForm m_MainForm;
-    private Winforms_Chess.Controller m_GameController;
+    private Game.Controller m_GameController;
 
     public Controller()
     {

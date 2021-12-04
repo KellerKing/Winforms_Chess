@@ -1,9 +1,7 @@
-﻿using Chess.Produktlogic.Contracts;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using Chess.Game.Factory;
+using Chess.Produktlogic.Contracts;
 
-namespace Winforms_Chess.PieceSelectForm
+namespace Chess.Game.PieceSelectForm
 {
   public class Controller
   {
@@ -23,8 +21,8 @@ namespace Winforms_Chess.PieceSelectForm
     private void InitForm()
     {
       m_Form.DrawTargetPieces(ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.BISHOP),
-        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.KNIGHT), 
-        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.QUEEN), 
+        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.KNIGHT),
+        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.QUEEN),
         ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.ROOK));
     }
 

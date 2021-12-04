@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Winforms_Chess.Contracts
+namespace Chess.Game.Contracts
 {
   public class ResultDto
   {

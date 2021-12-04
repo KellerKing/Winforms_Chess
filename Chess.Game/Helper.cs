@@ -1,6 +1,6 @@
 ﻿using Chess.Produktlogic.Contracts;
 
-namespace Winforms_Chess
+namespace Chess.Game
 {
   class Helper
   {
@@ -14,9 +14,9 @@ namespace Winforms_Chess
     {
       var tiles = new Coords[maxX, maxY];
 
-      for (int file = 0; file < maxX; file++)
+      for (var file = 0; file < maxX; file++)
       {
-        for (int rank = 0; rank < maxY; rank++)
+        for (var rank = 0; rank < maxY; rank++)
         {
           tiles[file, rank] = new(file, rank);
         }

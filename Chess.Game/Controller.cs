@@ -1,9 +1,11 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Game.Contracts;
+using Chess.Game.Factory;
+using Chess.Produktlogic.Contracts;
 using System.Collections.Generic;
 using System.Linq;
-using Winforms_Chess.Contracts;
+using Winforms_Chess;
 
-namespace Winforms_Chess
+namespace Chess.Game
 {
   public class Controller
   {
@@ -24,7 +26,7 @@ namespace Winforms_Chess
     public Controller(InputDto inputDto)
     {
       m_mainForm = new GameForm();
-      m_LogicController = new Chess.Produktlogic.Controller();
+      m_LogicController = new Produktlogic.Controller();
       m_Felder = Helper.CreateFelder(8, 8);
       ConnectEvents();
       InitGameComponents(inputDto.Singleplayer ? inputDto.PlayerSelected : Player.WHITE);

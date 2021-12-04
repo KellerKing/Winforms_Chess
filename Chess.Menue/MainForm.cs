@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Chess.Game.Contracts;
+using System;
 using System.Windows.Forms;
-using Winforms_Chess.Contracts;
 
 namespace Chess.Menue
 {

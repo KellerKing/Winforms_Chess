@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using Chess.Game.Properties;
 using System;
+using Winforms_Chess;
 
-namespace Winforms_Chess
+namespace Chess.Game.Factory
 {
   public class ViewModelCreator
   {

@@ -1,4 +1,5 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Game;
+using Chess.Produktlogic.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Data;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Winforms_Chess.PieceSelectForm
+namespace Chess.Game.PieceSelectForm
 {
   public partial class PieceSelectForm : Form
   {

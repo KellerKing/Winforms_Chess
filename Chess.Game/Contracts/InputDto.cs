@@ -1,6 +1,6 @@
 ﻿using Chess.Produktlogic.Contracts;
 
-namespace Winforms_Chess.Contracts
+namespace Chess.Game.Contracts
 {
   public class InputDto
   {

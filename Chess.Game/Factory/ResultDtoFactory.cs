@@ -1,8 +1,8 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Game.Contracts;
+using Chess.Produktlogic.Contracts;
 using System.Windows.Forms;
-using Winforms_Chess.Contracts;
 
-namespace Winforms_Chess
+namespace Chess.Game.Factory
 {
   public class ResultDtoFactory
   {

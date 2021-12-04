@@ -1,5 +1,5 @@
 ﻿
-namespace Winforms_Chess.PieceSelectForm
+namespace Chess.Game.PieceSelectForm
 {
   partial class PieceSelectForm
   {
