@@ -2,17 +2,11 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-
 namespace Chess.Produktlogic.Test
 {
   [TestFixture]
   public class PossibleMoveFactory_Tests
   {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestKnight_CenterPosition2Possibles()
@@ -45,29 +39,21 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.QUEEN
         }
       };
-
       var expected = new List<Coords>()
       {
         new Coords(2,3),
         new Coords(6,3),
-
         Feldbezeichnung.C6,
         Feldbezeichnung.G6,
         Feldbezeichnung.G4,
         Feldbezeichnung.C4,
-
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       foreach (var item in expected)
       {
         Assert.Contains(item, result);
       }
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestKnight_CenterPositionNoBlockingPicesAllEnemies()
@@ -94,32 +80,24 @@ namespace Chess.Produktlogic.Test
           Coord = new Coords(6, 3),
           PiceType = PiceType.KNIGHT
         },
-
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.C6,
         Feldbezeichnung.G6,
         Feldbezeichnung.G4,
         Feldbezeichnung.C4,
-
         Feldbezeichnung.F3,
         Feldbezeichnung.D3,
         Feldbezeichnung.F7,
         Feldbezeichnung.D7,
       }.OrderBy(x => x.File).ToList();
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup).OrderBy(x => x.File).ToList();
-
       foreach (var item in expected)
       {
         Assert.Contains(item, result);
       }
     }
-
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestKnight_H1PositionNoBlockingPices()
@@ -132,28 +110,17 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.KNIGHT
         }
       };
-
       var expected = new List<Coords>()
       {
         new Coords(2,6),
         new Coords(1,5)
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
-
-
       foreach (var item in expected)
       {
         Assert.Contains(item, result);
       }
-
-
     }
-
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestQueen_E5AllPositionsArePossible()
@@ -166,51 +133,39 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.QUEEN
         }
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.F5,
         Feldbezeichnung.E4,
         Feldbezeichnung.D5,
         Feldbezeichnung.E6,
-
         Feldbezeichnung.F4,
         Feldbezeichnung.G3,
         Feldbezeichnung.H2,
-
         Feldbezeichnung.D4,
         Feldbezeichnung.C3,
         Feldbezeichnung.B2,
         Feldbezeichnung.A1,
-
         Feldbezeichnung.D6,
         Feldbezeichnung.C7,
         Feldbezeichnung.B8,
-
         Feldbezeichnung.F6,
         Feldbezeichnung.G7,
         Feldbezeichnung.H8,
-
-
         Feldbezeichnung.G5,
         Feldbezeichnung.H5,
         Feldbezeichnung.C5,
         Feldbezeichnung.B5,
         Feldbezeichnung.A5,
-
         Feldbezeichnung.E7,
         Feldbezeichnung.E8,
         Feldbezeichnung.E3,
         Feldbezeichnung.E2,
         Feldbezeichnung.E1,
-
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestQueen_E5ArroundingIsBlockingDiagonalsAreEnemys()
@@ -222,7 +177,6 @@ namespace Chess.Produktlogic.Test
           Coord = new Coords(4, 4),
           PiceType = PiceType.QUEEN
         },
-
         new Piece(Player.BLACK) //Pice to Block
         {
          Coord =  new Coords(5,3),
@@ -233,29 +187,22 @@ namespace Chess.Produktlogic.Test
           Coord = new Coords(5,4),
           PiceType = PiceType.PAWN
         },
-
          new Piece(Player.BLACK) //Pice to Block
         {
           Coord = new Coords(4,5),
           PiceType = PiceType.PAWN
         },
-
          new Piece(Player.BLACK) //Pice to Block
         {
           Coord = new Coords(3,4),
           PiceType = PiceType.PAWN
         },
-
-
-
          new Piece(Player.WHITE) //Enemy --> geht, aber weiter geht die Diagonale nicht (nach links unten)
         {
           Coord = new Coords(3,3),
           PiceType = PiceType.PAWN
         },
-
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.D4,
@@ -263,25 +210,16 @@ namespace Chess.Produktlogic.Test
         Feldbezeichnung.C5,
         Feldbezeichnung.B5,
         Feldbezeichnung.A5,
-
         Feldbezeichnung.F6,
         Feldbezeichnung.G7,
         Feldbezeichnung.H8,
-
         Feldbezeichnung.F4,
         Feldbezeichnung.G3,
         Feldbezeichnung.H2,
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestQueen_H1()
@@ -294,7 +232,6 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.QUEEN
         }
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.H2,
@@ -304,7 +241,6 @@ namespace Chess.Produktlogic.Test
         Feldbezeichnung.H6,
         Feldbezeichnung.H7,
         Feldbezeichnung.H8,
-
         Feldbezeichnung.G1,
         Feldbezeichnung.F1,
         Feldbezeichnung.E1,
@@ -312,7 +248,6 @@ namespace Chess.Produktlogic.Test
         Feldbezeichnung.C1,
         Feldbezeichnung.B1,
         Feldbezeichnung.A1,
-
         Feldbezeichnung.G2,
         Feldbezeichnung.F3,
         Feldbezeichnung.E4,
@@ -320,18 +255,10 @@ namespace Chess.Produktlogic.Test
         Feldbezeichnung.C6,
         Feldbezeichnung.B7,
         Feldbezeichnung.A8,
-
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
-
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestKing_E5AllPossible()
@@ -344,27 +271,20 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.KING
         }
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.E6,
         Feldbezeichnung.F6,
         Feldbezeichnung.F5,
-
         Feldbezeichnung.F4,
         Feldbezeichnung.E4,
         Feldbezeichnung.D4,
-
         Feldbezeichnung.D5,
         Feldbezeichnung.D6,
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestKing_E5EnemysOnDiagonalsAn1OwnPawnOnBottom()
@@ -376,13 +296,11 @@ namespace Chess.Produktlogic.Test
           Coord = new Coords(4, 4),
           PiceType = PiceType.KING
         },
-
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.D6,
           PiceType = PiceType.PAWN
         },
-
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F6,
@@ -404,27 +322,19 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.E6,
         Feldbezeichnung.F6,
         Feldbezeichnung.F5,
-
         Feldbezeichnung.F4,
         Feldbezeichnung.D4,
-
         Feldbezeichnung.D5,
         Feldbezeichnung.D6,
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestKing_H1NoOtherPices()
@@ -437,23 +347,15 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.KING
         },
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.G1,
         Feldbezeichnung.G2,
         Feldbezeichnung.H2
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_E5EnemysOnF6D6AndOwnPawnOnE6_AsWhite()
@@ -465,13 +367,11 @@ namespace Chess.Produktlogic.Test
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.PAWN
         },
-
          new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.E6,
           PiceType = PiceType.PAWN
         },
-
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.F6,
@@ -483,20 +383,14 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         },
       };
-
       var expected = new List<Coords>()
       {
        Feldbezeichnung.F6,
        Feldbezeichnung.D6
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_E5EnemysOnF6OwnOnD6_AsWhite()
@@ -508,34 +402,26 @@ namespace Chess.Produktlogic.Test
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.PAWN
         },
-
          new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.D6,
           PiceType = PiceType.PAWN
         },
-
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.F6,
           PiceType = PiceType.PAWN
         },
       };
-
       var expected = new List<Coords>()
       {
        Feldbezeichnung.E6,
        Feldbezeichnung.D6,
        Feldbezeichnung.F6
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_E5_AsWhite()
@@ -548,18 +434,13 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>()
       {
        Feldbezeichnung.E6
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_E8_AsWhite()
@@ -572,14 +453,10 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>();
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_B2_AsWhite_CanForward2Fields()
@@ -592,18 +469,14 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>
       {
         Feldbezeichnung.B3,
         Feldbezeichnung.B4
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_B2_AsWhite_1EnemyInFront()
@@ -621,17 +494,13 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>
       {
         Feldbezeichnung.B3,
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_G7_AsBlack_CanForward2Fields()
@@ -644,18 +513,14 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>
       {
         Feldbezeichnung.G6,
         Feldbezeichnung.G5
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_G7_AsBlack_1EnemyInFront()
@@ -673,18 +538,13 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>
       {
         Feldbezeichnung.G6,
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_E5EnemysOnF4D4AndOnE4_AsBlack()
@@ -696,13 +556,11 @@ namespace Chess.Produktlogic.Test
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.PAWN
         },
-
          new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.E4,
           PiceType = PiceType.PAWN
         },
-
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F4,
@@ -714,20 +572,14 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         },
       };
-
       var expected = new List<Coords>()
       {
        Feldbezeichnung.F4,
        Feldbezeichnung.D4
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_E5EnemysOnF4OwnOnD4_AsBlack()
@@ -739,34 +591,26 @@ namespace Chess.Produktlogic.Test
           Coord = Feldbezeichnung.E5,
           PiceType = PiceType.PAWN
         },
-
          new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F4,
           PiceType = PiceType.PAWN
         },
-
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.D4,
           PiceType = PiceType.PAWN
         },
       };
-
       var expected = new List<Coords>()
       {
        Feldbezeichnung.E4,
        Feldbezeichnung.D4,
        Feldbezeichnung.F4
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_E5_AsBlack()
@@ -779,19 +623,13 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>()
       {
        Feldbezeichnung.E4
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_E1_AsBlack()
@@ -804,18 +642,12 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>()
       {
-
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_EnPassantPossible()
@@ -827,26 +659,21 @@ namespace Chess.Produktlogic.Test
           Coord = Feldbezeichnung.B5,
           PiceType = PiceType.PAWN
         },
-        new Piece(Player.BLACK) 
+        new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.C5,
           PiceType = PiceType.PAWN,
           MoveCounter = 1
         }
       };
-
       var expected = new List<Coords>
       {
         Feldbezeichnung.C6,
         Feldbezeichnung.B6
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestPawn_EnPassantNotPossibleEnemyHasMovedTwice()
@@ -858,25 +685,20 @@ namespace Chess.Produktlogic.Test
           Coord = Feldbezeichnung.B5,
           PiceType = PiceType.PAWN
         },
-        new Piece(Player.BLACK) 
+        new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.C5,
           PiceType = PiceType.PAWN,
           MoveCounter = 2
         }
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.B6
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestBishop_G2()
@@ -889,29 +711,21 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.BISHOP
         }
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.H1,
         Feldbezeichnung.F1,
         Feldbezeichnung.H3,
-
         Feldbezeichnung.F3,
         Feldbezeichnung.E4,
         Feldbezeichnung.D5,
         Feldbezeichnung.C6,
         Feldbezeichnung.B7,
         Feldbezeichnung.A8,
-
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestBishop_G2_OwnE4EnemyH3()
@@ -928,32 +742,22 @@ namespace Chess.Produktlogic.Test
           Coord = Feldbezeichnung.E4,
           PiceType = PiceType.PAWN
         },
-
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.H3,
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.H1,
         Feldbezeichnung.F1,
         Feldbezeichnung.H3,
-
         Feldbezeichnung.F3,
-
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestRook_H1_OwnF1EnemyH3()
@@ -970,30 +774,21 @@ namespace Chess.Produktlogic.Test
           Coord = Feldbezeichnung.F1,
           PiceType = PiceType.PAWN
         },
-
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.H3,
           PiceType = PiceType.PAWN
         }
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.H2,
         Feldbezeichnung.G1,
         Feldbezeichnung.H3,
-
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
-
     [Test]
     [TestCase]
     public void GetMovesFor_TestRook_E5_NoOtherPices()
@@ -1006,38 +801,25 @@ namespace Chess.Produktlogic.Test
           PiceType = PiceType.ROOK
         },
       };
-
       var expected = new List<Coords>()
       {
         Feldbezeichnung.F5,
         Feldbezeichnung.G5,
         Feldbezeichnung.H5,
-
         Feldbezeichnung.D5,
         Feldbezeichnung.C5,
         Feldbezeichnung.B5,
         Feldbezeichnung.A5,
-
-
         Feldbezeichnung.E4,
         Feldbezeichnung.E3,
         Feldbezeichnung.E2,
         Feldbezeichnung.E1,
-
         Feldbezeichnung.E6,
         Feldbezeichnung.E7,
         Feldbezeichnung.E8,
-
-
-
       };
-
       var result = PossibleMoveFactory.GetMovesFor(boardSetup.First(), boardSetup);
-
-
       CollectionAssert.AreEquivalent(result, expected);
     }
-
-
   }
 }
