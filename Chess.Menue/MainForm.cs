@@ -11,7 +11,6 @@ namespace Chess.Menue
     public MainForm()
     {
       InitializeComponent();
-     //btnPlay.Image = ViewModelCreator.GetProperPlayImage(btnPlay.Height);
     }
 
     private void button1_Click(object sender, EventArgs e)
@@ -42,7 +41,7 @@ namespace Chess.Menue
 
     internal void ShowMessage(ResultDto resultDto)
     {
-      if (!resultDto.IsPatt)
+      if (resultDto.IsPatt)
       {
         MessageBox.Show("Statlement");
         return;

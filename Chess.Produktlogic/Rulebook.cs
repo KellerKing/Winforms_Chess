@@ -7,15 +7,9 @@ namespace Chess.Produktlogic
 {
   public static class Rulebook
   {
-
-    public static bool IsLegalMove(List<Piece> positionsCurrent, Player currentPlayer)
-    {
-      return !IsKingInCheck(positionsCurrent, currentPlayer);
-    }
-
     public static bool IsStatelement(List<Piece> pices, Player currentPlayer)
     {
-      if (!IsLegalMove(pices, currentPlayer)) return false;
+      if (IsKingInCheck(pices, currentPlayer)) return false;
 
       foreach (var item in pices.Where(x => x.Owner == currentPlayer))
       {
@@ -27,7 +21,7 @@ namespace Chess.Produktlogic
 
     public static bool HasPlayerLost(List<Piece> pices, Player currentPlayer)
     {
-      if (IsLegalMove(pices, currentPlayer)) return false;
+      if (!IsKingInCheck(pices, currentPlayer)) return false;
 
       foreach (var item in pices.Where(x => x.Owner == currentPlayer))
       {
@@ -84,7 +78,7 @@ namespace Chess.Produktlogic
         (x.Coord.File > minFile && x.Coord.File < maxFile));
     }
 
-    private static bool IsKingInCheck(List<Piece> board, Player currentPlayer)
+    public static bool IsKingInCheck(List<Piece> board, Player currentPlayer)
     {
       var currentKing = board.FirstOrDefault(x => x.Owner == currentPlayer && x.PiceType == PiceType.KING);
 
@@ -93,7 +87,7 @@ namespace Chess.Produktlogic
         IsPiceAttacking(board, currentKing, PiceType.KING) || IsPiceAttacking(board, currentKing, PiceType.PAWN);
     }
 
-    private static bool IsKingInCheck(List<Piece> board, Piece currentKing)
+    public static bool IsKingInCheck(List<Piece> board, Piece currentKing)
     {
       return IsPiceAttacking(board, currentKing, PiceType.ROOK) || IsPiceAttacking(board, currentKing, PiceType.KNIGHT) ||
         IsPiceAttacking(board, currentKing, PiceType.BISHOP) || IsPiceAttacking(board, currentKing, PiceType.QUEEN) ||
@@ -105,7 +99,7 @@ namespace Chess.Produktlogic
       foreach (var possibleFeld in felderPossible)
       {
         var movetype = Move.GetMoveType(pieces.Any(x => x.Coord.Equals(possibleFeld)), felderPossible, possibleFeld, pieces, piece, piece.Owner);
-        if (IsLegalMove(Move.AutomaticMove(movetype, piece.Coord, possibleFeld, pieces.ConvertAll(x => (Piece)x.Clone()).ToList()), piece.Owner)) return true;
+        if (!IsKingInCheck(Move.AutomaticMove(movetype, piece.Coord, possibleFeld, pieces.ConvertAll(x => (Piece)x.Clone()).ToList()), piece.Owner)) return true;
       }
       return false;
     }

@@ -30,7 +30,6 @@ namespace Chess.Produktlogic
 
     public static List<Piece> AutomaticMove(MoveType moveType, Coords oldPosition, Coords newPosition, List<Piece> pices)
     {
-
       if (moveType == MoveType.CASTLE)
         return Castle(pices, oldPosition, newPosition);
       if (moveType == MoveType.CAPUTRE)

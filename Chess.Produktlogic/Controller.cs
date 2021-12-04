@@ -19,7 +19,7 @@ namespace Chess.Produktlogic
       {
         BoardPosition = newBoardPosition,
         PossibleFelder = new List<Coords>(),
-        WasMoveLegal = Rulebook.IsLegalMove(newBoardPosition, preselectedPice.Owner),
+        WasMoveLegal = !Rulebook.IsKingInCheck(newBoardPosition, preselectedPice.Owner),
       };
     }
 
@@ -30,7 +30,7 @@ namespace Chess.Produktlogic
       return new UpdatePositionDto
       {
         BoardPosition = newBoardPosition,
-        WasMoveLegal = Rulebook.IsLegalMove(newBoardPosition, preselectedPice.Owner),
+        WasMoveLegal = !Rulebook.IsKingInCheck(newBoardPosition, preselectedPice.Owner),
         PossibleFelder = new List<Coords>(),
       };
     }
@@ -42,7 +42,7 @@ namespace Chess.Produktlogic
       return new UpdatePositionDto
       {
         BoardPosition = newBoardPosition,
-        WasMoveLegal = Rulebook.IsLegalMove(newBoardPosition, preselectedPice.Owner),
+        WasMoveLegal = !Rulebook.IsKingInCheck(newBoardPosition, preselectedPice.Owner),
         PossibleFelder = new List<Coords>(),
       };
     }

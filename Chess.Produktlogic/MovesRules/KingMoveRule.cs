@@ -82,7 +82,7 @@ namespace Chess.Produktlogic.MovesRules
       return Enumerable.Range(minFile, maxFile).Any(x =>
       {
         king.Coord = new(king.Coord.Rank, x);
-        return Rulebook.IsLegalMove(pices, king.Owner);
+        return !Rulebook.IsKingInCheck(pices, king.Owner);
       });
     }
 
