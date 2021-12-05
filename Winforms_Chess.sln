@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess.Menue", "Chess.Menue\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess.Game", "Chess.Game\Chess.Game.csproj", "{6708C5E5-8DF0-4202-A83B-7FFEFF19D642}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chess.AI", "Chess.AI\Chess.AI.csproj", "{B3CB874B-562B-47C9-8BC9-481C555D9020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chess.AI.Test", "Chess.AI.Test\Chess.AI.Test.csproj", "{68DFE30B-3FAF-4C0C-B810-14A4C47A9A5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chess.AI.Test", "Chess.AI.Test\Chess.AI.Test.csproj", "{68DFE30B-3FAF-4C0C-B810-14A4C47A9A5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chess.AI", "Chess.AI\Chess.AI.csproj", "{CE88D801-DBF9-491C-BB24-683B11E51E00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +37,14 @@ Global
 		{6708C5E5-8DF0-4202-A83B-7FFEFF19D642}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6708C5E5-8DF0-4202-A83B-7FFEFF19D642}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6708C5E5-8DF0-4202-A83B-7FFEFF19D642}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3CB874B-562B-47C9-8BC9-481C555D9020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3CB874B-562B-47C9-8BC9-481C555D9020}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3CB874B-562B-47C9-8BC9-481C555D9020}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3CB874B-562B-47C9-8BC9-481C555D9020}.Release|Any CPU.Build.0 = Release|Any CPU
 		{68DFE30B-3FAF-4C0C-B810-14A4C47A9A5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{68DFE30B-3FAF-4C0C-B810-14A4C47A9A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68DFE30B-3FAF-4C0C-B810-14A4C47A9A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68DFE30B-3FAF-4C0C-B810-14A4C47A9A5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE88D801-DBF9-491C-BB24-683B11E51E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE88D801-DBF9-491C-BB24-683B11E51E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE88D801-DBF9-491C-BB24-683B11E51E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE88D801-DBF9-491C-BB24-683B11E51E00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

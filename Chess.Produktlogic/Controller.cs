@@ -54,7 +54,7 @@ namespace Chess.Produktlogic
       return new UpdatePositionDto
       {
         BoardPosition = newBoardPosition,
-        WasMoveLegal = !Rulebook.IsKingInCheck(newBoardPosition, preselectedPice.Owner),
+        WasMoveLegal = !Rulebook.IsKingInCheck(newBoardPosition, pieces.First(x => x.Coord.Equals(oldPosition)).Owner),
         PossibleFelder = new List<Coords>(),
       };
     }
