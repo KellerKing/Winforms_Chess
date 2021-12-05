@@ -47,6 +47,18 @@ namespace Chess.Produktlogic
       };
     }
 
+    public UpdatePositionDto MakeAutomaticMove(MoveType moveType, Coords oldPosition, Coords newPosition, List<Piece> pieces)
+    {
+      var newBoardPosition = Move.AutomaticMove(moveType, oldPosition, newPosition, pieces);
+
+      return new UpdatePositionDto
+      {
+        BoardPosition = newBoardPosition,
+        WasMoveLegal = !Rulebook.IsKingInCheck(newBoardPosition, preselectedPice.Owner),
+        PossibleFelder = new List<Coords>(),
+      };
+    }
+
     public int GetScoring(List<Piece> pices, Player currentPlayer)
     {
       return ScoreCalculator.CalculateRelativeScore(pices, currentPlayer);
