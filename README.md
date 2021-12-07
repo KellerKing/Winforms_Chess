@@ -1,6 +1,6 @@
 # Winforms_Chess
 
 ## Important
-I Did the Current pices not on my own.
-Here is the link to the original Files
+I did the current pieces not on my own.
+Here is the link to the original files:
 https://opengameart.org/content/chess-pieces
