@@ -49,7 +49,7 @@ namespace Chess.Produktlogic
 
     public UpdatePositionDto MakeAutomaticMove(MoveType moveType, Coords oldPosition, Coords newPosition, List<Piece> pieces)
     {
-      var newBoardPosition = Move.AutomaticMove(moveType, oldPosition, newPosition, pieces);
+      var newBoardPosition = Move.AutomaticMove(moveType, oldPosition, newPosition, pieces.ConvertAll(x => (Piece)x.Clone()));
 
       return new UpdatePositionDto
       {
