@@ -7,8 +7,10 @@ namespace Chess.Produktlogic
 {
   public class Move
   {
-    public static MoveType GetMoveType(bool isPieceClicked, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)
+    public static MoveType GetMoveType(List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)
     {
+      var isPieceClicked = pieces.Any(x => x.Coord.Equals(coordsToCheck));
+
       if (!isPieceClicked && piecePreSelected != null && felderPossible.Contains(coordsToCheck) && (coordsToCheck.Rank == 0 || coordsToCheck.Rank == 7) && piecePreSelected.PiceType == PiceType.PAWN)
         return MoveType.CONVERT_PAWN;
 

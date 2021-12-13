@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Chess.AI\Chess.AI.csproj" />
     <ProjectReference Include="..\Chess.Produktlogic\Chess.Produktlogic.csproj" />
   </ItemGroup>
 

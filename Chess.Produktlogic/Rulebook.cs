@@ -101,12 +101,12 @@ namespace Chess.Produktlogic
         IsPiceAttacking(board, currentKing, PiceType.KING) || IsPiceAttacking(board, currentKing, PiceType.PAWN);
     }
 
-    private static bool CanDoLegalMove(List<Piece> pieces, Piece piece, List<Coords> felderPossible)
+    private static bool CanDoLegalMove(List<Piece> pieces, Piece pieceToMove, List<Coords> felderPossible)
     {
       foreach (var possibleFeld in felderPossible)
       {
-        var movetype = Move.GetMoveType(pieces.Any(x => x.Coord.Equals(possibleFeld)), felderPossible, possibleFeld, pieces, piece, piece.Owner);
-        if (!IsKingInCheck(Move.AutomaticMove(movetype, piece.Coord, possibleFeld, pieces.ConvertAll(x => (Piece)x.Clone()).ToList()), piece.Owner)) return true;
+        var movetype = Move.GetMoveType(felderPossible, possibleFeld, pieces, pieceToMove, pieceToMove.Owner);
+        if (!IsKingInCheck(Move.AutomaticMove(movetype, pieceToMove.Coord, possibleFeld, pieces.ConvertAll(x => (Piece)x.Clone()).ToList()), pieceToMove.Owner)) return true;
       }
       return false;
     }

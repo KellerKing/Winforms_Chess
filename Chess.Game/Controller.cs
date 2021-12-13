@@ -20,6 +20,7 @@ namespace Chess.Game
 
     private List<string> m_Moves = new()
     {
+     // "rnbqkbnr/5ppp/8/8/8/8/PNPPPPPP/1RBQKBNR",
       "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
     };
 
@@ -41,6 +42,7 @@ namespace Chess.Game
     private void InitGameComponents(Player playerCurrent)
     {
       m_BoardPosition = m_LogicController.CreatePiecesFromFen(m_Moves[0]);
+      //Chess.AI.MinMaxCalculator.GetBestPosition(m_BoardPosition, playerCurrent, 20);
       var piecesToDraw = ViewModelCreator.GeneratePieces(m_BoardPosition);
       var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Felder);
       m_mainForm.InitBoard(felderToDraw, playerCurrent);
@@ -96,11 +98,11 @@ namespace Chess.Game
       return moveResult;
     }
 
-    private void GameObjectClicked(Coords coordsClicked, bool isPieceClicked)
+    private void GameObjectClicked(Coords coordsClicked)
     {
       UpdatePositionDto moveResult = null;
 
-      switch (m_LogicController.GetMoveType(isPieceClicked, m_PossibleFelder, coordsClicked, m_BoardPosition, m_SelectedPiece, m_CurrentPlayer))
+      switch (m_LogicController.GetMoveType(m_PossibleFelder, coordsClicked, m_BoardPosition, m_SelectedPiece, m_CurrentPlayer))
       {
         case MoveType.CASTLE:
           moveResult = m_LogicController.MakeCastleMove(m_BoardPosition, coordsClicked, m_SelectedPiece);

@@ -13,7 +13,7 @@ namespace Chess.Produktlogic
 
     public UpdatePositionDto MakeCastleMove(List<Piece> pices, Coords clickedPice, Piece preselectedPice)
     {
-      var newBoardPosition = Move.Castle(pices.Select(x => (Piece)x.Clone()).ToList(), preselectedPice.Coord, clickedPice);
+      var newBoardPosition = Move.Castle(pices.ConvertAll(x => (Piece)x.Clone()), preselectedPice.Coord, clickedPice);
 
       return new UpdatePositionDto
       {
@@ -25,7 +25,7 @@ namespace Chess.Produktlogic
 
     public UpdatePositionDto MakeCaptureMove(List<Piece> pices, Piece clickedPice, Piece preselectedPice)
     {
-      var newBoardPosition = Move.CapturePice(pices.Select(x => (Piece)x.Clone()).ToList(), preselectedPice.Coord, clickedPice.Coord);
+      var newBoardPosition = Move.CapturePice(pices.ConvertAll(x => (Piece)x.Clone()), preselectedPice.Coord, clickedPice.Coord);
       
       return new UpdatePositionDto
       {
@@ -37,7 +37,7 @@ namespace Chess.Produktlogic
 
     public UpdatePositionDto MakeNonCaptureMove(List<Piece> pices, Coords clickedPice, Piece preselectedPice)
     {
-      var newBoardPosition = Move.MakeNonCaptureMove(preselectedPice.Coord, clickedPice, pices.Select(x => (Piece)x.Clone()).ToList());
+      var newBoardPosition = Move.MakeNonCaptureMove(preselectedPice.Coord, clickedPice, pices.ConvertAll(x => (Piece)x.Clone()));
 
       return new UpdatePositionDto
       {
@@ -69,9 +69,9 @@ namespace Chess.Produktlogic
       return Rulebook.IsGameOver(pices, currentPlayer);
     }
 
-    public MoveType GetMoveType(bool isPice, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)
+    public MoveType GetMoveType(List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent)
     {
-      return Move.GetMoveType(isPice, felderPossible, coordsToCheck, pieces, piecePreSelected, playerCurrent);
+      return Move.GetMoveType(felderPossible, coordsToCheck, pieces, piecePreSelected, playerCurrent);
     }
 
     public List<Piece> CreatePiecesFromFen(string fen)

@@ -16,7 +16,7 @@ namespace Winforms_Chess
     private TileDrawModel[,] m_ChessBoardPanles;
     private List<PieceDrawModel> m_Pieces;
     private Player m_BottomPlayer;
-    public Action<Coords, bool> GameObjectClickedAction;
+    public Action<Coords> GameObjectClickedAction;
 
     public GameForm()
     {
@@ -111,7 +111,7 @@ namespace Winforms_Chess
 
     private void GameObjectClicked(object sender, EventArgs e)
     {
-      GameObjectClickedAction.Invoke(((IUiObject)sender).Coord, sender is PieceDrawModel);
+      GameObjectClickedAction.Invoke(((IUiObject)sender).Coord);
     }
 
     private void ButtonFlipBoard_Click(object sender, EventArgs e)

@@ -14,6 +14,6 @@ namespace Chess.Produktlogic.Contracts
     UpdatePositionDto MakeAutomaticMove(MoveType moveType, Coords oldPosition, Coords newPosition, List<Piece> pices);
     int GetScoring(List<Piece> pieces, Player currentPlayer);
     GameOver IsGameOver(List<Piece> pieces, Player currentPlayer);
-    MoveType GetMoveType(bool isPice, List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent);
+    MoveType GetMoveType(List<Coords> felderPossible, Coords coordsToCheck, List<Piece> pieces, Piece piecePreSelected, Player playerCurrent);
   }
 }
