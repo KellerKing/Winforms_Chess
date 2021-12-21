@@ -83,6 +83,16 @@ namespace Chess.Game.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap field_possible {
+            get {
+                object obj = ResourceManager.GetObject("field_possible", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap king_black {
             get {
                 object obj = ResourceManager.GetObject("king_black", resourceCulture);

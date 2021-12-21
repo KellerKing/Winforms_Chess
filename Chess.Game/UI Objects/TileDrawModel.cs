@@ -8,5 +8,7 @@ namespace Winforms_Chess
   {
     public string PicturePath { get; set; }
     public Coords Coord { get; set; }
+
+    public bool HighlightFeld { get; set; }
   }
 }

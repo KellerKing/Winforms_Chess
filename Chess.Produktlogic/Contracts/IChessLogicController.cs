@@ -8,6 +8,9 @@ namespace Chess.Produktlogic.Contracts
     public string CreateFenFromPieces(List<Piece> pieces);
 
     List<Coords> GetPossibleFelderForPiece(Piece piceToCheck, List<Piece> boardPosition);
+
+    List<Coords> FilterFelderForLegalMoves(List<Piece> boardPosition, List<Coords> felderPossible, Piece pieceToMove);
+
     UpdatePositionDto MakeCaptureMove(List<Piece> pieces, Piece clickedPice, Piece preselectedPice);
     UpdatePositionDto MakeNonCaptureMove(List<Piece> pieces, Coords clickedPice, Piece preselectedPice);
     UpdatePositionDto MakeCastleMove(List<Piece> pieces, Coords clickedPice, Piece preselectedPice);

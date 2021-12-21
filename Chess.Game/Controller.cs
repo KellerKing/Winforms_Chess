@@ -20,7 +20,7 @@ namespace Chess.Game
 
     private List<string> m_Moves = new()
     {
-     // "rnbqkbnr/5ppp/8/8/8/8/PNPPPPPP/1RBQKBNR",
+      //"6p1/3k4/8/8/8/8/8/3K4",
       "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
     };
 
@@ -35,6 +35,7 @@ namespace Chess.Game
 
     public ResultDto ShowGame()
     {
+      UpdateScores();
       m_mainForm.ShowDialog();
       return m_ResultDto;
     }
@@ -42,7 +43,7 @@ namespace Chess.Game
     private void InitGameComponents(Player playerCurrent)
     {
       m_BoardPosition = m_LogicController.CreatePiecesFromFen(m_Moves[0]);
-      //Chess.AI.MinMaxCalculator.GetBestPosition(m_BoardPosition, playerCurrent, 20);
+      //Chess.AI.MinMaxCalculator.GetBestPosition(m_BoardPosition, playerCurrent, 1000);
       var piecesToDraw = ViewModelCreator.GeneratePieces(m_BoardPosition);
       var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Felder);
       m_mainForm.InitBoard(felderToDraw, playerCurrent);
@@ -59,9 +60,22 @@ namespace Chess.Game
       if (!moveResult.WasMoveLegal) return;
 
       m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
+      m_SelectedPiece = null;
       m_PossibleFelder = moveResult.PossibleFelder;
       m_BoardPosition = moveResult.BoardPosition;
       m_mainForm.UpdatePieces(ViewModelCreator.GeneratePieces(moveResult.BoardPosition));
+      m_mainForm.RemoveHighlightedFelder();
+      UpdateScores();
+      HandlePlayerLossOrDoNothing();
+      //MakeEnemyMove();
+    }
+
+    private void MakeEnemyMove()
+    {
+      var postion = Chess.AI.MinMaxCalculator.GetBestPosition(m_BoardPosition, m_CurrentPlayer, 0, 10);
+      m_mainForm.UpdatePieces(ViewModelCreator.GeneratePieces(postion));
+      m_BoardPosition = postion;
+      m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
       UpdateScores();
       HandlePlayerLossOrDoNothing();
     }
@@ -87,6 +101,9 @@ namespace Chess.Game
     {
       m_SelectedPiece = m_BoardPosition.First(x => x.Coord.Equals(coords));
       m_PossibleFelder = m_LogicController.GetPossibleFelderForPiece(m_SelectedPiece, m_BoardPosition);
+
+      m_mainForm.RemoveHighlightedFelder();
+      m_mainForm.ShowPossibleFelder(m_PossibleFelder);
     }
 
     private UpdatePositionDto ConvertPawn(Coords clickedCoords)
@@ -115,6 +132,7 @@ namespace Chess.Game
           moveResult = m_LogicController.MakeNonCaptureMove(m_BoardPosition, coordsClicked, m_SelectedPiece);
           break;
         case MoveType.PIECE_SELECT:
+          if (m_BoardPosition.First(x => x.Coord.Equals(coordsClicked)) == m_SelectedPiece) return;
           SelectPieceToMove(coordsClicked);
           return;
         case MoveType.NONE:

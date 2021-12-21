@@ -10,6 +10,11 @@ namespace Chess.Produktlogic
     {
       return PossibleMoveFactory.GetMovesFor(piceToCheck, boardPosition);
     }
+    public List<Coords> FilterFelderForLegalMoves(List<Piece> boardPosition, List<Coords> felderPossible, Piece pieceToMove)
+    {
+      return MovesRules.MoveRulesHelper.FilterFelderForLegalMoves(boardPosition, felderPossible, pieceToMove).ToList();
+    }
+
 
     public UpdatePositionDto MakeCastleMove(List<Piece> pices, Coords clickedPice, Piece preselectedPice)
     {

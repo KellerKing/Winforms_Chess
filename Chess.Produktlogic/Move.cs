@@ -83,7 +83,5 @@ namespace Chess.Produktlogic
       selectedPice.MoveCounter++;
       return pices;
     }
-
-
   }
 }

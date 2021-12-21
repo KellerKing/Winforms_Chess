@@ -1,4 +1,5 @@
 ﻿using Chess.Game;
+using Chess.Game.Properties;
 using Chess.Produktlogic.Contracts;
 using System;
 using System.Collections.Generic;
@@ -29,15 +30,15 @@ namespace Winforms_Chess
       m_ChessBoardPanles = board;
       m_BottomPlayer = playerSelected;
       DrawBoard(m_ChessBoardPanles, playerSelected);
-      if(m_BottomPlayer == Player.BLACK) FlipScorePosition();
+      if (m_BottomPlayer == Player.BLACK) FlipScorePosition();
     }
 
     public void DrawBoard(TileDrawModel[,] board, Player playerSelected)
     {
       boradGrid.Controls.Clear();
 
-      var sortedTiles = playerSelected == Player.BLACK ? 
-        board.Cast<TileDrawModel>().ToList().OrderBy(x => x.Coord.Rank).ToList() : 
+      var sortedTiles = playerSelected == Player.BLACK ?
+        board.Cast<TileDrawModel>().ToList().OrderBy(x => x.Coord.Rank).ToList() :
         board.Cast<TileDrawModel>().ToList().OrderByDescending(x => x.Coord.Rank).ToList();
 
       sortedTiles.ForEach(x =>
@@ -45,7 +46,10 @@ namespace Winforms_Chess
         boradGrid.Controls.Add(x);
         x.Click += GameObjectClicked;
         x.BackgroundImage = Image.FromFile(x.PicturePath);
+        board[x.Coord.File, x.Coord.Rank] = x;
       });
+
+      m_ChessBoardPanles = board;
     }
 
     public void InitPieces(List<PieceDrawModel> pieceDrawModels)
@@ -78,12 +82,12 @@ namespace Winforms_Chess
 
     public void SetScore(int white, int black)
     {
-      if(white == black)
+      if (white == black)
       {
         lblPointsBlack.Text = "";
         lblPointsWhite.Text = "";
       }
-      else if(black < white)
+      else if (black < white)
       {
         lblPointsBlack.Text = "";
         lblPointsWhite.Text = white.ToString();
@@ -112,6 +116,50 @@ namespace Winforms_Chess
     private void GameObjectClicked(object sender, EventArgs e)
     {
       GameObjectClickedAction.Invoke(((IUiObject)sender).Coord);
+    }
+
+    public void RemoveHighlightedFelder()
+    {
+      var row = m_ChessBoardPanles.GetLength(0);
+      var col = m_ChessBoardPanles.GetLength(1);
+
+      for (int i = 0; i < row * col; i++)
+      {
+        var panel = m_ChessBoardPanles[i / col, i % col];
+
+        if (panel.HighlightFeld)
+        {
+          panel.HighlightFeld = false;
+          panel.BackgroundImage.Dispose();
+          panel.BackgroundImage = Image.FromFile(panel.PicturePath);
+        }
+
+      }
+    }
+
+    internal void ShowPossibleFelder(IEnumerable<Coords> felderPossible)
+    {
+      foreach (var item in felderPossible)
+      {
+        var panel = m_ChessBoardPanles[item.File, item.Rank];
+        if (panel.HighlightFeld) continue;
+        HighlightPanel(panel);
+      }
+    }
+
+    private void HighlightPanel(TileDrawModel panel)
+    {
+      panel.HighlightFeld = true;
+      var img = panel.BackgroundImage;
+      var result = new Bitmap(img.Width, img.Height);
+
+      using (var g = Graphics.FromImage(result))
+      {
+        g.DrawImage(img, Point.Empty);
+        g.DrawImage(Resources.field_possible, Point.Empty);
+        panel.BackgroundImage = result;
+      }
+      img.Dispose();
     }
 
     private void ButtonFlipBoard_Click(object sender, EventArgs e)

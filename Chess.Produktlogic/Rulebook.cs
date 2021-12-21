@@ -25,7 +25,8 @@ namespace Chess.Produktlogic
       var kingSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
         x.PiceType == PiceType.ROOK
         && x.Owner == king.Owner &&
-        x.Coord.File > king.Coord.File);
+        x.Coord.File > king.Coord.File && 
+        x.Coord.Rank == king.Coord.Rank);
 
       if (kingSideRook == null || IsCastleThroughCheck(pices, king, kingSideRook)) return false;
       return !IsPiceBlockingForCastle(pices, king, kingSideRook);
@@ -38,7 +39,8 @@ namespace Chess.Produktlogic
       var queenSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
         x.PiceType == PiceType.ROOK
         && x.Owner == king.Owner &&
-        x.Coord.File < king.Coord.File);
+        x.Coord.File < king.Coord.File &&
+        x.Coord.Rank == king.Coord.Rank);
 
       if (queenSideRook == null || IsCastleThroughCheck(pices, king, queenSideRook)) return false;
       return !IsPiceBlockingForCastle(pices, king, queenSideRook);

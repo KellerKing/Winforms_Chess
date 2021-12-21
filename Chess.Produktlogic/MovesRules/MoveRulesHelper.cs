@@ -1,9 +1,6 @@
 ﻿using Chess.Produktlogic.Contracts;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess.Produktlogic.MovesRules
 {
@@ -22,6 +19,19 @@ namespace Chess.Produktlogic.MovesRules
         return PiceBlockingReturn.OWN;
 
       return PiceBlockingReturn.NO;
+    }
+
+    public static IEnumerable<Coords> FilterFelderForLegalMoves(List<Piece> position, List<Coords> felderPossible, Piece pieceToMove)
+    {
+      foreach (var item in felderPossible)
+      {
+        var moveType = Move.GetMoveType(felderPossible, item, position, pieceToMove, pieceToMove.Owner);
+        var moveResult = Move.AutomaticMove(moveType, pieceToMove.Coord, item, position);
+
+        if (Rulebook.IsKingInCheck(moveResult, pieceToMove.Owner)) continue;
+
+        yield return item;
+      }
     }
   }
 }

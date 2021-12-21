@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Chess.Game.Properties;
 using System;
 using Winforms_Chess;
+using System.Linq;
 
 namespace Chess.Game.Factory
 {
@@ -56,7 +57,6 @@ namespace Chess.Game.Factory
       return texture;
     }
 
-
     public static List<PieceDrawModel> GeneratePieces(List<Piece> pieces)
     {
       var output = new List<PieceDrawModel>();
@@ -81,7 +81,6 @@ namespace Chess.Game.Factory
 
     private static Bitmap GetBitmapForPiece(PiceType pieceType, Player player)
     {
-
       var pieceColor = player == Player.WHITE ? "white" : "black";
       var key = new Tuple<string, PiceType>(pieceColor, pieceType);
 
