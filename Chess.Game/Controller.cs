@@ -70,15 +70,15 @@ namespace Chess.Game
       //MakeEnemyMove();
     }
 
-    private void MakeEnemyMove()
-    {
-      //var postion = Chess.AI.MinMaxCalculator.GetBestPosition(m_BoardPosition, m_CurrentPlayer, 0, 10);
-      m_mainForm.UpdatePieces(ViewModelCreator.GeneratePieces(postion));
-      m_BoardPosition = postion;
-      m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
-      UpdateScores();
-      HandlePlayerLossOrDoNothing();
-    }
+    //private void MakeEnemyMove()
+    //{
+    //  var postion = Chess.AI.MinMaxCalculator.GetBestPosition(m_BoardPosition, m_CurrentPlayer, 0, 10);
+    //  m_mainForm.UpdatePieces(ViewModelCreator.GeneratePieces(postion));
+    //  m_BoardPosition = postion;
+    //  m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
+    //  UpdateScores();
+    //  HandlePlayerLossOrDoNothing();
+    //}
 
     private void HandlePlayerLossOrDoNothing()
     {
