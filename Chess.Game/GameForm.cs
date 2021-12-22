@@ -102,7 +102,7 @@ namespace Winforms_Chess
     private void SetFormResolution()
     {
       var screenSize = Screen.FromControl(this);
-      var newFormSize = Math.Min(screenSize.Bounds.Width, screenSize.Bounds.Height) * 0.5;
+      var newFormSize = Math.Min(screenSize.Bounds.Width, screenSize.Bounds.Height) * 0.65;
       this.Size = new((int)newFormSize, (int)newFormSize);
     }
 
@@ -156,7 +156,7 @@ namespace Winforms_Chess
       using (var g = Graphics.FromImage(result))
       {
         g.DrawImage(img, Point.Empty);
-        g.DrawImage(Resources.field_possible, Point.Empty);
+        g.DrawImage(Resources.field_possible, new Point((panel.Width /2), (panel.Height / 2)));
         panel.BackgroundImage = result;
       }
       img.Dispose();

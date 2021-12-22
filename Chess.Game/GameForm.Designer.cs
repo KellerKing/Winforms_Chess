@@ -42,7 +42,10 @@ namespace Winforms_Chess
       this.boradGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.boradGrid.AutoSize = true;
+      this.boradGrid.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.boradGrid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+      this.boradGrid.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.InsetDouble;
       this.boradGrid.ColumnCount = 8;
       this.boradGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
       this.boradGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
@@ -52,8 +55,8 @@ namespace Winforms_Chess
       this.boradGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
       this.boradGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
       this.boradGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-      this.boradGrid.Location = new System.Drawing.Point(12, 53);
-      this.boradGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+      this.boradGrid.Location = new System.Drawing.Point(81, 43);
+      this.boradGrid.Margin = new System.Windows.Forms.Padding(0);
       this.boradGrid.Name = "boradGrid";
       this.boradGrid.RowCount = 8;
       this.boradGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
@@ -64,7 +67,7 @@ namespace Winforms_Chess
       this.boradGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
       this.boradGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
       this.boradGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-      this.boradGrid.Size = new System.Drawing.Size(855, 863);
+      this.boradGrid.Size = new System.Drawing.Size(731, 851);
       this.boradGrid.TabIndex = 0;
       // 
       // lblPointsWhite
@@ -72,7 +75,7 @@ namespace Winforms_Chess
       this.lblPointsWhite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.lblPointsWhite.AutoSize = true;
       this.lblPointsWhite.ForeColor = System.Drawing.Color.White;
-      this.lblPointsWhite.Location = new System.Drawing.Point(12, 940);
+      this.lblPointsWhite.Location = new System.Drawing.Point(11, 940);
       this.lblPointsWhite.Name = "lblPointsWhite";
       this.lblPointsWhite.Size = new System.Drawing.Size(0, 20);
       this.lblPointsWhite.TabIndex = 5;
@@ -81,7 +84,7 @@ namespace Winforms_Chess
       // 
       this.lblPointsBlack.AutoSize = true;
       this.lblPointsBlack.ForeColor = System.Drawing.Color.White;
-      this.lblPointsBlack.Location = new System.Drawing.Point(12, 9);
+      this.lblPointsBlack.Location = new System.Drawing.Point(11, 9);
       this.lblPointsBlack.Name = "lblPointsBlack";
       this.lblPointsBlack.Size = new System.Drawing.Size(0, 20);
       this.lblPointsBlack.TabIndex = 6;
@@ -118,7 +121,11 @@ namespace Winforms_Chess
       this.Controls.Add(this.lblPointsBlack);
       this.Controls.Add(this.lblPointsWhite);
       this.Controls.Add(this.boradGrid);
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+      this.MaximizeBox = false;
+      this.MinimizeBox = false;
       this.Name = "GameForm";
+      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Form1";
       this.panel1.ResumeLayout(false);
       this.ResumeLayout(false);
