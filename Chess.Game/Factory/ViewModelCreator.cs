@@ -41,6 +41,7 @@ namespace Chess.Game.Factory
             BackgroundImageLayout = ImageLayout.Stretch,
             Coord = new Coords(y, x),
             Dock = DockStyle.Fill,
+            Margin = new Padding(0),
             PicturePath = (x + y) % 2 != 0 ?
             @".\Assets\Board_Light.png" :
             @".\Assets\Board_Dark.png"

@@ -133,7 +133,6 @@ namespace Winforms_Chess
           panel.BackgroundImage.Dispose();
           panel.BackgroundImage = Image.FromFile(panel.PicturePath);
         }
-
       }
     }
 
