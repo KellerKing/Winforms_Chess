@@ -37,7 +37,7 @@ namespace Winforms_Chess
       this.panel1.SuspendLayout();
       this.SuspendLayout();
       // 
-      // boradGrid
+      // boardGrid
       // 
       this.boardGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -56,7 +56,7 @@ namespace Winforms_Chess
       this.boardGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
       this.boardGrid.Location = new System.Drawing.Point(81, 43);
       this.boardGrid.Margin = new System.Windows.Forms.Padding(0);
-      this.boardGrid.Name = "boradGrid";
+      this.boardGrid.Name = "boardGrid";
       this.boardGrid.RowCount = 8;
       this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
       this.boardGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
@@ -120,12 +120,14 @@ namespace Winforms_Chess
       this.Controls.Add(this.lblPointsBlack);
       this.Controls.Add(this.lblPointsWhite);
       this.Controls.Add(this.boardGrid);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+      this.DoubleBuffered = true;
       this.MaximizeBox = false;
-      this.MinimizeBox = false;
       this.Name = "GameForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Form1";
+      this.ResizeBegin += new System.EventHandler(this.GameForm_ResizeBegin);
+      this.ResizeEnd += new System.EventHandler(this.GameForm_ResizeEnd);
+      this.Resize += new System.EventHandler(this.GameForm_Resize);
       this.panel1.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();

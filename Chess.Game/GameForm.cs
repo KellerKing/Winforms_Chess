@@ -155,7 +155,7 @@ namespace Winforms_Chess
       using (var g = Graphics.FromImage(result))
       {
         g.DrawImage(img, Point.Empty);
-        g.DrawImage(Resources.field_possible, (img.Width/2) - (sizeHighlight/2), (img.Height/2) - (sizeHighlight / 2), sizeHighlight, sizeHighlight);
+        g.DrawImage(Resources.field_possible, (img.Width / 2) - (sizeHighlight / 2), (img.Height / 2) - (sizeHighlight / 2), sizeHighlight, sizeHighlight);
         panel.BackgroundImage = result;
       }
       img.Dispose();
@@ -166,6 +166,44 @@ namespace Winforms_Chess
       m_BottomPlayer = Helper.GetEnemy(m_BottomPlayer);
       DrawBoard(m_ChessBoardPanles, m_BottomPlayer);
       FlipScorePosition();
+    }
+
+    private void GameForm_Resize(object sender, EventArgs e)
+    {
+      this.Update();
+    }
+
+    private void GameForm_ResizeBegin(object sender, EventArgs e)
+    {
+      var row = m_ChessBoardPanles.GetLength(0);
+      var col = m_ChessBoardPanles.GetLength(1);
+
+      for (int i = 0; i < row * col; i++)
+      {
+        SetVisibleForPanel(m_ChessBoardPanles[i / col, i % col], false);
+      }
+    }
+
+    private void SetVisibleForPanel(TileDrawModel panel, bool visible)
+    {
+      if (panel == null) return;
+
+      foreach (var item in panel.Controls.OfType<PieceDrawModel>())
+      {
+        item.Visible = visible;
+      }
+    }
+
+    private void GameForm_ResizeEnd(object sender, EventArgs e)
+    {
+      var row = m_ChessBoardPanles.GetLength(0);
+      var col = m_ChessBoardPanles.GetLength(1);
+
+      for (int i = 0; i < row * col; i++)
+      {
+        SetVisibleForPanel(m_ChessBoardPanles[i / col, i % col], true);
+      }
+
     }
   }
 }
