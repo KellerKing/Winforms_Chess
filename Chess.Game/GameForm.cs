@@ -13,7 +13,6 @@ namespace Winforms_Chess
 {
   public partial class GameForm : Form
   {
-
     private TileDrawModel[,] m_ChessBoardPanles;
     private List<PieceDrawModel> m_Pieces;
     private Player m_BottomPlayer;
@@ -35,7 +34,7 @@ namespace Winforms_Chess
 
     public void DrawBoard(TileDrawModel[,] board, Player playerSelected)
     {
-      boradGrid.Controls.Clear();
+      boardGrid.Controls.Clear();
 
       var sortedTiles = playerSelected == Player.BLACK ?
         board.Cast<TileDrawModel>().ToList().OrderBy(x => x.Coord.Rank).ToList() :
@@ -43,7 +42,7 @@ namespace Winforms_Chess
 
       sortedTiles.ForEach(x =>
       {
-        boradGrid.Controls.Add(x);
+        boardGrid.Controls.Add(x);
         x.Click += GameObjectClicked;
         x.BackgroundImage = Image.FromFile(x.PicturePath);
         board[x.Coord.File, x.Coord.Rank] = x;
@@ -151,11 +150,12 @@ namespace Winforms_Chess
       panel.HighlightFeld = true;
       var img = panel.BackgroundImage;
       var result = new Bitmap(img.Width, img.Height);
+      var sizeHighlight = panel.Width / 1.5f;
 
       using (var g = Graphics.FromImage(result))
       {
         g.DrawImage(img, Point.Empty);
-        g.DrawImage(Resources.field_possible, new Point((panel.Width /2), (panel.Height / 2)));
+        g.DrawImage(Resources.field_possible, (img.Width/2) - (sizeHighlight/2), (img.Height/2) - (sizeHighlight / 2), sizeHighlight, sizeHighlight);
         panel.BackgroundImage = result;
       }
       img.Dispose();
