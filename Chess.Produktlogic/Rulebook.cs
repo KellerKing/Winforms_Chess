@@ -25,7 +25,7 @@ namespace Chess.Produktlogic
       var kingSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
         x.PiceType == PiceType.ROOK
         && x.Owner == king.Owner &&
-        x.Coord.File > king.Coord.File && 
+        x.Coord.File == 7 && 
         x.Coord.Rank == king.Coord.Rank);
 
       if (kingSideRook == null || IsCastleThroughCheck(pices, king, kingSideRook)) return false;
@@ -39,7 +39,7 @@ namespace Chess.Produktlogic
       var queenSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
         x.PiceType == PiceType.ROOK
         && x.Owner == king.Owner &&
-        x.Coord.File < king.Coord.File &&
+        x.Coord.File == 0 &&
         x.Coord.Rank == king.Coord.Rank);
 
       if (queenSideRook == null || IsCastleThroughCheck(pices, king, queenSideRook)) return false;
@@ -66,15 +66,17 @@ namespace Chess.Produktlogic
     }
 
 
-    private static bool IsCastleThroughCheck(List<Piece> pices, Piece king, Piece rook)
+    private static bool IsCastleThroughCheck(List<Piece> pieces, Piece king, Piece rook)
     {
       var minFile = Math.Min(king.Coord.File, rook.Coord.File);
       var maxFile = Math.Max(king.Coord.File, rook.Coord.File);
+      var copyList = pieces.ConvertAll(x => (Piece)x.Clone()).ToList();
+      var copyKing = copyList.First(x => x.Coord.Equals(king.Coord));
 
       return Enumerable.Range(minFile, maxFile).Any(x =>
       {
-        king.Coord = new(king.Coord.Rank, x);
-        return IsKingInCheck(pices, king);
+        copyKing.Coord = new(king.Coord.Rank, x);
+        return IsKingInCheck(copyList, king);
       });
     }
 

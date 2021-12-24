@@ -38,7 +38,7 @@ namespace Chess.Produktlogic.MovesRules
     {
       return pices.FirstOrDefault(x => x.PiceType == PiceType.ROOK &&
           x.Owner == king.Owner &&
-          side.Contains("KING", StringComparison.OrdinalIgnoreCase) ?
+          side.ToUpper().Contains("KING") ?
           x.Coord.File > king.Coord.File : 
           x.Coord.File < king.Coord.File).Coord;
     }
@@ -50,7 +50,7 @@ namespace Chess.Produktlogic.MovesRules
       var kingSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
         x.PiceType == PiceType.ROOK
         && x.Owner == king.Owner &&
-        x.Coord.File > king.Coord.File);
+        x.Coord.File == 7);
 
       if (kingSideRook == null) return false;
       if (IsCastleThroughCheck(pices, king, kingSideRook)) return false;
