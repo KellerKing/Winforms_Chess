@@ -34,6 +34,7 @@ namespace Winforms_Chess
       this.lblPointsBlack = new System.Windows.Forms.Label();
       this.panel1 = new System.Windows.Forms.Panel();
       this.btnFlipBoard = new System.Windows.Forms.Button();
+      this.buttonSettings = new System.Windows.Forms.Button();
       this.panel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -54,7 +55,7 @@ namespace Winforms_Chess
       this.boardGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
       this.boardGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
       this.boardGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-      this.boardGrid.Location = new System.Drawing.Point(81, 43);
+      this.boardGrid.Location = new System.Drawing.Point(74, 43);
       this.boardGrid.Margin = new System.Windows.Forms.Padding(0);
       this.boardGrid.Name = "boardGrid";
       this.boardGrid.RowCount = 8;
@@ -110,12 +111,24 @@ namespace Winforms_Chess
       this.btnFlipBoard.UseVisualStyleBackColor = true;
       this.btnFlipBoard.Click += new System.EventHandler(this.ButtonFlipBoard_Click);
       // 
+      // buttonSettings
+      // 
+      this.buttonSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.buttonSettings.Location = new System.Drawing.Point(830, 43);
+      this.buttonSettings.Name = "buttonSettings";
+      this.buttonSettings.Size = new System.Drawing.Size(37, 29);
+      this.buttonSettings.TabIndex = 8;
+      this.buttonSettings.Text = "button1";
+      this.buttonSettings.UseVisualStyleBackColor = true;
+      this.buttonSettings.Click += new System.EventHandler(this.ButtonSettingsClicked);
+      // 
       // GameForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
       this.ClientSize = new System.Drawing.Size(879, 969);
+      this.Controls.Add(this.buttonSettings);
       this.Controls.Add(this.panel1);
       this.Controls.Add(this.lblPointsBlack);
       this.Controls.Add(this.lblPointsWhite);
@@ -127,7 +140,6 @@ namespace Winforms_Chess
       this.Text = "Form1";
       this.ResizeBegin += new System.EventHandler(this.GameForm_ResizeBegin);
       this.ResizeEnd += new System.EventHandler(this.GameForm_ResizeEnd);
-      this.Resize += new System.EventHandler(this.GameForm_Resize);
       this.panel1.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
@@ -141,6 +153,7 @@ namespace Winforms_Chess
     private System.Windows.Forms.Label lblPointsBlack;
     private System.Windows.Forms.Panel panel1;
     private System.Windows.Forms.Button btnFlipBoard;
+    private System.Windows.Forms.Button buttonSettings;
   }
 }
 

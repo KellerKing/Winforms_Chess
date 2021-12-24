@@ -2,7 +2,9 @@
 using Chess.Game.Factory;
 using Chess.Produktlogic.Contracts;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 using Winforms_Chess;
 
 namespace Chess.Game
@@ -53,6 +55,7 @@ namespace Chess.Game
     private void ConnectEvents()
     {
       m_mainForm.GameObjectClickedAction += GameObjectClicked;
+      m_mainForm.OnButtonSettingsClicked += OnButtonSettingsClicked;
     }
 
     private void ValidiereZug(UpdatePositionDto moveResult)
@@ -102,6 +105,7 @@ namespace Chess.Game
       m_SelectedPiece = m_BoardPosition.First(x => x.Coord.Equals(coords));
       m_PossibleFelder = m_LogicController.GetPossibleFelderForPiece(m_SelectedPiece, m_BoardPosition);
 
+      if (!Settings.ShowHighlightedFelder) return;
       m_mainForm.RemoveHighlightedFelder();
       m_mainForm.ShowPossibleFelder(m_PossibleFelder);
     }
@@ -113,6 +117,27 @@ namespace Chess.Game
       var moveResult = m_LogicController.MakeNonCaptureMove(m_BoardPosition, clickedCoords, m_SelectedPiece);
       moveResult.BoardPosition.First(x => x.Coord.Equals(clickedCoords)).PiceType = newPiece;
       return moveResult;
+    }
+
+    private void OnButtonSettingsClicked(Point locationStart)
+    {
+      var ctr = new SettingsForm.Controller(new SettingsForm.InputDto
+      {
+        LocationStart = locationStart,
+        HighlightFelder = Settings.ShowHighlightedFelder
+      });
+      var result = ctr.ShowDialog();
+
+      if (result.DialogResult != DialogResult.OK) return;
+      UpdateSettings(result);
+    }
+
+    private void UpdateSettings(SettingsForm.ResultDto result)
+    {
+      if (!result.HighlightFelder) m_mainForm.RemoveHighlightedFelder();
+      else m_mainForm.ShowPossibleFelder(m_PossibleFelder);
+      Settings.ShowHighlightedFelder = result.HighlightFelder;
+    
     }
 
     private void GameObjectClicked(Coords coordsClicked)

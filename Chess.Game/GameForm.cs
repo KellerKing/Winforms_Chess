@@ -1,5 +1,6 @@
 ﻿using Chess.Game;
 using Chess.Game.Properties;
+using Chess.Game.SettingsForm;
 using Chess.Produktlogic.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,14 @@ namespace Winforms_Chess
     private TileDrawModel[,] m_ChessBoardPanles;
     private List<PieceDrawModel> m_Pieces;
     private Player m_BottomPlayer;
+
+    internal Action<Point> OnButtonSettingsClicked;
     public Action<Coords> GameObjectClickedAction;
 
     public GameForm()
     {
       InitializeComponent();
-      SetFormResolution();
+      this.Size = UiHelper.GetFormResolution(Screen.FromControl(this));
     }
 
     public void InitBoard(TileDrawModel[,] board, Player playerSelected)
@@ -98,13 +101,6 @@ namespace Winforms_Chess
       }
     }
 
-    private void SetFormResolution()
-    {
-      var screenSize = Screen.FromControl(this);
-      var newFormSize = Math.Min(screenSize.Bounds.Width, screenSize.Bounds.Height) * 0.65;
-      this.Size = new((int)newFormSize, (int)newFormSize);
-    }
-
     private void FlipScorePosition()
     {
       var coordsBlack = lblPointsBlack.Location;
@@ -141,25 +137,10 @@ namespace Winforms_Chess
       {
         var panel = m_ChessBoardPanles[item.File, item.Rank];
         if (panel.HighlightFeld) continue;
-        HighlightPanel(panel);
+        UiHelper.HighlightPanel(panel);
       }
     }
 
-    private void HighlightPanel(TileDrawModel panel)
-    {
-      panel.HighlightFeld = true;
-      var img = panel.BackgroundImage;
-      var result = new Bitmap(img.Width, img.Height);
-      var sizeHighlight = panel.Width / 1.5f;
-
-      using (var g = Graphics.FromImage(result))
-      {
-        g.DrawImage(img, Point.Empty);
-        g.DrawImage(Resources.field_possible, (img.Width / 2) - (sizeHighlight / 2), (img.Height / 2) - (sizeHighlight / 2), sizeHighlight, sizeHighlight);
-        panel.BackgroundImage = result;
-      }
-      img.Dispose();
-    }
 
     private void ButtonFlipBoard_Click(object sender, EventArgs e)
     {
@@ -168,42 +149,35 @@ namespace Winforms_Chess
       FlipScorePosition();
     }
 
-    private void GameForm_Resize(object sender, EventArgs e)
-    {
-      this.Update();
-    }
-
     private void GameForm_ResizeBegin(object sender, EventArgs e)
     {
-      var row = m_ChessBoardPanles.GetLength(0);
-      var col = m_ChessBoardPanles.GetLength(1);
+      boardGrid.Visible = false;
+      //var row = m_ChessBoardPanles.GetLength(0);
+      //var col = m_ChessBoardPanles.GetLength(1);
 
-      for (int i = 0; i < row * col; i++)
-      {
-        SetVisibleForPanel(m_ChessBoardPanles[i / col, i % col], false);
-      }
+      //for (int i = 0; i < row * col; i++)
+      //{
+      //  UiHelper.SetVisibleForPanel(m_ChessBoardPanles[i / col, i % col], false);
+      //}
     }
-
-    private void SetVisibleForPanel(TileDrawModel panel, bool visible)
-    {
-      if (panel == null) return;
-
-      foreach (var item in panel.Controls.OfType<PieceDrawModel>())
-      {
-        item.Visible = visible;
-      }
-    }
-
     private void GameForm_ResizeEnd(object sender, EventArgs e)
     {
-      var row = m_ChessBoardPanles.GetLength(0);
-      var col = m_ChessBoardPanles.GetLength(1);
+      boardGrid.Visible = true;
+      //var row = m_ChessBoardPanles.GetLength(0);
+      //var col = m_ChessBoardPanles.GetLength(1);
 
-      for (int i = 0; i < row * col; i++)
-      {
-        SetVisibleForPanel(m_ChessBoardPanles[i / col, i % col], true);
-      }
+      //for (int i = 0; i < row * col; i++)
+      //{
+      //  UiHelper.SetVisibleForPanel(m_ChessBoardPanles[i / col, i % col], true);
+      //}
 
+    }
+
+    private void ButtonSettingsClicked(object sender, EventArgs e)
+    {
+      var locationSender = PointToScreen(new Point(buttonSettings.Left + buttonSettings.Width, buttonSettings.Top + buttonSettings.Height));
+
+      OnButtonSettingsClicked?.Invoke(locationSender);
     }
   }
 }
