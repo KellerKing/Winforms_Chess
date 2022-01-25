@@ -9,17 +9,16 @@ namespace Chess.Game
 {
   internal class UiHelper
   {
+
     public static void HighlightPanel(TileDrawModel panel)
     {
       panel.HighlightFeld = true;
       var img = panel.BackgroundImage;
       var result = new Bitmap(img.Width, img.Height);
-      var sizeHighlight = panel.Width / 1.5f;
 
       using (var g = Graphics.FromImage(result))
       {
-        g.DrawImage(img, Point.Empty);
-        g.DrawImage(Resources.field_possible, (img.Width / 2) - (sizeHighlight / 2), (img.Height / 2) - (sizeHighlight / 2), sizeHighlight, sizeHighlight);
+        g.FillRectangle(Brushes.LightBlue, new Rectangle(0, 0, img.Width, img.Height));
         panel.BackgroundImage = result;
       }
       img.Dispose();

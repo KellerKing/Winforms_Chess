@@ -4,6 +4,7 @@ using Chess.Produktlogic.Contracts;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Winforms_Chess;
 
@@ -12,17 +13,19 @@ namespace Chess.Game
   public class Controller
   {
     private readonly GameForm m_mainForm;
+    private readonly InputDto m_InputDto;
     private ResultDto m_ResultDto = new();
     private Player m_CurrentPlayer = Player.WHITE;
     private Piece m_SelectedPiece;
     private List<Coords> m_PossibleFelder = new();
     private readonly IChessLogicController m_LogicController;
+    private readonly Chess.AI.Controller m_ChessAiController;
     private List<Piece> m_BoardPosition;
     private readonly Coords[,] m_Felder;
 
     private List<string> m_Moves = new()
     {
-      //"6p1/3k4/8/8/8/8/8/3K4",
+      //"6rr/3k4/8/8/8/8/8/3K4",
       "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
     };
 
@@ -30,9 +33,11 @@ namespace Chess.Game
     {
       m_mainForm = new GameForm();
       m_LogicController = new Produktlogic.Controller();
+      m_ChessAiController = inputDto.Singleplayer ? new AI.Controller() : null;
       m_Felder = Helper.CreateFelder(8, 8);
       ConnectEvents();
       InitGameComponents(inputDto.Singleplayer ? inputDto.PlayerSelected : Player.WHITE);
+      m_InputDto = inputDto;
     }
 
     public ResultDto ShowGame()
@@ -45,7 +50,6 @@ namespace Chess.Game
     private void InitGameComponents(Player playerCurrent)
     {
       m_BoardPosition = m_LogicController.CreatePiecesFromFen(m_Moves[0]);
-      //Chess.AI.MinMaxCalculator.GetBestPosition(m_BoardPosition, playerCurrent, 1000);
       var piecesToDraw = ViewModelCreator.GeneratePieces(m_BoardPosition);
       var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Felder);
       m_mainForm.InitBoard(felderToDraw, playerCurrent);
@@ -70,18 +74,17 @@ namespace Chess.Game
       m_mainForm.RemoveHighlightedFelder();
       UpdateScores();
       HandlePlayerLossOrDoNothing();
-      //MakeEnemyMove();
     }
 
-    //private void MakeEnemyMove()
-    //{
-    //  var postion = Chess.AI.MinMaxCalculator.GetBestPosition(m_BoardPosition, m_CurrentPlayer, 0, 10);
-    //  m_mainForm.UpdatePieces(ViewModelCreator.GeneratePieces(postion));
-    //  m_BoardPosition = postion;
-    //  m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
-    //  UpdateScores();
-    //  HandlePlayerLossOrDoNothing();
-    //}
+    private async Task MakeEnemyMoveAsync()
+    {
+      var postion = await Task.Run(() => m_ChessAiController.GetBestMove(m_BoardPosition, m_CurrentPlayer, 4));
+      m_mainForm.UpdatePieces(ViewModelCreator.GeneratePieces(postion));
+      m_BoardPosition = postion;
+      m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
+      UpdateScores();
+      HandlePlayerLossOrDoNothing();
+    }
 
     private void HandlePlayerLossOrDoNothing()
     {
@@ -167,6 +170,8 @@ namespace Chess.Game
           break;
       }
       ValidiereZug(moveResult);
+
+      if (m_ChessAiController != null) MakeEnemyMoveAsync();
     }
   }
 }

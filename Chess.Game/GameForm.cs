@@ -1,6 +1,4 @@
 ﻿using Chess.Game;
-using Chess.Game.Properties;
-using Chess.Game.SettingsForm;
 using Chess.Produktlogic.Contracts;
 using System;
 using System.Collections.Generic;
