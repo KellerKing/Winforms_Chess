@@ -32,12 +32,13 @@ namespace Chess.Game
     public Controller(InputDto inputDto)
     {
       m_mainForm = new GameForm();
+      m_InputDto = inputDto;
       m_LogicController = new Produktlogic.Controller();
       m_ChessAiController = inputDto.Singleplayer ? new AI.Controller() : null;
       m_Felder = Helper.CreateFelder(8, 8);
       ConnectEvents();
       InitGameComponents(inputDto.Singleplayer ? inputDto.PlayerSelected : Player.WHITE);
-      m_InputDto = inputDto;
+      if(inputDto.Singleplayer && inputDto.PlayerSelected == Player.BLACK) MakeEnemyMoveAsync();
     }
 
     public ResultDto ShowGame()
