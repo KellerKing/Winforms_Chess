@@ -1,16 +1,15 @@
-﻿using Chess.Game.Properties;
+﻿using Chess.Game.ViewModel;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Winforms_Chess;
 
 namespace Chess.Game
 {
   internal class UiHelper
   {
 
-    public static void HighlightPanel(TileDrawModel panel)
+    internal static void HighlightPanel(TileDrawModel panel)
     {
       panel.HighlightFeld = true;
       var img = panel.BackgroundImage;
@@ -24,7 +23,7 @@ namespace Chess.Game
       img.Dispose();
     }
 
-    public static void SetVisibleForPanel(TileDrawModel panel, bool visible)
+    internal static void SetVisibleForPanel(TileDrawModel panel, bool visible)
     {
       if (panel == null) return;
 
@@ -34,7 +33,7 @@ namespace Chess.Game
       }
     }
 
-    public static Size GetFormResolution(Screen screenSize)
+    internal static Size GetFormResolution(Screen screenSize)
     {
       var newFormSize = Math.Min(screenSize.Bounds.Width, screenSize.Bounds.Height) * 0.65;
       return new Size((int)newFormSize, (int)newFormSize);

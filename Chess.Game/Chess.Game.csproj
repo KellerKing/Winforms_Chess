@@ -12,7 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chess.AI\Chess.AI.csproj" />
-    <ProjectReference Include="..\Chess.Produktlogic\Chess.Produktlogic.csproj" />
+    <ProjectReference Include="..\Chess.Contracts\Chess.Contracts.csproj" />
+    <ProjectReference Include="..\Chess.Produktlogic\Chess.Productlogic.csproj" />
   </ItemGroup>
 
   <ItemGroup>

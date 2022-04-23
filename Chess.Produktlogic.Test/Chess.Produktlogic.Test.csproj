@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Chess.Produktlogic\Chess.Produktlogic.csproj" />
+    <ProjectReference Include="..\Chess.Produktlogic\Chess.Productlogic.csproj" />
   </ItemGroup>
 
 </Project>

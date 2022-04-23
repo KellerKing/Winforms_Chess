@@ -1,11 +1,10 @@
-﻿using Chess.Game.Contracts;
+﻿using Chess.Contracts.Menue;
 
 namespace Chess.Menue
 {
-  class Controller
+  public class Controller : IMenueController
   {
     private readonly MainForm m_MainForm;
-    private Game.Controller m_GameController;
 
     public Controller()
     {
@@ -13,31 +12,23 @@ namespace Chess.Menue
       ConnectEvents();
     }
 
-    public void ShowGameMenue()
+    public ResultDto ShowDialog()
     {
       m_MainForm.ShowDialog();
+      var result = ResultDtoFactory.CreateResultDto(m_MainForm.DialogResult, m_MainForm.IsSinglePlayer(), m_MainForm.IsSinglePlayerOnWhiteSide());
+      m_MainForm.Dispose();
+
+      return result;
     }
 
     private void ConnectEvents()
     {
-      m_MainForm.m_PlayPresed += StartGame;
+      m_MainForm.OnStartGame += StartGame;
     }
 
     private void StartGame()
     {
-      m_GameController = new(m_MainForm.CollectSettings());
-      m_MainForm.Hide();
-      HandleGameResult(m_GameController.ShowGame());
-    }
-
-    private void HandleGameResult(ResultDto resultDto)
-    {
-      m_MainForm.Show();
-
-      if (resultDto.DialogResult == System.Windows.Forms.DialogResult.OK)
-      {
-        m_MainForm.ShowMessage(resultDto);
-      }
+      m_MainForm.Close();
     }
   }
 }

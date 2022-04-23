@@ -1,6 +1,4 @@
-﻿using Chess.AI.Contracts;
-using Chess.Produktlogic.Contracts;
-using System;
+﻿using Chess.Contracts.AI;
 using System.Collections.Generic;
 
 namespace Chess.AI

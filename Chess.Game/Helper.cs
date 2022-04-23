@@ -1,12 +1,27 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Contracts.Game;
+using Chess.Game.Dto;
 
 namespace Chess.Game
 {
   class Helper
   {
-    public static Player GetEnemy(Player playerCurrent)
+    public static Chess.Game.Konstanten.Player GetCurrentPlayerFromInputDto(InputDto inputDto)
     {
-      return playerCurrent == Player.WHITE ? Player.BLACK : Player.WHITE;
+
+      if (!inputDto.IsSingleplayer) return Konstanten.Player.WHITE;
+
+      return inputDto.StartingPlayer switch
+      {
+        Player.BLACK => Konstanten.Player.BLACK,
+        Player.WHITE => Konstanten.Player.WHITE,
+        _ => throw new System.Exception($"This Player is unknown: {inputDto.StartingPlayer}"),
+      };
+    }
+
+
+    public static Konstanten.Player GetEnemy(Konstanten.Player playerCurrent)
+    {
+      return playerCurrent == Konstanten.Player.WHITE ? Konstanten.Player.BLACK : Konstanten.Player.WHITE;
     }
 
     //TODO: Eigentlich eine Factory Methode

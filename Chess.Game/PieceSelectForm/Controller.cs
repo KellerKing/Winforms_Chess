@@ -1,15 +1,14 @@
 ﻿using Chess.Game.Factory;
-using Chess.Produktlogic.Contracts;
 
 namespace Chess.Game.PieceSelectForm
 {
-  public class Controller
+  internal class Controller
   {
-    private readonly Player m_PlayerCurrent;
-    private PiceType m_SelectedPieceType;
+    private readonly Konstanten.Player m_PlayerCurrent;
+    private Konstanten.PieceType m_SelectedPieceType;
     private readonly PieceSelectForm m_Form;
 
-    public Controller(Player playerCurrent)
+    internal Controller(Konstanten.Player playerCurrent)
     {
       m_PlayerCurrent = playerCurrent;
       m_Form = new PieceSelectForm();
@@ -20,10 +19,10 @@ namespace Chess.Game.PieceSelectForm
 
     private void InitForm()
     {
-      m_Form.DrawTargetPieces(ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.BISHOP),
-        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.KNIGHT),
-        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.QUEEN),
-        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, PiceType.ROOK));
+      m_Form.DrawTargetPieces(ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, Konstanten.PieceType.BISHOP),
+        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, Konstanten.PieceType.KNIGHT),
+        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, Konstanten.PieceType.QUEEN),
+        ViewModelCreator.GetSinglePieceImage(m_PlayerCurrent, Konstanten.PieceType.ROOK));
     }
 
     private void ConnectEvents()
@@ -31,14 +30,14 @@ namespace Chess.Game.PieceSelectForm
       m_Form.PictureBoxClicked += TargetPieceClicked;
     }
 
-    private void TargetPieceClicked(PiceType pieceTypeTarget)
+    private void TargetPieceClicked(Konstanten.PieceType pieceTypeTarget)
     {
       m_SelectedPieceType = pieceTypeTarget;
       m_Form.Dispose();
       m_Form.Close();
     }
 
-    public PiceType ShowDialog()
+    internal Konstanten.PieceType ShowDialog()
     {
       m_Form.ShowDialog();
       return m_SelectedPieceType;

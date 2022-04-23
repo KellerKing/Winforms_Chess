@@ -1,4 +1,4 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Contracts.Productlogic;
 using Chess.Produktlogic.MovesRules;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +11,10 @@ namespace Chess.Produktlogic
     {
       var isPieceClicked = pieces.Any(x => x.Coord.Equals(coordsToCheck));
 
-      if (!isPieceClicked && piecePreSelected != null && felderPossible.Contains(coordsToCheck) && (coordsToCheck.Rank == 0 || coordsToCheck.Rank == 7) && piecePreSelected.PiceType == PiceType.PAWN)
+      if (!isPieceClicked && piecePreSelected != null && felderPossible.Contains(coordsToCheck) && (coordsToCheck.Rank == 0 || coordsToCheck.Rank == 7) && piecePreSelected.PiceType == PieceType.PAWN)
         return MoveType.CONVERT_PAWN;
 
-      if (isPieceClicked && piecePreSelected?.PiceType == PiceType.KING && pieces.Find(x => x.Owner == playerCurrent && x.Coord.Equals(coordsToCheck))?.PiceType == PiceType.ROOK)
+      if (isPieceClicked && piecePreSelected?.PiceType == PieceType.KING && pieces.Find(x => x.Owner == playerCurrent && x.Coord.Equals(coordsToCheck))?.PiceType == PieceType.ROOK)
         return MoveType.CASTLE;
 
       if (isPieceClicked && pieces.Any(x => x.Owner == playerCurrent && x.Coord.Equals(coordsToCheck)))

@@ -1,43 +1,41 @@
-﻿using Chess.Game;
-using Chess.Produktlogic.Contracts;
+﻿using Chess.Game.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Winforms_Chess.UI_Objects;
 
-namespace Winforms_Chess
+namespace Chess.Game
 {
-  public partial class GameForm : Form
+  internal partial class GameForm : Form
   {
     private TileDrawModel[,] m_ChessBoardPanles;
     private List<PieceDrawModel> m_Pieces;
-    private Player m_BottomPlayer;
+    private Konstanten.Player m_BottomPlayer;
 
     internal Action<Point> OnButtonSettingsClicked;
-    public Action<Coords> GameObjectClickedAction;
+    internal Action<Dto.Coords> GameObjectClickedAction;
 
-    public GameForm()
+    internal GameForm()
     {
       InitializeComponent();
       this.Size = UiHelper.GetFormResolution(Screen.FromControl(this));
     }
 
-    public void InitBoard(TileDrawModel[,] board, Player playerSelected)
+    internal void InitBoard(TileDrawModel[,] board, Konstanten.Player playerSelected)
     {
       m_ChessBoardPanles = board;
       m_BottomPlayer = playerSelected;
       DrawBoard(m_ChessBoardPanles, playerSelected);
-      if (m_BottomPlayer == Player.BLACK) FlipScorePosition();
+      if (m_BottomPlayer == Konstanten.Player.BLACK) FlipScorePosition();
     }
 
-    public void DrawBoard(TileDrawModel[,] board, Player playerSelected)
+    internal void DrawBoard(TileDrawModel[,] board, Konstanten.Player playerSelected)
     {
       boardGrid.Controls.Clear();
 
-      var sortedTiles = playerSelected == Player.BLACK ?
+      var sortedTiles = playerSelected == Konstanten.Player.BLACK ?
         board.Cast<TileDrawModel>().ToList().OrderBy(x => x.Coord.Rank).ToList() :
         board.Cast<TileDrawModel>().ToList().OrderByDescending(x => x.Coord.Rank).ToList();
 
@@ -52,7 +50,7 @@ namespace Winforms_Chess
       m_ChessBoardPanles = board;
     }
 
-    public void InitPieces(List<PieceDrawModel> pieceDrawModels)
+    internal void InitPieces(List<PieceDrawModel> pieceDrawModels)
     {
       m_Pieces = pieceDrawModels;
 
@@ -64,7 +62,7 @@ namespace Winforms_Chess
       });
     }
 
-    public void UpdatePieces(List<PieceDrawModel> pieceDrawModels)
+    internal void UpdatePieces(List<PieceDrawModel> pieceDrawModels)
     {
       var piecesToRemoveFromBoard = m_Pieces.Where(x => !pieceDrawModels.Any(y => y.Coord.Equals(x.Coord))).ToList();
       var piecesToRedraw = pieceDrawModels.Where(x => !m_Pieces.Any(y => y.Coord.Equals(x.Coord) && y.Piece.Owner == x.Piece.Owner && y.Piece.PiceType == x.Piece.PiceType)).ToList();
@@ -99,6 +97,16 @@ namespace Winforms_Chess
       }
     }
 
+    internal void SetDefaultCursor()
+    {
+      Cursor = Cursors.Default;
+    }
+
+    internal void SetWaitCursor()
+    {
+      Cursor = Cursors.WaitCursor;
+    }
+
     private void FlipScorePosition()
     {
       var coordsBlack = lblPointsBlack.Location;
@@ -108,10 +116,14 @@ namespace Winforms_Chess
 
     private void GameObjectClicked(object sender, EventArgs e)
     {
-      GameObjectClickedAction.Invoke(((IUiObject)sender).Coord);
+      if (sender is PieceDrawModel pieceDrawModel)
+        GameObjectClickedAction.Invoke(pieceDrawModel.Coord);
+
+      else if (sender is TileDrawModel tileDrawModel)
+        GameObjectClickedAction.Invoke(tileDrawModel.Coord);
     }
 
-    public void RemoveHighlightedFelder()
+    internal void RemoveHighlightedFelder()
     {
       var row = m_ChessBoardPanles.GetLength(0);
       var col = m_ChessBoardPanles.GetLength(1);
@@ -129,7 +141,7 @@ namespace Winforms_Chess
       }
     }
 
-    internal void ShowPossibleFelder(IEnumerable<Coords> felderPossible)
+    internal void ShowPossibleFelder(IEnumerable<Dto.Coords> felderPossible)
     {
       foreach (var item in felderPossible)
       {

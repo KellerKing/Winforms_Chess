@@ -1,21 +1,20 @@
-﻿using Chess.Game.Contracts;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Chess.Menue
 {
   public partial class MainForm : Form
   {
-    public Action m_PlayPresed;
+    public Action OnStartGame;
 
     public MainForm()
     {
       InitializeComponent();
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    private void OnBtnPlay_Click(object sender, EventArgs e)
     {
-      m_PlayPresed.Invoke();
+      OnStartGame.Invoke();
     }
 
     private void PlayerCount_CheckedChanged(object sender, EventArgs e)
@@ -25,28 +24,19 @@ namespace Chess.Menue
       SetSizeChoosing(state);
     }
 
-    public InputDto CollectSettings()
+    public bool IsSinglePlayer()
     {
-      return new InputDto
-      {
-        PlayerSelected = rbPlayerWhite.Checked ? Produktlogic.Contracts.Player.WHITE : Produktlogic.Contracts.Player.BLACK,
-        Singleplayer = rbSinglePlayer.Checked
-      };
+      return rbSinglePlayer.Checked;
+    }
+
+    public bool IsSinglePlayerOnWhiteSide()
+    {
+      return rbPlayerWhite.Checked;
     }
 
     private void SetSizeChoosing(bool state)
     {
       groupBoxSideChoose.Enabled = state;
-    }
-
-    internal void ShowMessage(ResultDto resultDto)
-    {
-      if (resultDto.IsPatt)
-      {
-        MessageBox.Show("Statlement");
-        return;
-      }
-      MessageBox.Show($"{resultDto.Winner} has won!");
     }
   }
 }

@@ -1,4 +1,4 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Contracts.Productlogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +7,15 @@ namespace Chess.Produktlogic
 {
   public static class Rulebook
   {
-    public static GameOver IsGameOver(List<Piece> pices, Player currentPlayer)
+    public static GameOverResult IsGameOver(List<Piece> pices, Player currentPlayer)
     {
       var isKingInCheck = IsKingInCheck(pices, currentPlayer);
 
-      if (isKingInCheck && HasPlayerLost(pices, currentPlayer)) return GameOver.GAME_OVER;
+      if (isKingInCheck && HasPlayerLost(pices, currentPlayer)) return GameOverResult.GAME_OVER;
 
-      if (!isKingInCheck && IsStatelement(pices, currentPlayer)) return GameOver.STATLEMENT;
+      if (!isKingInCheck && IsStatelement(pices, currentPlayer)) return GameOverResult.STATLEMENT;
 
-      return GameOver.NO;
+      return GameOverResult.NO;
     }
 
     public static bool CanCastleKingSide(List<Piece> pices, Piece king)
@@ -23,7 +23,7 @@ namespace Chess.Produktlogic
       if (king.MoveCounter != 0) return false;
 
       var kingSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
-        x.PiceType == PiceType.ROOK
+        x.PiceType == PieceType.ROOK
         && x.Owner == king.Owner &&
         x.Coord.File == 7 && 
         x.Coord.Rank == king.Coord.Rank);
@@ -37,7 +37,7 @@ namespace Chess.Produktlogic
       if (king.MoveCounter != 0) return false;
 
       var queenSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
-        x.PiceType == PiceType.ROOK
+        x.PiceType == PieceType.ROOK
         && x.Owner == king.Owner &&
         x.Coord.File == 0 &&
         x.Coord.Rank == king.Coord.Rank);
@@ -91,18 +91,18 @@ namespace Chess.Produktlogic
 
     public static bool IsKingInCheck(List<Piece> board, Player currentPlayer)
     {
-      var currentKing = board.FirstOrDefault(x => x.Owner == currentPlayer && x.PiceType == PiceType.KING);
+      var currentKing = board.FirstOrDefault(x => x.Owner == currentPlayer && x.PiceType == PieceType.KING);
 
-      return IsPiceAttacking(board, currentKing, PiceType.ROOK) || IsPiceAttacking(board, currentKing, PiceType.KNIGHT) ||
-        IsPiceAttacking(board, currentKing, PiceType.BISHOP) || IsPiceAttacking(board, currentKing, PiceType.QUEEN) ||
-        IsPiceAttacking(board, currentKing, PiceType.KING) || IsPiceAttacking(board, currentKing, PiceType.PAWN);
+      return IsPiceAttacking(board, currentKing, PieceType.ROOK) || IsPiceAttacking(board, currentKing, PieceType.KNIGHT) ||
+        IsPiceAttacking(board, currentKing, PieceType.BISHOP) || IsPiceAttacking(board, currentKing, PieceType.QUEEN) ||
+        IsPiceAttacking(board, currentKing, PieceType.KING) || IsPiceAttacking(board, currentKing, PieceType.PAWN);
     }
 
     public static bool IsKingInCheck(List<Piece> board, Piece currentKing)
     {
-      return IsPiceAttacking(board, currentKing, PiceType.ROOK) || IsPiceAttacking(board, currentKing, PiceType.KNIGHT) ||
-        IsPiceAttacking(board, currentKing, PiceType.BISHOP) || IsPiceAttacking(board, currentKing, PiceType.QUEEN) ||
-        IsPiceAttacking(board, currentKing, PiceType.KING) || IsPiceAttacking(board, currentKing, PiceType.PAWN);
+      return IsPiceAttacking(board, currentKing, PieceType.ROOK) || IsPiceAttacking(board, currentKing, PieceType.KNIGHT) ||
+        IsPiceAttacking(board, currentKing, PieceType.BISHOP) || IsPiceAttacking(board, currentKing, PieceType.QUEEN) ||
+        IsPiceAttacking(board, currentKing, PieceType.KING) || IsPiceAttacking(board, currentKing, PieceType.PAWN);
     }
 
     private static bool CanDoLegalMove(List<Piece> pieces, Piece pieceToMove, List<Coords> felderPossible)
@@ -115,7 +115,7 @@ namespace Chess.Produktlogic
       return false;
     }
 
-    private static bool IsPiceAttacking(List<Piece> board, Piece king, PiceType piceToCheck)
+    private static bool IsPiceAttacking(List<Piece> board, Piece king, PieceType piceToCheck)
     {
       var enemyPices = board.Where(x => x.Owner != king.Owner && x.PiceType == piceToCheck).ToList();
       var possibleFelder = new List<Coords>();

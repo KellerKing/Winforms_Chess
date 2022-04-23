@@ -1,5 +1,5 @@
 ﻿
-namespace Winforms_Chess
+namespace Chess.Game
 {
   partial class GameForm
   {

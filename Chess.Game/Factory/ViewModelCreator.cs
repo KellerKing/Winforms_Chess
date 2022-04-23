@@ -1,34 +1,32 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Game.Properties;
+using Chess.Game.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Chess.Game.Properties;
-using System;
-using Winforms_Chess;
-using System.Linq;
 
 namespace Chess.Game.Factory
 {
   public class ViewModelCreator
   {
-    private static readonly Dictionary<Tuple<string, PiceType>, Bitmap> pieceResources = new()
+    private static readonly Dictionary<Tuple<string, Konstanten.PieceType>, Bitmap> pieceResources = new()
     {
-      { new Tuple<string, PiceType>("white", PiceType.ROOK), Resources.rook_white },
-      { new Tuple<string, PiceType>("white", PiceType.PAWN), Resources.pawn_white },
-      { new Tuple<string, PiceType>("white", PiceType.BISHOP), Resources.bishop_white },
-      { new Tuple<string, PiceType>("white", PiceType.QUEEN), Resources.queen_white },
-      { new Tuple<string, PiceType>("white", PiceType.KING), Resources.king_white },
-      { new Tuple<string, PiceType>("white", PiceType.KNIGHT), Resources.knight_white },
+      { new Tuple<string, Konstanten.PieceType>("white", Konstanten.PieceType.ROOK), Resources.rook_white },
+      { new Tuple<string, Konstanten.PieceType>("white", Konstanten.PieceType.PAWN), Resources.pawn_white },
+      { new Tuple<string, Konstanten.PieceType>("white", Konstanten.PieceType.BISHOP), Resources.bishop_white },
+      { new Tuple<string, Konstanten.PieceType>("white", Konstanten.PieceType.QUEEN), Resources.queen_white },
+      { new Tuple<string, Konstanten.PieceType>("white", Konstanten.PieceType.KING), Resources.king_white },
+      { new Tuple<string, Konstanten.PieceType>("white", Konstanten.PieceType.KNIGHT), Resources.knight_white },
 
-      { new Tuple<string, PiceType>("black", PiceType.ROOK), Resources.rook_black },
-      { new Tuple<string, PiceType>("black", PiceType.PAWN), Resources.pawn_black },
-      { new Tuple<string, PiceType>("black", PiceType.BISHOP), Resources.bishop_black },
-      { new Tuple<string, PiceType>("black", PiceType.QUEEN), Resources.queen_black },
-      { new Tuple<string, PiceType>("black", PiceType.KING), Resources.king_black },
-      { new Tuple<string, PiceType>("black", PiceType.KNIGHT), Resources.knight_black },
+      { new Tuple<string, Konstanten.PieceType>("black", Konstanten.PieceType.ROOK), Resources.rook_black },
+      { new Tuple<string, Konstanten.PieceType>("black", Konstanten.PieceType.PAWN), Resources.pawn_black },
+      { new Tuple<string, Konstanten.PieceType>("black", Konstanten.PieceType.BISHOP), Resources.bishop_black },
+      { new Tuple<string, Konstanten.PieceType>("black", Konstanten.PieceType.QUEEN), Resources.queen_black },
+      { new Tuple<string, Konstanten.PieceType>("black", Konstanten.PieceType.KING), Resources.king_black },
+      { new Tuple<string, Konstanten.PieceType>("black", Konstanten.PieceType.KNIGHT), Resources.knight_black },
     };
 
-    public static TileDrawModel[,] CreateChessBoardDrawModels(Coords[,] tiles)
+    internal static TileDrawModel[,] CreateChessBoardDrawModels(Dto.Coords[,] tiles)
     {
       var chessBoardPanels = new TileDrawModel[tiles.GetLength(0), tiles.GetLength(1)];
 
@@ -39,7 +37,7 @@ namespace Chess.Game.Factory
           chessBoardPanels[x, y] = new TileDrawModel
           {
             BackgroundImageLayout = ImageLayout.Stretch,
-            Coord = new Coords(y, x),
+            Coord = new(y, x),
             Dock = DockStyle.Fill,
             Margin = new Padding(0),
             PicturePath = (x + y) % 2 != 0 ?
@@ -51,14 +49,14 @@ namespace Chess.Game.Factory
       return chessBoardPanels;
     }
 
-    public static Bitmap GetSinglePieceImage(Player player, PiceType pieceType)
+    internal static Bitmap GetSinglePieceImage(Konstanten.Player player, Konstanten.PieceType pieceType)
     {
       var texture = GetBitmapForPiece(pieceType, player);
       texture.MakeTransparent();
       return texture;
     }
 
-    public static List<PieceDrawModel> GeneratePieces(List<Piece> pieces)
+    internal static List<PieceDrawModel> GeneratePieces(List<Dto.Piece> pieces)
     {
       var output = new List<PieceDrawModel>();
 
@@ -80,10 +78,10 @@ namespace Chess.Game.Factory
       return output;
     }
 
-    private static Bitmap GetBitmapForPiece(PiceType pieceType, Player player)
+    private static Bitmap GetBitmapForPiece(Konstanten.PieceType pieceType, Konstanten.Player player)
     {
-      var pieceColor = player == Player.WHITE ? "white" : "black";
-      var key = new Tuple<string, PiceType>(pieceColor, pieceType);
+      var pieceColor = player == Konstanten.Player.WHITE ? "white" : "black";
+      var key = new Tuple<string, Konstanten.PieceType>(pieceColor, pieceType);
 
       if (pieceResources.ContainsKey(key))
         return pieceResources[key];

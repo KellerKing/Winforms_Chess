@@ -1,5 +1,4 @@
-﻿using Chess.Produktlogic.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,21 +8,20 @@ namespace Chess.Game.PieceSelectForm
   public partial class PieceSelectForm : Form
   {
 
-    private Dictionary<PictureBox, PiceType> m_PieceTypes;
+    private Dictionary<PictureBox, Konstanten.PieceType> m_PieceTypes;
 
-
-    public Action<PiceType> PictureBoxClicked;
+    internal Action<Konstanten.PieceType> PictureBoxClicked;
 
     public PieceSelectForm()
     {
       InitializeComponent();
 
-      m_PieceTypes = new Dictionary<PictureBox, PiceType>
+      m_PieceTypes = new Dictionary<PictureBox, Konstanten.PieceType>
       {
-        { pictureBoxBishop,PiceType.BISHOP },
-        { pictureBoxKnight,PiceType.KNIGHT },
-        { pictureBoxQueen,PiceType.QUEEN },
-        { pictureBoxRook,PiceType.ROOK }
+        { pictureBoxBishop, Konstanten.PieceType.BISHOP },
+        { pictureBoxKnight, Konstanten.PieceType.KNIGHT },
+        { pictureBoxQueen, Konstanten.PieceType.QUEEN },
+        { pictureBoxRook, Konstanten.PieceType.ROOK }
       };
     }
 

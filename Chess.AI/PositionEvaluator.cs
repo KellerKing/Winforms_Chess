@@ -1,4 +1,5 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.AI.Dto;
+using Chess.Contracts.AI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace Chess.AI
 
       var valueCenter = 10000;
 
-      var coordCenter = new List<Coords>
+      var coordCenter = new List<Coordinates>
       {
         new(3,3),
         new(3,4),

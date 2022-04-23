@@ -77,6 +77,7 @@ namespace Chess.Menue
       // btnPlay
       // 
       this.btnPlay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.btnPlay.DialogResult = System.Windows.Forms.DialogResult.OK;
       this.btnPlay.Dock = System.Windows.Forms.DockStyle.Bottom;
       this.btnPlay.FlatAppearance.BorderColor = System.Drawing.Color.White;
       this.btnPlay.FlatAppearance.BorderSize = 0;
@@ -92,7 +93,7 @@ namespace Chess.Menue
       this.btnPlay.TabIndex = 2;
       this.btnPlay.Text = "PLAY";
       this.btnPlay.UseVisualStyleBackColor = true;
-      this.btnPlay.Click += new System.EventHandler(this.button1_Click);
+      this.btnPlay.Click += new System.EventHandler(this.OnBtnPlay_Click);
       // 
       // panel1
       // 
@@ -180,6 +181,7 @@ namespace Chess.Menue
       this.ClientSize = new System.Drawing.Size(539, 295);
       this.Controls.Add(this.panel1);
       this.Name = "MainForm";
+      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Chess";
       this.panel1.ResumeLayout(false);
       this.groupBox2.ResumeLayout(false);

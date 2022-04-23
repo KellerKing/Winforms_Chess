@@ -1,4 +1,4 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Contracts.Productlogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,34 +8,34 @@ namespace Chess.Produktlogic
 {
   public class FenMapper
   {
-    private static readonly Dictionary<char, PiceType> MappingCharToPieceType = new Dictionary<char, PiceType>()
+    private static readonly Dictionary<char, PieceType> MappingCharToPieceType = new Dictionary<char, PieceType>()
     {
-      { 'K', PiceType.KING },
+      { 'K', PieceType.KING },
 
-      { 'R', PiceType.ROOK },
+      { 'R', PieceType.ROOK },
 
-      { 'B', PiceType.BISHOP },
+      { 'B', PieceType.BISHOP },
 
-      { 'N', PiceType.KNIGHT },
+      { 'N', PieceType.KNIGHT },
 
-      { 'P', PiceType.PAWN },
+      { 'P', PieceType.PAWN },
 
-      { 'Q', PiceType.QUEEN },
+      { 'Q', PieceType.QUEEN },
     };
 
-    private static readonly Dictionary<PiceType, char> MappingPieceTypeToChar = new Dictionary<PiceType, char>()
+    private static readonly Dictionary<PieceType, char> MappingPieceTypeToChar = new Dictionary<PieceType, char>()
     {
-      { PiceType.KING, 'K' },
+      { PieceType.KING, 'K' },
 
-      { PiceType.ROOK, 'R' },
+      { PieceType.ROOK, 'R' },
 
-      { PiceType.BISHOP, 'B' },
+      { PieceType.BISHOP, 'B' },
 
-      { PiceType.KNIGHT, 'N' },
+      { PieceType.KNIGHT, 'N' },
 
-      { PiceType.PAWN, 'P' },
+      { PieceType.PAWN, 'P' },
 
-      { PiceType.QUEEN, 'Q' },
+      { PieceType.QUEEN, 'Q' },
     };
 
     public static List<Piece> CreatePiecesFromFen(string fen)

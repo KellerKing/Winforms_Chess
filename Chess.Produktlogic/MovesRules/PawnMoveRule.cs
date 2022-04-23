@@ -1,4 +1,6 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Contracts.Productlogic;
+using Chess.Produktlogic.Dto;
+using Chess.Produktlogic.Konstanten;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,9 +19,9 @@ namespace Chess.Produktlogic.MovesRules
 
     public static EnPassantItem GetEnPassant(Piece clickedPice, List<Piece> pices)
     {
-      if (clickedPice.PiceType != PiceType.PAWN) return default;
+      if (clickedPice.PiceType != PieceType.PAWN) return default;
 
-      if (clickedPice.Owner == Player.WHITE && pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == 4 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
+      if (clickedPice.Owner == Player.WHITE && pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == 4 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PieceType.PAWN))
       {
         return new EnPassantItem
         {
@@ -28,7 +30,7 @@ namespace Chess.Produktlogic.MovesRules
         };
       }
 
-      if (clickedPice.Owner == Player.WHITE && pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == 4 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
+      if (clickedPice.Owner == Player.WHITE && pices.Any(x => x.Owner == Player.BLACK && x.Coord.Rank == 4 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PieceType.PAWN))
       {
         return new EnPassantItem
         {
@@ -37,7 +39,7 @@ namespace Chess.Produktlogic.MovesRules
         };
       }
 
-      if (clickedPice.Owner == Player.BLACK && pices.Any(x => x.Owner == Player.WHITE && x.Coord.Rank == 3 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
+      if (clickedPice.Owner == Player.BLACK && pices.Any(x => x.Owner == Player.WHITE && x.Coord.Rank == 3 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File + 1 && x.MoveCounter == 1 && x.PiceType == PieceType.PAWN))
       {
         return new EnPassantItem
         {
@@ -45,7 +47,7 @@ namespace Chess.Produktlogic.MovesRules
           PiceToCapture = new(clickedPice.Coord.Rank, clickedPice.Coord.File + 1)
         };
       }
-      if (clickedPice.Owner == Player.BLACK && pices.Any(x => x.Owner == Player.WHITE && x.Coord.Rank == 3 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PiceType.PAWN))
+      if (clickedPice.Owner == Player.BLACK && pices.Any(x => x.Owner == Player.WHITE && x.Coord.Rank == 3 && x.Coord.Rank == clickedPice.Coord.Rank && x.Coord.File == clickedPice.Coord.File - 1 && x.MoveCounter == 1 && x.PiceType == PieceType.PAWN))
       {
         return new EnPassantItem
         {

@@ -1,7 +1,8 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.AI.Connector;
+using Chess.Contracts.AI;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,32 +10,21 @@ namespace Chess.AI
 {
   public class MinMaxCalculator
   {
-    private static readonly IChessLogicController m_LogicController = new Produktlogic.Controller();
+    private static readonly ProductlogicConnector m_ProduktlogicConnector = new ProductlogicConnector(new Produktlogic.Controller());
 
     public static List<Piece> GetBestPosition(List<Piece> position, Player playerCurrent, int moveCounter, int depth)
     {
-      var results = new List<Tuple<List<Piece>, int>>();
+      var results = new ConcurrentBag<Tuple<List<Piece>, int>>();
 
       var childPositions = GetAllChildPositions(position, playerCurrent);
 
       childPositions.ForEach(x => results.Add(new(x, PositionEvaluator.EvaluatePosition(x))));
-
-      var start = Stopwatch.StartNew();
-
-      //foreach (var child in childPositions)
-      //{
-      //  var score = GetMinMax(position, playerCurrent, int.MinValue, int.MaxValue, depth - 1).Result;
-      //  results.Add(new(child, score));
-      //}
 
       Parallel.ForEach(childPositions, async child =>
       {
         var score = await GetMinMax(position, playerCurrent, Int32.MinValue, Int32.MaxValue, depth - 1).ConfigureAwait(false);
         results.Add(new(child, score));
       });
-
-      start.Stop();
-      Debug.Print($"{start.ElapsedMilliseconds} ms");
 
       if(playerCurrent == Player.BLACK) 
         return results.First(x => x.Item2 == results.Min(x => x.Item2)).Item1;
@@ -45,12 +35,12 @@ namespace Chess.AI
 
     private static async Task<int> GetMinMax(List<Piece> position, Player playerCurrent, int alpha, int beta, int depth)
     {
-      var gameOverResult = m_LogicController.IsGameOver(position, playerCurrent);
+      var gameOverResult = m_ProduktlogicConnector.IsGameOver(position, playerCurrent);
 
-      if (depth <= 0 || gameOverResult == GameOver.STATLEMENT) 
+      if (depth <= 0 || gameOverResult == Konstanten.GameOverResult.STATLEMENT) 
         return PositionEvaluator.EvaluatePosition(position);
 
-      if (gameOverResult == GameOver.GAME_OVER)
+      if (gameOverResult == Konstanten.GameOverResult.GAME_OVER)
         return playerCurrent == Player.WHITE ? int.MinValue : int.MaxValue;
 
       if (playerCurrent == Player.WHITE)
@@ -93,16 +83,16 @@ namespace Chess.AI
     }
 
 
-    private static List<List<Piece>> GetEndpostionForSinglePiece(List<Piece> position, List<Coords> felderPossible, Piece pieceToMove)
+    private static List<List<Piece>> GetEndpostionForSinglePiece(List<Piece> position, List<Coordinates> felderPossible, Piece pieceToMove)
     {
       var output = new List<List<Piece>>();
 
       foreach (var item in felderPossible)
       {
-        var moveType = m_LogicController.GetMoveType(felderPossible, item, position.ConvertAll(x => (Piece)x.Clone()), pieceToMove, pieceToMove.Owner);
-        var moveResult = m_LogicController.MakeAutomaticMove(moveType, pieceToMove.Coord, item, position.ConvertAll(x => (Piece)x.Clone()));
+        var moveType = m_ProduktlogicConnector.GetMoveType(felderPossible, item, position.ConvertAll(x => Helper.ClonePiece(x)), pieceToMove, pieceToMove.Owner);
+        var moveResult = m_ProduktlogicConnector.MakeAutomaticMove(moveType, pieceToMove.Coord, item, position.ConvertAll(x => Helper.ClonePiece(x)));
 
-        if (!moveResult.WasMoveLegal) continue;
+        if (!moveResult.WasLegalMove) continue;
 
         output.Add(moveResult.BoardPosition);
       }
@@ -115,7 +105,7 @@ namespace Chess.AI
 
       foreach (var item in position.Where(x => x.Owner == playerCurrent))
       {
-        var felderPossible = m_LogicController.GetPossibleFelderForPiece(item, position);
+        var felderPossible = m_ProduktlogicConnector.GetPossibleFelderForPiece(item, position);
         output.AddRange(GetEndpostionForSinglePiece(position, felderPossible, item));
       }
       return output.Where(x => x.Count != 0).ToList();

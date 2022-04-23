@@ -1,4 +1,4 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Contracts.Productlogic;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -69,7 +69,7 @@ namespace Chess.Produktlogic
       return ScoreCalculator.CalculateRelativeScore(pices, currentPlayer);
     }
 
-    public GameOver IsGameOver(List<Piece> pices, Player currentPlayer)
+    public GameOverResult IsGameOver(List<Piece> pices, Player currentPlayer)
     {
       return Rulebook.IsGameOver(pices, currentPlayer);
     }

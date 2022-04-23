@@ -1,4 +1,5 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Contracts.Productlogic;
+using Chess.Produktlogic.Konstanten;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace Chess.Produktlogic.MovesRules
 
     private static Coords GetCastleRook(Piece king, List<Piece> pices, string side)
     {
-      return pices.FirstOrDefault(x => x.PiceType == PiceType.ROOK &&
+      return pices.FirstOrDefault(x => x.PiceType == PieceType.ROOK &&
           x.Owner == king.Owner &&
           side.ToUpper().Contains("KING") ?
           x.Coord.File > king.Coord.File : 
@@ -48,7 +49,7 @@ namespace Chess.Produktlogic.MovesRules
       if (king.MoveCounter != 0) return false;
 
       var kingSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
-        x.PiceType == PiceType.ROOK
+        x.PiceType == PieceType.ROOK
         && x.Owner == king.Owner &&
         x.Coord.File == 7);
 
@@ -63,7 +64,7 @@ namespace Chess.Produktlogic.MovesRules
       if (king.MoveCounter != 0) return false;
 
       var queenSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
-        x.PiceType == PiceType.ROOK
+        x.PiceType == PieceType.ROOK
         && x.Owner == king.Owner &&
         x.Coord.File < king.Coord.File);
 

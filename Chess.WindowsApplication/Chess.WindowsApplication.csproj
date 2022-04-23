@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Chess.Contracts\Chess.Contracts.csproj" />
+    <ProjectReference Include="..\Chess.Game\Chess.Game.csproj" />
+    <ProjectReference Include="..\Chess.Menue\Chess.Menue.csproj" />
+  </ItemGroup>
+
+</Project>
