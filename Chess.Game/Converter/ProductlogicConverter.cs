@@ -15,7 +15,7 @@ namespace Chess.Game.Converter
         {
           Coord = new(piece.Coord.Rank, piece.Coord.File),
           MoveCounter = piece.MoveCounter,
-          PiceType = ConvertPieceType(piece.PiceType)
+          PiceType = ConvertPieceType(piece.PieceType)
         };
       }
     }
@@ -28,7 +28,7 @@ namespace Chess.Game.Converter
         {
           Coord = new(piece.Coord.Rank, piece.Coord.File),
           MoveCounter = piece.MoveCounter,
-          PiceType = ConvertPieceType(piece.PiceType)
+          PieceType = ConvertPieceType(piece.PiceType)
         };
       }
     }
@@ -42,7 +42,7 @@ namespace Chess.Game.Converter
       {
         Coord = new(piece.Coord.Rank, piece.Coord.File),
         MoveCounter = piece.MoveCounter,
-        PiceType = ConvertPieceType(piece.PiceType)
+        PieceType = ConvertPieceType(piece.PiceType)
       };
     }
 

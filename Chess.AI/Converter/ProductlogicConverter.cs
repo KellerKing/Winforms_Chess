@@ -73,7 +73,7 @@ namespace Chess.AI.Converter
       {
         Coord = ConvertCoordinate(pieceToMove.Coord),
         MoveCounter = pieceToMove.MoveCounter,
-        PiceType = ConvertPieceType(pieceToMove.PiceType)
+        PieceType = ConvertPieceType(pieceToMove.PiceType)
       };
     }
 
@@ -83,7 +83,7 @@ namespace Chess.AI.Converter
       {
         Coord = ConvertCoordinate(pieceToMove.Coord),
         MoveCounter = pieceToMove.MoveCounter,
-        PiceType = ConvertPieceType(pieceToMove.PiceType)
+        PiceType = ConvertPieceType(pieceToMove.PieceType)
       };
     }
 

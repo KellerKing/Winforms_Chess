@@ -23,7 +23,7 @@ namespace Chess.Produktlogic
       if (king.MoveCounter != 0) return false;
 
       var kingSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
-        x.PiceType == PieceType.ROOK
+        x.PieceType == PieceType.ROOK
         && x.Owner == king.Owner &&
         x.Coord.File == 7 && 
         x.Coord.Rank == king.Coord.Rank);
@@ -37,7 +37,7 @@ namespace Chess.Produktlogic
       if (king.MoveCounter != 0) return false;
 
       var queenSideRook = pices.FirstOrDefault(x => x.MoveCounter == 0 &&
-        x.PiceType == PieceType.ROOK
+        x.PieceType == PieceType.ROOK
         && x.Owner == king.Owner &&
         x.Coord.File == 0 &&
         x.Coord.Rank == king.Coord.Rank);
@@ -91,7 +91,7 @@ namespace Chess.Produktlogic
 
     public static bool IsKingInCheck(List<Piece> board, Player currentPlayer)
     {
-      var currentKing = board.FirstOrDefault(x => x.Owner == currentPlayer && x.PiceType == PieceType.KING);
+      var currentKing = board.FirstOrDefault(x => x.Owner == currentPlayer && x.PieceType == PieceType.KING);
 
       return IsPiceAttacking(board, currentKing, PieceType.ROOK) || IsPiceAttacking(board, currentKing, PieceType.KNIGHT) ||
         IsPiceAttacking(board, currentKing, PieceType.BISHOP) || IsPiceAttacking(board, currentKing, PieceType.QUEEN) ||
@@ -117,7 +117,7 @@ namespace Chess.Produktlogic
 
     private static bool IsPiceAttacking(List<Piece> board, Piece king, PieceType piceToCheck)
     {
-      var enemyPices = board.Where(x => x.Owner != king.Owner && x.PiceType == piceToCheck).ToList();
+      var enemyPices = board.Where(x => x.Owner != king.Owner && x.PieceType == piceToCheck).ToList();
       var possibleFelder = new List<Coords>();
       enemyPices.ForEach(x => possibleFelder.AddRange(PossibleMoveFactory.GetMovesFor(x, board, true)));
       return possibleFelder.Any(x => x.Equals(king.Coord));

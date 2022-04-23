@@ -1,4 +1,4 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Contracts.Productlogic;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,27 +16,27 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
-          PiceType = PiceType.KNIGHT
+          PieceType = PieceType.KNIGHT
         },
         new Piece(Player.BLACK) //Rechts oben --> geht nicht
         {
           Coord = new Coords(6, 5),
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.WHITE) //Links unten --> geht
         {
           Coord = new Coords(2, 3),
-          PiceType = PiceType.ROOK
+          PieceType = PieceType.ROOK
         },
         new Piece(Player.WHITE) //Links oben --> geht
         {
           Coord = new Coords(6, 3),
-          PiceType = PiceType.KNIGHT
+          PieceType = PieceType.KNIGHT
         },
         new Piece(Player.BLACK) // Rechts unten --> geht nicht
         {
           Coord = new Coords(2, 5),
-          PiceType = PiceType.QUEEN
+          PieceType = PieceType.QUEEN
         }
       };
       var expected = new List<Coords>()
@@ -63,22 +63,22 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
-          PiceType = PiceType.KNIGHT
+          PieceType = PieceType.KNIGHT
         },
         new Piece(Player.WHITE) //Rechts oben --> geht
         {
           Coord = new Coords(6, 5),
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.WHITE) //Links unten --> geht
         {
           Coord = new Coords(2, 3),
-          PiceType = PiceType.ROOK
+          PieceType = PieceType.ROOK
         },
         new Piece(Player.WHITE) //Links oben --> geht
         {
           Coord = new Coords(6, 3),
-          PiceType = PiceType.KNIGHT
+          PieceType = PieceType.KNIGHT
         },
       };
       var expected = new List<Coords>()
@@ -107,7 +107,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(0, 7),
-          PiceType = PiceType.KNIGHT
+          PieceType = PieceType.KNIGHT
         }
       };
       var expected = new List<Coords>()
@@ -130,7 +130,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
-          PiceType = PiceType.QUEEN
+          PieceType = PieceType.QUEEN
         }
       };
       var expected = new List<Coords>()
@@ -175,32 +175,32 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
-          PiceType = PiceType.QUEEN
+          PieceType = PieceType.QUEEN
         },
         new Piece(Player.BLACK) //Pice to Block
         {
          Coord =  new Coords(5,3),
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
          new Piece(Player.BLACK) //Pice to Block
         {
           Coord = new Coords(5,4),
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
          new Piece(Player.BLACK) //Pice to Block
         {
           Coord = new Coords(4,5),
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
          new Piece(Player.BLACK) //Pice to Block
         {
           Coord = new Coords(3,4),
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
          new Piece(Player.WHITE) //Enemy --> geht, aber weiter geht die Diagonale nicht (nach links unten)
         {
           Coord = new Coords(3,3),
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
       };
       var expected = new List<Coords>()
@@ -229,7 +229,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.H1,
-          PiceType = PiceType.QUEEN
+          PieceType = PieceType.QUEEN
         }
       };
       var expected = new List<Coords>()
@@ -268,7 +268,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
-          PiceType = PiceType.KING
+          PieceType = PieceType.KING
         }
       };
       var expected = new List<Coords>()
@@ -294,32 +294,32 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = new Coords(4, 4),
-          PiceType = PiceType.KING
+          PieceType = PieceType.KING
         },
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.D6,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F6,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F4,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.D4,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.E4,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>()
@@ -344,7 +344,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.H1,
-          PiceType = PiceType.KING
+          PieceType = PieceType.KING
         },
       };
       var expected = new List<Coords>()
@@ -365,22 +365,22 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
          new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.E6,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.F6,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.D6,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
       };
       var expected = new List<Coords>()
@@ -400,17 +400,17 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
          new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.D6,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.F6,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
       };
       var expected = new List<Coords>()
@@ -431,7 +431,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>()
@@ -450,7 +450,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.E8,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>();
@@ -466,7 +466,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.B2,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>
@@ -486,12 +486,12 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.B2,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
          new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.B4,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>
@@ -510,7 +510,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.G7,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>
@@ -530,12 +530,12 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.G7,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
          new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.G5,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>
@@ -554,22 +554,22 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
          new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.E4,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F4,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.D4,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
       };
       var expected = new List<Coords>()
@@ -589,17 +589,17 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
          new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F4,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.D4,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
       };
       var expected = new List<Coords>()
@@ -620,7 +620,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>()
@@ -639,7 +639,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.BLACK) //Pice to test
         {
           Coord = Feldbezeichnung.E1,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>()
@@ -657,12 +657,12 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.B5,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.C5,
-          PiceType = PiceType.PAWN,
+          PieceType = PieceType.PAWN,
           MoveCounter = 1
         }
       };
@@ -683,12 +683,12 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.B5,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.C5,
-          PiceType = PiceType.PAWN,
+          PieceType = PieceType.PAWN,
           MoveCounter = 2
         }
       };
@@ -708,7 +708,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.G2,
-          PiceType = PiceType.BISHOP
+          PieceType = PieceType.BISHOP
         }
       };
       var expected = new List<Coords>()
@@ -735,17 +735,17 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.G2,
-          PiceType = PiceType.BISHOP
+          PieceType = PieceType.BISHOP
         },
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.E4,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.H3,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>()
@@ -767,17 +767,17 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.H1,
-          PiceType = PiceType.ROOK
+          PieceType = PieceType.ROOK
         },
         new Piece(Player.WHITE)
         {
           Coord = Feldbezeichnung.F1,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         },
         new Piece(Player.BLACK)
         {
           Coord = Feldbezeichnung.H3,
-          PiceType = PiceType.PAWN
+          PieceType = PieceType.PAWN
         }
       };
       var expected = new List<Coords>()
@@ -798,7 +798,7 @@ namespace Chess.Produktlogic.Test
         new Piece(Player.WHITE) //Pice to test
         {
           Coord = Feldbezeichnung.E5,
-          PiceType = PiceType.ROOK
+          PieceType = PieceType.ROOK
         },
       };
       var expected = new List<Coords>()

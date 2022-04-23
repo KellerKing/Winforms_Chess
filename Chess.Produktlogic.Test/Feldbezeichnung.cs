@@ -1,4 +1,4 @@
-﻿using Chess.Produktlogic.Contracts;
+﻿using Chess.Contracts.Productlogic;
 
 namespace Chess.Produktlogic.Test
 {

@@ -11,10 +11,10 @@ namespace Chess.Produktlogic
       if (pices == null) return 0;
 
       var scoreForPlayer = pices.Where(x => x.Owner == currentPlayer)
-        .Sum(x => PieceValueInformation.VALUES[x.PiceType]);
+        .Sum(x => PieceValueInformation.VALUES[x.PieceType]);
 
       var scoreForEnemy = pices.Where(x => x.Owner != currentPlayer)
-        .Sum(x => PieceValueInformation.VALUES[x.PiceType]);
+        .Sum(x => PieceValueInformation.VALUES[x.PieceType]);
 
       return scoreForPlayer - scoreForEnemy;
     }

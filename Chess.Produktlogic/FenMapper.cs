@@ -83,7 +83,7 @@ namespace Chess.Produktlogic
 
       output.Add(new Piece(Char.IsLower(character) ? Player.BLACK : Player.WHITE)
       {
-        PiceType = MappingCharToPieceType[char.ToUpper(character)],
+        PieceType = MappingCharToPieceType[char.ToUpper(character)],
         MoveCounter = 0,
         Coord = new(rankIndex, fileCurrent)
       });
@@ -134,8 +134,8 @@ namespace Chess.Produktlogic
     if (piece == null) return '1';
 
     return piece.Owner == Player.WHITE ?
-      MappingPieceTypeToChar[piece.PiceType] :
-      Char.ToLowerInvariant(MappingPieceTypeToChar[piece.PiceType]);
+      MappingPieceTypeToChar[piece.PieceType] :
+      Char.ToLowerInvariant(MappingPieceTypeToChar[piece.PieceType]);
   }
 }
 }

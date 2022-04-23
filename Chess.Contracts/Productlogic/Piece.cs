@@ -8,7 +8,7 @@
     }
 
     public Player Owner { get; init; }
-    public PieceType PiceType { get; set; }
+    public PieceType PieceType { get; set; }
     public Coords Coord { get; set; }
     public int MoveCounter { get; set; }
 

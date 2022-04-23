@@ -10,7 +10,7 @@ namespace Chess.Produktlogic
     {
       var enemy = pice.Owner == Player.BLACK ? Player.WHITE : Player.BLACK;
 
-      var possibleMoves = pice.PiceType switch
+      var possibleMoves = pice.PieceType switch
       {
         PieceType.KNIGHT => KnightMoveRule.GetMovesForKnight(pice, pices, enemy),
         PieceType.QUEEN => QueenMoveRule.GetMovesForQueen(pice, pices, enemy),
