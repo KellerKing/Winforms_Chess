@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Chess.Produktlogic.Test
+namespace Chess.Productlogic.Test
 {
   [TestFixture]
   public class FenMapper_Tests

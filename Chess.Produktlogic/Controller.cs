@@ -1,8 +1,9 @@
 ﻿using Chess.Contracts.Productlogic;
+using Chess.Productlogic.Factory;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Chess.Produktlogic
+namespace Chess.Productlogic
 {
   public class Controller : IChessLogicController
   {

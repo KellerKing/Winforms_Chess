@@ -1,10 +1,10 @@
 ﻿using Chess.Contracts.Productlogic;
-using Chess.Produktlogic.Dto;
-using Chess.Produktlogic.Konstanten;
+using Chess.Productlogic.Dto;
+using Chess.Productlogic.Konstanten;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Chess.Produktlogic.MovesRules
+namespace Chess.Productlogic.MovesRules
 {
   static class PawnMoveRule
   {

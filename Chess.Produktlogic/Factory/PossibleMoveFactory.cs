@@ -1,8 +1,8 @@
 ﻿using Chess.Contracts.Productlogic;
-using Chess.Produktlogic.MovesRules;
+using Chess.Productlogic.MovesRules;
 using System.Collections.Generic;
 
-namespace Chess.Produktlogic
+namespace Chess.Productlogic.Factory
 {
   public static class PossibleMoveFactory
   {

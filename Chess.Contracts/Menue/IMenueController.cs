@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Chess.Contracts.Menue
+﻿namespace Chess.Contracts.Menue
 {
   public interface IMenueController
   {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Chess.Produktlogic.MovesRules
+namespace Chess.Productlogic.MovesRules
 {
   public static class QueenMoveRule
   {

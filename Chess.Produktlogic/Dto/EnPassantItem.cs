@@ -1,6 +1,6 @@
 ﻿using Chess.Contracts.Productlogic;
 
-namespace Chess.Produktlogic.Dto
+namespace Chess.Productlogic.Dto
 {
   public class EnPassantItem
   {

@@ -1,6 +1,6 @@
 ﻿using Chess.Contracts.Productlogic;
 
-namespace Chess.Produktlogic.Test
+namespace Chess.Productlogic.Test
 {
   public static class Feldbezeichnung
   {

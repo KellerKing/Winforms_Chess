@@ -1,9 +1,10 @@
 ﻿using Chess.Contracts.Productlogic;
+using Chess.Productlogic.Factory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Chess.Produktlogic
+namespace Chess.Productlogic
 {
   public static class Rulebook
   {

@@ -1,4 +1,4 @@
-﻿namespace Chess.Produktlogic.Konstanten
+﻿namespace Chess.Productlogic.Konstanten
 {
   public enum PiceBlockingReturn
   {

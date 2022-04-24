@@ -33,7 +33,7 @@ namespace Chess.Game
     {
       m_mainForm = new GameForm();
       m_InputDto = inputDto;
-      m_LogicConnector = new ProduktlogicConnector(new Produktlogic.Controller());
+      m_LogicConnector = new ProduktlogicConnector(new Productlogic.Controller());
       m_CurrentPlayer = Helper.GetCurrentPlayerFromInputDto(inputDto);
       m_AiConnector = new AiConnector(AiControllerFactory.GetChessAIController(inputDto.IsSingleplayer));
       m_Felder = Helper.CreateFelder(8, 8);

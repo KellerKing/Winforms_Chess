@@ -1,8 +1,9 @@
 ﻿using Chess.Contracts.Productlogic;
+using Chess.Productlogic.Factory;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-namespace Chess.Produktlogic.Test
+namespace Chess.Productlogic.Test
 {
   [TestFixture]
   public class PossibleMoveFactory_Tests

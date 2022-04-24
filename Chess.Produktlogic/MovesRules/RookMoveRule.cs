@@ -1,8 +1,8 @@
 ﻿using Chess.Contracts.Productlogic;
-using Chess.Produktlogic.Konstanten;
+using Chess.Productlogic.Konstanten;
 using System.Collections.Generic;
 
-namespace Chess.Produktlogic.MovesRules
+namespace Chess.Productlogic.MovesRules
 {
   static class RookMoveRule
   {

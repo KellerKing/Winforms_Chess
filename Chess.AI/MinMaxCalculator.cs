@@ -10,7 +10,7 @@ namespace Chess.AI
 {
   public class MinMaxCalculator
   {
-    private static readonly ProductlogicConnector m_ProduktlogicConnector = new ProductlogicConnector(new Produktlogic.Controller());
+    private static readonly ProductlogicConnector m_ProduktlogicConnector = new ProductlogicConnector(new Productlogic.Controller());
 
     public static List<Piece> GetBestPosition(List<Piece> position, Player playerCurrent, int moveCounter, int depth)
     {

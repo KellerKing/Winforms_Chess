@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Chess.Produktlogic
+namespace Chess.Productlogic
 {
   public class FenMapper
   {

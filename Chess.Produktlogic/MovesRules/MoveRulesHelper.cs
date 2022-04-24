@@ -1,9 +1,9 @@
 ﻿using Chess.Contracts.Productlogic;
-using Chess.Produktlogic.Konstanten;
+using Chess.Productlogic.Konstanten;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Chess.Produktlogic.MovesRules
+namespace Chess.Productlogic.MovesRules
 {
   public class MoveRulesHelper
   {
