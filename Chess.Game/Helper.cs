@@ -5,20 +5,6 @@ namespace Chess.Game
 {
   class Helper
   {
-    public static Chess.Game.Konstanten.Player GetCurrentPlayerFromInputDto(InputDto inputDto)
-    {
-
-      if (!inputDto.IsSingleplayer) return Konstanten.Player.WHITE;
-
-      return inputDto.StartingPlayer switch
-      {
-        Player.BLACK => Konstanten.Player.BLACK,
-        Player.WHITE => Konstanten.Player.WHITE,
-        _ => throw new System.Exception($"This Player is unknown: {inputDto.StartingPlayer}"),
-      };
-    }
-
-
     public static Konstanten.Player GetEnemy(Konstanten.Player playerCurrent)
     {
       return playerCurrent == Konstanten.Player.WHITE ? Konstanten.Player.BLACK : Konstanten.Player.WHITE;

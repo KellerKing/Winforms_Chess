@@ -19,9 +19,9 @@ namespace Chess.Menue
 
     private void PlayerCount_CheckedChanged(object sender, EventArgs e)
     {
-      var state = ((RadioButton)sender) == rbSinglePlayer ? true : false;
+      var isSinglePlayer = ((RadioButton)sender) == rbSinglePlayer;
 
-      SetSizeChoosing(state);
+      ToggleStateGroupboxSideChoose(isSinglePlayer);
     }
 
     public bool IsSinglePlayer()
@@ -29,12 +29,12 @@ namespace Chess.Menue
       return rbSinglePlayer.Checked;
     }
 
-    public bool IsSinglePlayerOnWhiteSide()
+    public bool IsPlayerWhite()
     {
       return rbPlayerWhite.Checked;
     }
 
-    private void SetSizeChoosing(bool state)
+    private void ToggleStateGroupboxSideChoose(bool state)
     {
       groupBoxSideChoose.Enabled = state;
     }

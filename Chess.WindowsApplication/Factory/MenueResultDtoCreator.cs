@@ -15,7 +15,7 @@ namespace Chess.WindowsApplication.Factiry
       return new MenueResultDto
       {
         DialogResult = resultDto.DialogResult,
-        IsPlayerStartingWhite = resultDto.IsPlayerStartingWhite,
+        IsPlayerStartingWhite = resultDto.IsPlayerWhite,
         IsSingleplayer = resultDto.IsSingleplayer
       };
     }

@@ -10,7 +10,7 @@ namespace Chess.WindowsApplication.Factory
       return new InputDto
       {
         IsSingleplayer = menueResultDto.IsSingleplayer,
-        StartingPlayer = GetStartingPlayer(menueResultDto),
+        PlayerIsPlayingAs = GetStartingPlayer(menueResultDto),
       };
     }
 

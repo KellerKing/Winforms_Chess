@@ -15,7 +15,7 @@ namespace Chess.Menue
     public ResultDto ShowDialog()
     {
       m_MainForm.ShowDialog();
-      var result = ResultDtoFactory.CreateResultDto(m_MainForm.DialogResult, m_MainForm.IsSinglePlayer(), m_MainForm.IsSinglePlayerOnWhiteSide());
+      var result = ResultDtoFactory.CreateResultDto(m_MainForm.DialogResult, m_MainForm.IsSinglePlayer(), m_MainForm.IsPlayerWhite());
       m_MainForm.Dispose();
 
       return result;

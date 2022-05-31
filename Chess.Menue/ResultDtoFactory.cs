@@ -9,7 +9,7 @@ namespace Chess.Menue
     {
       return new ResultDto
       {
-        IsPlayerStartingWhite = isWhiteSide,
+        IsPlayerWhite = isWhiteSide,
         IsSingleplayer = isSingleplayer,
         DialogResult = dialogResult
       };

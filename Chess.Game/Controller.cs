@@ -1,5 +1,7 @@
 ﻿using Chess.Contracts.Game;
 using Chess.Game.Connector;
+using Chess.Game.Converter;
+using Chess.Game.Converter.Interface;
 using Chess.Game.Factory;
 using Chess.Game.Konstanten;
 using System.Collections.Generic;
@@ -13,13 +15,16 @@ namespace Chess.Game
   public class Controller : IGameController
   {
     private readonly GameForm m_mainForm;
-    private readonly InputDto m_InputDto;
     private ResultDto m_ResultDto = new();
     private Konstanten.Player m_CurrentPlayer;
     private Dto.Piece m_SelectedPiece;
     private List<Dto.Coords> m_PossibleFelder = new();
+    
     private readonly ProduktlogicConnector m_LogicConnector;
     private readonly AiConnector m_AiConnector;
+    private readonly IInputDtoConverter m_InputDtoConverter;
+
+
     private List<Dto.Piece> m_BoardPosition;
     private readonly Dto.Coords[,] m_Felder;
 
@@ -31,17 +36,17 @@ namespace Chess.Game
 
     public Controller(InputDto inputDto)
     {
+      m_InputDtoConverter = new InputDtoConverter();
       m_mainForm = new GameForm();
-      m_InputDto = inputDto;
       m_LogicConnector = new ProduktlogicConnector(new Productlogic.Controller());
-      m_CurrentPlayer = Helper.GetCurrentPlayerFromInputDto(inputDto);
+      m_CurrentPlayer = m_InputDtoConverter.GetStartingPlayer(inputDto);
       m_AiConnector = new AiConnector(AiControllerFactory.GetChessAIController(inputDto.IsSingleplayer));
       m_Felder = Helper.CreateFelder(8, 8);
       
       ConnectEvents();
       InitGameComponents(m_CurrentPlayer);
 
-      if (inputDto.IsSingleplayer && inputDto.StartingPlayer == Contracts.Game.Player.BLACK) MakeEnemyMoveAsync();
+      if (inputDto.IsSingleplayer && inputDto.PlayerIsPlayingAs == Contracts.Game.Player.BLACK) MakeEnemyMoveAsync();
     }
 
     public ResultDto ShowGame()
@@ -51,12 +56,12 @@ namespace Chess.Game
       return m_ResultDto;
     }
 
-    private void InitGameComponents(Konstanten.Player playerCurrent)
+    private void InitGameComponents(Konstanten.Player startingPlayer)
     {
       m_BoardPosition = m_LogicConnector.CreatePiecesFromFen(m_Moves[0]);
       var piecesToDraw = ViewModelCreator.GeneratePieces(m_BoardPosition);
       var felderToDraw = ViewModelCreator.CreateChessBoardDrawModels(m_Felder);
-      m_mainForm.InitBoard(felderToDraw, playerCurrent);
+      m_mainForm.InitBoard(felderToDraw, startingPlayer);
       m_mainForm.InitPieces(piecesToDraw);
     }
 
