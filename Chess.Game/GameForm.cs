@@ -82,8 +82,8 @@ namespace Chess.Game
     {
       if (white == black)
       {
-        lblPointsBlack.Text = "";
-        lblPointsWhite.Text = "";
+        lblPointsBlack.Text = "0";
+        lblPointsWhite.Text = "0";
       }
       else if (black < white)
       {
@@ -141,13 +141,13 @@ namespace Chess.Game
       }
     }
 
-    internal void ShowPossibleFelder(IEnumerable<Dto.Coords> felderPossible)
+    internal void ShowPossibleFelder(IEnumerable<Dto.Coords> felderPossible, Bitmap possibleFieldTexture)
     {
       foreach (var item in felderPossible)
       {
         var panel = m_ChessBoardPanles[item.File, item.Rank];
         if (panel.HighlightFeld) continue;
-        UiHelper.HighlightPanel(panel);
+        UiHelper.HighlightPanel(panel, possibleFieldTexture);
       }
     }
 

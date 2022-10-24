@@ -49,6 +49,12 @@ namespace Chess.Game.Factory
       return chessBoardPanels;
     }
 
+
+    internal static Bitmap GetBitmapForHighligthFields()
+    {
+      return Resources.field_possible;
+    }
+
     internal static Bitmap GetSinglePieceImage(Konstanten.Player player, Konstanten.PieceType pieceType)
     {
       var texture = GetBitmapForPiece(pieceType, player);
@@ -90,5 +96,3 @@ namespace Chess.Game.Factory
     }
   }
 }
-
-

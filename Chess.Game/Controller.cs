@@ -122,7 +122,7 @@ namespace Chess.Game
 
       if (!Settings.ShowHighlightedFelder) return;
       m_mainForm.RemoveHighlightedFelder();
-      m_mainForm.ShowPossibleFelder(m_PossibleFelder);
+      m_mainForm.ShowPossibleFelder(m_PossibleFelder, ViewModelCreator.GetBitmapForHighligthFields());
     }
 
     private Dto.UpdatePositionDto ConvertPawn(Dto.Coords clickedCoords)
@@ -150,7 +150,7 @@ namespace Chess.Game
     private void UpdateSettings(SettingsForm.ResultDto result)
     {
       if (!result.HighlightFelder) m_mainForm.RemoveHighlightedFelder();
-      else m_mainForm.ShowPossibleFelder(m_PossibleFelder);
+      else m_mainForm.ShowPossibleFelder(m_PossibleFelder, ViewModelCreator.GetBitmapForHighligthFields());
       
       Settings.ShowHighlightedFelder = result.HighlightFelder; 
     }
