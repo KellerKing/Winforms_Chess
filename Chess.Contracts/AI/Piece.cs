@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Chess.Contracts.AI
+﻿namespace Chess.Contracts.AI
 {
   public class Piece
   {
@@ -17,5 +11,8 @@ namespace Chess.Contracts.AI
     public PieceType PiceType { get; set; }
     public Coordinates Coord { get; set; }
     public int MoveCounter { get; set; }
+    public bool IsLastMovedPieceFromPlayer { get; set; }
+    public bool HasCastleKingSideRight { get; set; }
+    public bool HasCastleQueenSideRight { get; set; }
   }
 }

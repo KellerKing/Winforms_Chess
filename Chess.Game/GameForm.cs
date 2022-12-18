@@ -33,6 +33,10 @@ namespace Chess.Game
 
     internal void DrawBoard(TileDrawModel[,] board, Konstanten.Player playerSelected)
     {
+      foreach (Control item in boardGrid.Controls)
+      {
+        item.Click -= GameObjectClicked;
+      }
       boardGrid.Controls.Clear();
 
       var sortedTiles = playerSelected == Konstanten.Player.BLACK ?

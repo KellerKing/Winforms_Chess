@@ -15,7 +15,11 @@ namespace Chess.Game.Converter
         {
           Coord = new(piece.Coord.Rank, piece.Coord.File),
           MoveCounter = piece.MoveCounter,
-          PiceType = ConvertPieceType(piece.PieceType)
+          PiceType = ConvertPieceType(piece.PieceType),
+          HasCastleKingSideRight = piece.HasCastleKingSideRight,
+          HasCastleQueenSideRight = piece.HasCastleQueenSideRight,
+          IsLastMovedPieceFromPlayer = piece.IsLastMovedPieceFromPlayer
+
         };
       }
     }
@@ -28,7 +32,11 @@ namespace Chess.Game.Converter
         {
           Coord = new(piece.Coord.Rank, piece.Coord.File),
           MoveCounter = piece.MoveCounter,
-          PieceType = ConvertPieceType(piece.PiceType)
+          PieceType = ConvertPieceType(piece.PiceType),
+          HasCastleKingSideRight = piece.HasCastleKingSideRight,
+          HasCastleQueenSideRight = piece.HasCastleQueenSideRight,
+          IsLastMovedPieceFromPlayer = piece.IsLastMovedPieceFromPlayer
+
         };
       }
     }

@@ -88,7 +88,7 @@ namespace Chess.Productlogic
 
     public string CreateFenFromPieces(List<Piece> pieces)
     {
-     return FenMapper.CreateFenFromPices(pieces);
+     return FenMapper.CreateFenFromPices(pieces, Player.WHITE); //TODO: Hier dann was richtiges
     }
   }
 }

@@ -178,7 +178,7 @@ namespace Chess.Productlogic.Test
 
       var expected = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 
-      var result = FenMapper.CreateFenFromPices(test, 7);
+      var result = FenMapper.CreateFenFromPices(test, Player.WHITE);
 
       Assert.AreEqual(expected, result);
     }
@@ -197,7 +197,7 @@ namespace Chess.Productlogic.Test
 
       var expected = "8/8/8/8/8/8/8/R7";
 
-      var result = FenMapper.CreateFenFromPices(test, 7);
+      var result = FenMapper.CreateFenFromPices(test, Player.WHITE);
 
       Assert.AreEqual(expected, result);
     }
@@ -209,7 +209,7 @@ namespace Chess.Productlogic.Test
 
       var expected = "8/8/8/8/8/8/8/8";
 
-      var result = FenMapper.CreateFenFromPices(test, 7);
+      var result = FenMapper.CreateFenFromPices(test, Player.WHITE);
 
       Assert.AreEqual(expected, result);
     }

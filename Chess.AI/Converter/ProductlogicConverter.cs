@@ -73,7 +73,10 @@ namespace Chess.AI.Converter
       {
         Coord = ConvertCoordinate(pieceToMove.Coord),
         MoveCounter = pieceToMove.MoveCounter,
-        PieceType = ConvertPieceType(pieceToMove.PiceType)
+        PieceType = ConvertPieceType(pieceToMove.PiceType),
+        HasCastleKingSideRight = pieceToMove.HasCastleKingSideRight,
+        HasCastleQueenSideRight = pieceToMove.HasCastleQueenSideRight,
+        IsLastMovedPieceFromPlayer = pieceToMove.IsLastMovedPieceFromPlayer
       };
     }
 
@@ -83,7 +86,10 @@ namespace Chess.AI.Converter
       {
         Coord = ConvertCoordinate(pieceToMove.Coord),
         MoveCounter = pieceToMove.MoveCounter,
-        PiceType = ConvertPieceType(pieceToMove.PieceType)
+        PiceType = ConvertPieceType(pieceToMove.PieceType),
+        HasCastleKingSideRight = pieceToMove.HasCastleKingSideRight,
+        HasCastleQueenSideRight = pieceToMove.HasCastleQueenSideRight,
+        IsLastMovedPieceFromPlayer = pieceToMove.IsLastMovedPieceFromPlayer
       };
     }
 

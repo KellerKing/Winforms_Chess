@@ -46,6 +46,7 @@ namespace Chess.Productlogic
       if (queenSideRook == null || IsCastleThroughCheck(pices, king, queenSideRook)) return false;
       return !IsPiceBlockingForCastle(pices, king, queenSideRook);
     }
+
     private static bool IsStatelement(List<Piece> pices, Player currentPlayer)
     {
       foreach (var item in pices.Where(x => x.Owner == currentPlayer))
@@ -65,7 +66,6 @@ namespace Chess.Productlogic
       }
       return true;
     }
-
 
     private static bool IsCastleThroughCheck(List<Piece> pieces, Piece king, Piece rook)
     {
