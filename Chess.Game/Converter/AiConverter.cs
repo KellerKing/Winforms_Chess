@@ -28,8 +28,8 @@ namespace Chess.Game.Converter
         MoveCounter = currentPosistion.MoveCounter,
         HasCastleKingSideRight = currentPosistion.HasCastleKingSideRight,
         HasCastleQueenSideRight = currentPosistion.HasCastleQueenSideRight,
-        IsLastMovedPieceFromPlayer = currentPosistion.IsLastMovedPieceFromPlayer
-
+        IsLastMovedPieceFromPlayer = currentPosistion.IsLastMovedPieceFromPlayer,
+        MovesSinceLastPawnOrCaptureMove = currentPosistion.MovesSinceLastPawnOrCaptureMove
       };
     }
 
@@ -42,8 +42,8 @@ namespace Chess.Game.Converter
         MoveCounter = currentPosition.MoveCounter,
         HasCastleKingSideRight = currentPosition.HasCastleKingSideRight,
         HasCastleQueenSideRight = currentPosition.HasCastleQueenSideRight,
-        IsLastMovedPieceFromPlayer = currentPosition.IsLastMovedPieceFromPlayer
-
+        IsLastMovedPieceFromPlayer = currentPosition.IsLastMovedPieceFromPlayer,
+        MovesSinceLastPawnOrCaptureMove = currentPosition.MovesSinceLastPawnOrCaptureMove
       };
     }
 

@@ -664,7 +664,8 @@ namespace Chess.Productlogic.Test
         {
           Coord = Feldbezeichnung.C5,
           PieceType = PieceType.PAWN,
-          MoveCounter = 1
+          MoveCounter = 1,
+          IsLastMovedPieceFromPlayer = true
         }
       };
       var expected = new List<Coords>

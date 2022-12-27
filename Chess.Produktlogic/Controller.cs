@@ -86,9 +86,9 @@ namespace Chess.Productlogic
       return FenMapper.CreatePiecesFromFen(fen);
     }
 
-    public string CreateFenFromPieces(List<Piece> pieces)
+    public string CreateFenFromPieces(List<Piece> pieces, Player playerNextZug)
     {
-     return FenMapper.CreateFenFromPices(pieces, Player.WHITE); //TODO: Hier dann was richtiges
+      return FenMapper.CreateFenFromPices(pieces, playerNextZug);
     }
   }
 }

@@ -76,6 +76,7 @@ namespace Chess.Game
       if (!moveResult.WasMoveLegal) return;
 
       m_CurrentPlayer = Helper.GetEnemy(m_CurrentPlayer);
+      m_Moves.Add(m_LogicConnector.CreateFenFromPieces(m_BoardPosition, m_CurrentPlayer));
       m_SelectedPiece = null;
       m_PossibleFelder = moveResult.PossibleFelder;
       m_BoardPosition = moveResult.BoardPosition;

@@ -18,8 +18,8 @@ namespace Chess.Game.Converter
           PiceType = ConvertPieceType(piece.PieceType),
           HasCastleKingSideRight = piece.HasCastleKingSideRight,
           HasCastleQueenSideRight = piece.HasCastleQueenSideRight,
-          IsLastMovedPieceFromPlayer = piece.IsLastMovedPieceFromPlayer
-
+          IsLastMovedPieceFromPlayer = piece.IsLastMovedPieceFromPlayer,
+          MovesSinceLastPawnOrCaptureMove = piece.MovesSinceLastPawnOrCaptureMove
         };
       }
     }
@@ -35,8 +35,8 @@ namespace Chess.Game.Converter
           PieceType = ConvertPieceType(piece.PiceType),
           HasCastleKingSideRight = piece.HasCastleKingSideRight,
           HasCastleQueenSideRight = piece.HasCastleQueenSideRight,
-          IsLastMovedPieceFromPlayer = piece.IsLastMovedPieceFromPlayer
-
+          IsLastMovedPieceFromPlayer = piece.IsLastMovedPieceFromPlayer,
+          MovesSinceLastPawnOrCaptureMove = piece.MovesSinceLastPawnOrCaptureMove
         };
       }
     }

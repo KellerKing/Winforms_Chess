@@ -5,7 +5,7 @@ namespace Chess.Contracts.Productlogic
   public interface IChessLogicController
   {
     public List<Piece> CreatePiecesFromFen(string fen);
-    public string CreateFenFromPieces(List<Piece> pieces);
+    public string CreateFenFromPieces(List<Piece> pieces, Player playerNextZug);
 
     List<Coords> GetPossibleFelderForPiece(Piece piceToCheck, List<Piece> boardPosition);
 

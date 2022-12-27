@@ -11,6 +11,7 @@
     public PieceType PiceType { get; set; }
     public Coordinates Coord { get; set; }
     public int MoveCounter { get; set; }
+    public int MovesSinceLastPawnOrCaptureMove { get; set; }
     public bool IsLastMovedPieceFromPlayer { get; set; }
     public bool HasCastleKingSideRight { get; set; }
     public bool HasCastleQueenSideRight { get; set; }

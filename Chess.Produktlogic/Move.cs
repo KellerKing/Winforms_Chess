@@ -41,17 +41,20 @@ namespace Chess.Productlogic
       return new List<Piece>();
     }
 
-    public static List<Piece> Castle(List<Piece> pices, Coords king, Coords rook)
+    public static List<Piece> Castle(List<Piece> pices, Coords king, Coords rook) 
     {
       var selectedKing = pices.First(x => x.Coord.Equals(king));
       var selectedRook = pices.First(x => x.Coord.Equals(rook));
+      //TODO: Hier ab ich noch das Problem, dass nur das Castlerecht verhindert wird wenn ich Castle. Sonst nicht.
+      //Vielleicht etwas logik aus CanCastle..Side rausziehen. Genau das würde ich brauchen. Oder ein Helper!
 
+      //TODO: Bei einem Capture Move muss der Movecounter auf eine andere Figur übetragen werden, die im besten Fall schon einen Zug gemacht hat. Sonst stimmt hinterher der Fen nicht mehr.
       if (Rulebook.CanCastelQueenSide(pices.ConvertAll(x => (Piece)x.Clone()), (Piece)selectedKing.Clone()))
       {
         selectedKing.Coord = new(selectedKing.Coord.Rank, selectedKing.Coord.File - 2);
         selectedRook.Coord = new(selectedRook.Coord.Rank, selectedRook.Coord.File + 3);
         selectedKing.MoveCounter++;
-        selectedRook.MoveCounter++;
+        selectedKing.MovesSinceLastPawnOrCaptureMove++;
         selectedKing.HasCastleQueenSideRight  = false;
         selectedKing.HasCastleKingSideRight  = false;
                 
@@ -62,7 +65,7 @@ namespace Chess.Productlogic
         selectedKing.Coord = selectedKing.Coord = new(selectedKing.Coord.Rank, selectedKing.Coord.File + 2);
         selectedRook.Coord = new(selectedRook.Coord.Rank, selectedRook.Coord.File - 2);
         selectedKing.MoveCounter++;
-        selectedRook.MoveCounter++;
+        selectedKing.MovesSinceLastPawnOrCaptureMove++;
         selectedKing.HasCastleQueenSideRight  = false;
         selectedKing.HasCastleKingSideRight  = false;
 
@@ -77,6 +80,7 @@ namespace Chess.Productlogic
       var selectedPice = pices.First(x => x.Coord.Equals(oldPosition));
       selectedPice.Coord = newPosition;
       selectedPice.MoveCounter++;
+      pices.ForEach(x => x.MovesSinceLastPawnOrCaptureMove = 0);
 
       return UpdateLastMovedPiece(pices, selectedPice).ToList();
     }
@@ -91,6 +95,9 @@ namespace Chess.Productlogic
       selectedPice.Coord = newPosition;
       selectedPice.MoveCounter++;
 
+      if (selectedPice.PieceType == PieceType.PAWN) pices.ForEach(x => x.MovesSinceLastPawnOrCaptureMove = 0);
+      else selectedPice.MovesSinceLastPawnOrCaptureMove++;
+
       return UpdateLastMovedPiece(pices, selectedPice).ToList();
     }
 
@@ -102,6 +109,15 @@ namespace Chess.Productlogic
           .ToList();
 
       movedPiece.IsLastMovedPieceFromPlayer = true;
+
+      if (movedPiece.PieceType == PieceType.KING)
+      {
+        movedPiece.HasCastleKingSideRight = false;
+        movedPiece.HasCastleQueenSideRight = false;
+      }
+
+      if (movedPiece.PieceType != PieceType.ROOK) return pieces;
+
       return pieces;
     }
   }

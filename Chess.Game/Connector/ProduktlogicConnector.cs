@@ -93,5 +93,13 @@ namespace Chess.Game.Connector
 
       return m_ProductlogicConverter.ConvertMoveType(movetype);
     }
+
+    internal string CreateFenFromPieces(IEnumerable<Dto.Piece> pieces, Konstanten.Player playerNextZug)
+    {
+      var convertedCurrentPosition = m_ProductlogicConverter.ConvertPieces(pieces.ToList()).ToList();
+      var convertedCurrentPlayer = m_ProductlogicConverter.ConvertPlayer(playerNextZug);
+
+      return m_ProductlogicController.CreateFenFromPieces(convertedCurrentPosition, convertedCurrentPlayer);
+    }
   }
 }

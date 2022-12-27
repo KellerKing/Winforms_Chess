@@ -57,8 +57,12 @@ namespace Chess.Productlogic
       var aktiverSpieler = GetSpielerAmZug(currentPlayer);
       var rochadeRechtWeiss = GetRochardeRechtFuerSpieler(pieces, Player.WHITE);
       var rochadeRechtSchwarz = GetRochardeRechtFuerSpieler(pieces, Player.BLACK);
-      var enPassantSchlat = GetEnPassantSchlag(pieces, currentPlayer);
-      return figurenstellung;
+      var rochadeRecht = string.IsNullOrEmpty(rochadeRechtSchwarz) && string.IsNullOrEmpty(rochadeRechtWeiss) ? "-" : rochadeRechtWeiss + rochadeRechtSchwarz;
+      var enPassantSchlag = GetEnPassantSchlag(pieces, currentPlayer);
+      var halbzuege = GetHalbzuege(pieces);
+      var zugnummer = GetZugnummerNaechsterZug(pieces, currentPlayer);
+
+      return $"{figurenstellung} {aktiverSpieler} {rochadeRecht} {enPassantSchlag} {halbzuege} {zugnummer}";
     }
 
     private static string GetFigurenstellungFen(IEnumerable<Piece> pieces)
@@ -91,7 +95,7 @@ namespace Chess.Productlogic
         case Player.WHITE:
           return 'w';
       }
-      return ' ';
+      return '-';
     }
 
     private static string GetRochardeRechtFuerSpieler(IEnumerable<Piece> pieces, Player playerToCheck)
@@ -108,13 +112,13 @@ namespace Chess.Productlogic
 
     private static string GetEnPassantSchlag(IEnumerable<Piece> pieces, Player currentPlayer)
     {
-      var pawn = currentPlayer == Player.WHITE ?
-        pieces.FirstOrDefault(x => x.Owner == Player.BLACK && x.Coord.Rank == 4 && x.MoveCounter == 1) :
-        pieces.FirstOrDefault(x => x.Owner == Player.WHITE && x.Coord.Rank == 3 && x.MoveCounter == 1);
+      var bauerGegner = currentPlayer == Player.WHITE ?
+        pieces.FirstOrDefault(x => x.Owner == Player.BLACK && x.PieceType == PieceType.PAWN && x.IsLastMovedPieceFromPlayer && x.Coord.Rank == 4 && x.MoveCounter == 1) :
+        pieces.FirstOrDefault(x => x.Owner == Player.WHITE && x.PieceType == PieceType.PAWN && x.IsLastMovedPieceFromPlayer && x.Coord.Rank == 3 && x.MoveCounter == 1);
 
-      if (pawn == null) return "-";
+      if (bauerGegner == null) return "-";
 
-      var rankIndexToChar = new Dictionary<int, char> 
+      var fileIndexToChar = new Dictionary<int, char>
       {
         {0, 'a' },
         {1, 'b' },
@@ -126,7 +130,7 @@ namespace Chess.Productlogic
         {7, 'h' },
       };
 
-      var fileIndexToChar = new Dictionary<int, char>
+      var rankIndexToChar = new Dictionary<int, char>
       {
         {0, '1' },
         {1, '2' },
@@ -139,8 +143,21 @@ namespace Chess.Productlogic
       };
 
       return currentPlayer == Player.WHITE ?
-        $"{fileIndexToChar[pawn.Coord.File]}{rankIndexToChar[pawn.Coord.Rank - 1]}" :
-        $"{fileIndexToChar[pawn.Coord.File]}{rankIndexToChar[pawn.Coord.Rank + 1]}";
+        $"{fileIndexToChar[bauerGegner.Coord.File]}{rankIndexToChar[bauerGegner.Coord.Rank + 1]}" :
+        $"{fileIndexToChar[bauerGegner.Coord.File]}{rankIndexToChar[bauerGegner.Coord.Rank - 1]}";
+    }
+
+    private static string GetHalbzuege(IEnumerable<Piece> pieces)
+    {
+      return pieces.Sum(x => x.MovesSinceLastPawnOrCaptureMove).ToString();
+    }
+
+    private static string GetZugnummerNaechsterZug(IEnumerable<Piece> pieces, Player currentPlayer)
+    {
+      var anzahlZuege = Math.Ceiling(pieces.Sum(x => x.MoveCounter) / 2.0);
+      var zusatz = currentPlayer == Player.BLACK ? 0 : 1;
+
+      return Math.Max(anzahlZuege + zusatz, 1).ToString();
     }
 
     private static List<Piece> GetPiecesFromRank(string rank, int rankIndex)

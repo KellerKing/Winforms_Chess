@@ -10,6 +10,7 @@
     public Player Owner { get; init; }
     public PieceType PieceType { get; set; }
     public Coords Coord { get; set; }
+    public int MovesSinceLastPawnOrCaptureMove { get; set; }
     public int MoveCounter { get; set; }
     public bool IsLastMovedPieceFromPlayer { get; set; }
     public bool HasCastleKingSideRight { get; set; }
