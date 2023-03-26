@@ -31,14 +31,14 @@ namespace Chess.Game.SettingsForm
     {
       return new ResultDto
       {
-        DialogResult = this.DialogResult,
+        DialogResult = DialogResult == System.Windows.Forms.DialogResult.OK ? Game.SettingsForm.DialogResult.OK : Game.SettingsForm.DialogResult.Cancel,
         HighlightFelder = radioButtonHighlightOn.Checked
       };
     }
 
     private void buttonAccept_Click(object sender, EventArgs e)
     {
-      DialogResult = DialogResult.OK;
+      DialogResult = System.Windows.Forms.DialogResult.OK;
       OnButtonAcceptClicked?.Invoke();
     }
 

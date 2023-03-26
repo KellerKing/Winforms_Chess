@@ -1,5 +1,4 @@
 ﻿using Chess.Contracts.Game;
-using System.Windows.Forms;
 
 namespace Chess.Game.Factory
 {

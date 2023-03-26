@@ -191,7 +191,7 @@ namespace Chess.Game
 
     private void ButtonSettingsClicked(object sender, EventArgs e)
     {
-      var locationSender = PointToScreen(new Point(buttonSettings.Left + buttonSettings.Width, buttonSettings.Top + buttonSettings.Height));
+      var locationSender = PointToScreen(new Point(buttonSettings.Left, buttonSettings.Bottom));
 
       OnButtonSettingsClicked?.Invoke(locationSender);
     }

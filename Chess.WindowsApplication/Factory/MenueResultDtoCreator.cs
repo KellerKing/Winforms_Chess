@@ -1,10 +1,5 @@
 ﻿using Chess.Contracts.Menue;
 using Chess.WindowsApplication.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chess.WindowsApplication.Factiry
 {
@@ -12,9 +7,10 @@ namespace Chess.WindowsApplication.Factiry
   {
     public MenueResultDto CreateMenueResultDto(ResultDto resultDto)
     {
+      var windowsDialogResult = resultDto.DialogResult == DialogResult.OK ? System.Windows.Forms.DialogResult.OK : System.Windows.Forms.DialogResult.Cancel;
       return new MenueResultDto
       {
-        DialogResult = resultDto.DialogResult,
+        DialogResult = windowsDialogResult,
         IsPlayerStartingWhite = resultDto.IsPlayerWhite,
         IsSingleplayer = resultDto.IsSingleplayer
       };

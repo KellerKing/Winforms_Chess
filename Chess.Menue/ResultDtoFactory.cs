@@ -1,5 +1,4 @@
 ﻿using Chess.Contracts.Menue;
-using System.Windows.Forms;
 
 namespace Chess.Menue
 {

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Chess.Game
 {
@@ -144,7 +143,7 @@ namespace Chess.Game
       });
       var result = ctr.ShowDialog();
 
-      if (result.DialogResult != DialogResult.OK) return;
+      if (result.DialogResult != SettingsForm.DialogResult.OK) return;
       UpdateSettings(result);
     }
 
