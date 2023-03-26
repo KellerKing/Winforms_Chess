@@ -158,9 +158,11 @@ namespace Chess.Game
 
     private void ButtonFlipBoard_Click(object sender, EventArgs e)
     {
+      SuspendLayout();
       m_BottomPlayer = Helper.GetEnemy(m_BottomPlayer);
       DrawBoard(m_ChessBoardPanles, m_BottomPlayer);
       FlipScorePosition();
+      ResumeLayout();
     }
 
     private void GameForm_ResizeBegin(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Forms;
 
 namespace Chess.WindowsApplication
 {
@@ -10,8 +11,8 @@ namespace Chess.WindowsApplication
     [STAThread]
     static void Main()
     {
+      Application.EnableVisualStyles();
       var game = new Main();
-      
       game.StartRoutine();
 
     }

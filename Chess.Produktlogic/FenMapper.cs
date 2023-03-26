@@ -40,15 +40,20 @@ namespace Chess.Productlogic
 
     public static List<Piece> CreatePiecesFromFen(string fen)
     {
-      var splittedFen = fen.Split('/').Reverse().ToList();
-      var output = new List<Piece>();
+      if (string.IsNullOrEmpty(fen)) return new List<Piece>();
 
-      for (int rankIndex = 0; rankIndex < splittedFen.Count; rankIndex++)
-      {
-        output.AddRange(GetPiecesFromRank(splittedFen[rankIndex], rankIndex));
-      }
+      var fenbloecke = fen.Split(" "); //TODO: Den Rest sollte man irgendwann auswerten
 
-      return output;
+      var figurenTeil = fenbloecke.FirstOrDefault() ?? String.Empty;
+      var aktiverSpielerTeil = fenbloecke.Length > 1 ? fenbloecke[1] : String.Empty;
+      var rochadeTeil = fenbloecke.Length > 2 ? fenbloecke[2] : String.Empty;
+      var enPassantTeil = fenbloecke.Length > 3 ? fenbloecke[3] : String.Empty;
+      var halbzuegeTeil = fenbloecke.Length > 4 ? fenbloecke[4] : String.Empty;
+      var zugnummerTeil = fenbloecke.Length > 5 ? fenbloecke[5] : String.Empty;
+
+      var result = CreatePiecePositionFromFen(figurenTeil).ToList();
+
+      return result;
     }
 
     public static string CreateFenFromPices(List<Piece> pieces, Player currentPlayer)
@@ -160,31 +165,6 @@ namespace Chess.Productlogic
       return Math.Max(anzahlZuege + zusatz, 1).ToString();
     }
 
-    private static List<Piece> GetPiecesFromRank(string rank, int rankIndex)
-    {
-      var output = new List<Piece>();
-      var fileCurrent = 0;
-
-      for (int fileIndex = 0; fileIndex < rank.Length; fileIndex++)
-      {
-        var character = rank[fileIndex];
-
-        if (Char.IsNumber(character))
-        {
-          fileCurrent += Convert.ToInt32(character.ToString());
-          continue;
-        }
-
-        output.Add(new Piece(Char.IsLower(character) ? Player.BLACK : Player.WHITE)
-        {
-          PieceType = MappingCharToPieceType[char.ToUpper(character)],
-          MoveCounter = 0,
-          Coord = new(rankIndex, fileCurrent)
-        });
-        fileCurrent++;
-      }
-      return output;
-    }
 
     private static string ConvertRowToFen(List<Piece> piecesSorted)
     {
@@ -230,5 +210,46 @@ namespace Chess.Productlogic
         MappingPieceTypeToChar[piece.PieceType] :
         Char.ToLowerInvariant(MappingPieceTypeToChar[piece.PieceType]);
     }
+
+
+    private static IEnumerable<Piece> CreatePiecePositionFromFen(string fenBlock)
+    {
+      var result = new List<Piece>();
+      var splittedFen = fenBlock.Split('/').Reverse().ToList();
+
+      for (int rankIndex = 0; rankIndex < splittedFen.Count; rankIndex++)
+      {
+        result.AddRange(GetPiecesFromRank(splittedFen[rankIndex], rankIndex));
+      }
+
+      return result;
+    }
+
+    private static List<Piece> GetPiecesFromRank(string rank, int rankIndex)
+    {
+      var output = new List<Piece>();
+      var fileCurrent = 0;
+
+      for (int fileIndex = 0; fileIndex < rank.Length; fileIndex++)
+      {
+        var character = rank[fileIndex];
+
+        if (Char.IsNumber(character))
+        {
+          fileCurrent += Convert.ToInt32(character.ToString());
+          continue;
+        }
+
+        output.Add(new Piece(Char.IsLower(character) ? Player.BLACK : Player.WHITE)
+        {
+          PieceType = MappingCharToPieceType[char.ToUpper(character)],
+          MoveCounter = 0,
+          Coord = new(rankIndex, fileCurrent)
+        });
+        fileCurrent++;
+      }
+      return output;
+    }
+
   }
 }
